@@ -1,12 +1,16 @@
 {
-  "env": { "node": true, "browser": true },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "extends": [
-    "eslint:recommended",
-    "plugin:prettier/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended"
-  ]
+    "prettier",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }]
+  }
 }
