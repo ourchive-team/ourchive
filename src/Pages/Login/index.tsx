@@ -47,7 +47,7 @@ const Title = styled.span`
   font-weight: 400;
   font-size: 56px;
   text-align: center;
-  margin-top: 24px;
+  padding-top: 10px;
 
   color: #000000;
 `;
