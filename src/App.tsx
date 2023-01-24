@@ -11,13 +11,7 @@ const App = () => {
     return <Login />;
   }
 
-  return (
-    <div>
-      <div>asdasdasd</div>
-      <Main />
-      <div />
-    </div>
-  );
+  return <Main />;
 };
 
 export default App;

@@ -17,5 +17,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     'no-unused-vars': 'off',
     'arrow-body-style': 'off',
+    'arrow-parens': 'off',
+    'object-curly-newline': 'off',
   },
 };

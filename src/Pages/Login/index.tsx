@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
 import { LargeButton } from '../../styles';
 import { media } from '../../styles/mediaQuery';
+import { loginState } from '../../states/loginState';
 
 const LoginPageContainer = styled.div`
   width: 100%;
@@ -57,13 +59,21 @@ const Title = styled.span`
 // need font and image
 
 export const Login = () => {
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   return (
     <LoginPageContainer>
       <TitleContainer>
         <ImageContainer />
         <Title>OurChive</Title>
       </TitleContainer>
-      <LargeButton style={{ marginTop: 'auto' }}>Wallet Connect</LargeButton>
+      <LargeButton
+        style={{ marginTop: 'auto' }}
+        onClick={() => {
+          setIsLogin({ isLogin: true });
+        }}
+      >
+        Wallet Connect
+      </LargeButton>
     </LoginPageContainer>
   );
 };
