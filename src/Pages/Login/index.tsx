@@ -1,0 +1,67 @@
+import React from 'react';
+import styled from 'styled-components';
+
+import { LargeButton } from '../../styles';
+import { media } from '../../styles/mediaQuery';
+
+const LoginPageContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  min-height: 667px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 40px 24px;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  width: 100%;
+
+  background-color: #f2f2f2;
+
+  ${media.mobile`
+      min-height: 158px;
+      height: 22.66vh;
+  `}
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  ${media.mobile`
+    margin-top: 29.18%;
+    margin-bottom: 26.23%;
+  `}
+`;
+
+const Title = styled.span`
+  font-family: 'Balsamiq Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 56px;
+  text-align: center;
+  margin-top: 24px;
+
+  color: #000000;
+`;
+
+// need font and image
+
+export const Login = () => {
+  return (
+    <LoginPageContainer>
+      <TitleContainer>
+        <ImageContainer />
+        <Title>OurChive</Title>
+      </TitleContainer>
+      <LargeButton style={{ marginTop: 'auto' }}>Wallet Connect</LargeButton>
+    </LoginPageContainer>
+  );
+};

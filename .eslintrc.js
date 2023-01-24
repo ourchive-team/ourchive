@@ -11,5 +11,11 @@ module.exports = {
     project: ['tsconfig.json'],
   },
   plugins: ['react'],
-  rules: {},
+  rules: {
+    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
+    'import/prefer-default-export': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    'no-unused-vars': 'off',
+    'arrow-body-style': 'off',
+  },
 };

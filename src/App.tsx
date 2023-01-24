@@ -1,16 +1,23 @@
 import React from 'react';
 import './App.css';
+import { RecoilRoot, useRecoilValue } from 'recoil';
+import Main from './Pages/Main';
+import { Login } from './Pages/Login';
+import { loginState } from './states/loginState';
 
-function App() {
+const App = () => {
+  const { isLogin } = useRecoilValue(loginState);
+  if (!isLogin) {
+    return <Login />;
+  }
+
   return (
-    <React.Fragment key="App">
-      <header className="App-header">
-        <nav />
-      </header>
-      <main />
-      <footer />
-    </React.Fragment>
+    <div>
+      <div>asdasdasd</div>
+      <Main />
+      <div />
+    </div>
   );
-}
+};
 
 export default App;
