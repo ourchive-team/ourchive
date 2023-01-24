@@ -7,7 +7,7 @@ import { media } from '../../styles/mediaQuery';
 const LoginPageContainer = styled.div`
   width: 100%;
   height: 100%;
-  min-height: 667px;
+  min-height: 600px;
 
   display: flex;
   flex-direction: column;
@@ -21,6 +21,8 @@ const ImageContainer = styled.div`
   align-content: center;
 
   width: 100%;
+
+  border-radius: 4px;
 
   background-color: #f2f2f2;
 
@@ -47,7 +49,7 @@ const Title = styled.span`
   font-weight: 400;
   font-size: 56px;
   text-align: center;
-  padding-top: 10px;
+  padding-top: 16px;
 
   color: #000000;
 `;
