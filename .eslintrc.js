@@ -19,5 +19,7 @@ module.exports = {
     'arrow-body-style': 'off',
     'arrow-parens': 'off',
     'object-curly-newline': 'off',
+    'spaced-comment': 'off',
+    'operator-linebreak': 'off',
   },
 };

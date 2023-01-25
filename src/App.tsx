@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import { RecoilRoot, useRecoilValue } from 'recoil';
-import Main from './Pages/Main';
+import { useRecoilValue } from 'recoil';
 import { Login } from './Pages/Login';
 import { loginState } from './states/loginState';
+import ImageDetail from './Pages/ImageDetail';
 
 const App = () => {
   const { isLogin } = useRecoilValue(loginState);
@@ -11,7 +11,7 @@ const App = () => {
     return <Login />;
   }
 
-  return <Main />;
+  return <ImageDetail />;
 };
 
 export default App;
