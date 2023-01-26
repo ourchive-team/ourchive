@@ -8,8 +8,16 @@ import GridImageContainer from '../../Components/GridImageContainer';
 
 const Main = () => {
   const itemList = [
-    { title: 'NFT', price: '1000$', info: 'Lorem Ipsum', resolution: '1280x720 ~ 2560x1440', creator: 'SH.Kim' },
     {
+      id: '0x',
+      title: 'NFT',
+      price: '1000$',
+      info: 'Lorem Ipsum',
+      resolution: '1280x720 ~ 2560x1440',
+      creator: 'SH.Kim',
+    },
+    {
+      id: '0x1',
       title: 'NFT-Shard-01',
       price: '1000$',
       info: 'Lorem Ipsum',
@@ -17,6 +25,7 @@ const Main = () => {
       creator: 'SH.Kim',
     },
     {
+      id: '0x2',
       title: 'NFT-Shard-02',
       price: '1000$',
       info: 'Lorem Ipsum',
@@ -30,7 +39,7 @@ const Main = () => {
         <SearchHeader />
       </HeaderContainer>
       <SelectCategoryBar data={['Recommend', 'Category', 'Category', 'Category']} />
-      <GridImageContainer itemList={itemList} />
+      <GridImageContainer itemList={itemList} routeUrl="/images" />
     </div>
   );
 };

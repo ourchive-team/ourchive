@@ -21,5 +21,7 @@ module.exports = {
     'object-curly-newline': 'off',
     'spaced-comment': 'off',
     'operator-linebreak': 'off',
+    'react/jsx-no-useless-fragment': 'off',
+    '@typescript-eslint/quotes': 'off',
   },
 };

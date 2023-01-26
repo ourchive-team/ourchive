@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { useLocation } from 'react-router-dom';
+
 import { ImageContainer, LargeButton } from '../../styles';
 import GridImageContainer from '../../Components/GridImageContainer';
 
@@ -39,9 +41,10 @@ const ImageDetail = () => {
   const imageDataMap = Object.values(imageData);
   const imageDataMapWithoutProfileData = imageDataMap.slice(2, imageDataMap.length);
 
-  const recommendedItemList = ['img', 'img'];
-  const similarImageItemList = ['img', 'img'];
+  const recommendedItemList = [{ id: '0x123' }, { id: '0x124' }];
+  const similarImageItemList = [{ id: '0x125' }, { id: '0x126' }];
 
+  const location = useLocation();
   return (
     <div
       style={{
@@ -80,12 +83,12 @@ const ImageDetail = () => {
       <>
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '28px' }}>
           <RenderSeeMoreDetailsLayout itemList={['아티스트의 다른 작품', '더보기 >']} />
-          <GridImageContainer itemList={recommendedItemList} />
+          <GridImageContainer itemList={recommendedItemList} routeUrl={location.pathname} />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '56px' }}>
           <RenderSeeMoreDetailsLayout itemList={['유사한 이미지', '더보기 >']} />
-          <GridImageContainer itemList={similarImageItemList} />
+          <GridImageContainer itemList={similarImageItemList} routeUrl={location.pathname} />
         </div>
       </>
 
