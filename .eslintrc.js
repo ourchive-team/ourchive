@@ -14,7 +14,6 @@ module.exports = {
   rules: {
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'import/prefer-default-export': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
     'no-unused-vars': 'off',
     'arrow-body-style': 'off',
     'arrow-parens': 'off',
@@ -22,6 +21,8 @@ module.exports = {
     'spaced-comment': 'off',
     'operator-linebreak': 'off',
     'react/jsx-no-useless-fragment': 'off',
+    'react/require-default-props': 'off',
     '@typescript-eslint/quotes': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
   },
 };

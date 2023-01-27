@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+
+import { useNavigate } from 'react-router-dom';
 
 import SelectCategoryBar from '../../Components/SelectCategoryBar';
 import HeaderContainer from '../../Components/Header/HeaderContainer';
@@ -33,8 +34,19 @@ const Main = () => {
       creator: 'SH.Kim',
     },
   ];
+  const nav = useNavigate();
+
   return (
     <div style={{ width: '100%', height: '100%' }}>
+      <button
+        type="button"
+        onClick={() => {
+          nav('/upload');
+        }}
+      >
+        go to upload
+      </button>
+
       <HeaderContainer>
         <SearchHeader />
       </HeaderContainer>

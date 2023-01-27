@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import { LargeButton } from '../../styles';
 import { media } from '../../styles/mediaQuery';
 import { loginState } from '../../states/loginState';
+import { walletConnect } from '../../func';
 
 const LoginPageContainer = styled.div`
   width: 100%;
@@ -53,23 +54,26 @@ const Title = styled.span`
   text-align: center;
   padding-top: 16px;
 
-  color: #000000;
+  color: white;
 `;
 
 // need font and image
 
 export const Login = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+
   return (
     <LoginPageContainer>
       <TitleContainer>
         <ImageContainer />
         <Title>OurChive</Title>
       </TitleContainer>
+
       <LargeButton
         style={{ marginTop: 'auto' }}
         onClick={() => {
           setIsLogin({ isLogin: true });
+          walletConnect();
         }}
       >
         Wallet Connect
