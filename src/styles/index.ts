@@ -15,6 +15,7 @@ export const LargeButton = styled.button`
 
   /* Black */
   background: #1a1a1a;
+  border: none;
   border-radius: 4px;
 `;
 

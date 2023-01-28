@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import SelectCategoryBar from '../../Components/SelectCategoryBar';
 import HeaderContainer from '../../Components/Header/HeaderContainer';
@@ -8,6 +7,7 @@ import SearchHeader from '../../Components/Header/SearchHeader';
 import GridImageContainer from '../../Components/GridImageContainer';
 
 const Main = () => {
+  const nav = useNavigate();
   const itemList = [
     {
       id: '0x',
@@ -34,24 +34,31 @@ const Main = () => {
       creator: 'SH.Kim',
     },
   ];
-  const nav = useNavigate();
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <button
-        type="button"
-        onClick={() => {
-          nav('/upload');
-        }}
-      >
-        go to upload
-      </button>
-
+    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
       <HeaderContainer>
         <SearchHeader />
       </HeaderContainer>
       <SelectCategoryBar data={['Recommend', 'Category', 'Category', 'Category']} />
       <GridImageContainer itemList={itemList} routeUrl="/images" />
+      <div
+        style={{
+          display: 'flex',
+          marginTop: 'auto',
+          padding: '16px',
+          justifyContent: 'space-between',
+          backgroundColor: 'yellow',
+          color: 'black',
+          fontSize: '24px',
+        }}
+      >
+        <span style={{ marginRight: '10px' }}>home</span>
+        <Link to="/uploadNFT" style={{ marginRight: '10px' }}>
+          upload
+        </Link>
+        <Link to="/profile">profile</Link>
+      </div>
     </div>
   );
 };

@@ -13,6 +13,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
+    'max-len': 'off',
     'import/prefer-default-export': 'off',
     'no-unused-vars': 'off',
     'arrow-body-style': 'off',

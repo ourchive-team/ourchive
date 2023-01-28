@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ImageContainer, LargeButton } from '../../styles';
 import GridImageContainer from '../../Components/GridImageContainer';
@@ -31,6 +31,8 @@ const Card = styled.div`
 `;
 
 const ImageDetail = () => {
+  const nav = useNavigate();
+
   const imageData = {
     icon: 'Icon',
     creator: 'SH.Kim',
@@ -83,23 +85,26 @@ const ImageDetail = () => {
       <>
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '28px' }}>
           <RenderSeeMoreDetailsLayout itemList={['아티스트의 다른 작품', '더보기 >']} />
-          <GridImageContainer itemList={recommendedItemList} routeUrl={location.pathname} />
+          <GridImageContainer itemList={recommendedItemList} routeUrl={location.pathname} hideDetails />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '56px' }}>
           <RenderSeeMoreDetailsLayout itemList={['유사한 이미지', '더보기 >']} />
-          <GridImageContainer itemList={similarImageItemList} routeUrl={location.pathname} />
+          <GridImageContainer itemList={similarImageItemList} routeUrl={location.pathname} hideDetails />
         </div>
       </>
 
       {/*footer*/}
       <div style={{ display: 'flex', marginTop: 'auto' }}>
+        {/* nav = /reportNFT -> /reportNFT:id */}
         <LargeButton
+          onClick={() => nav('reportNFT')}
           style={{ width: '48px', background: 'white', border: '1px solid black', color: 'black', marginRight: '4px' }}
         >
           신고
         </LargeButton>
-        <LargeButton>Buy This Image</LargeButton>
+        {/* nav = /buyNFT -> /buyNFT:id */}
+        <LargeButton onClick={() => nav('buyNFT')}>Buy This NFT</LargeButton>
       </div>
     </div>
   );

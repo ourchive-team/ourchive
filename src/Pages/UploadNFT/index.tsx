@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { LargeButton } from '../../styles';
+import { uploadNFT } from '../../func';
 
 const StyledBox = styled.div`
   background-color: transparent;
@@ -32,6 +35,10 @@ const Input = styled.input`
   border-radius: 8px;
   min-height: 48px;
   font-size: 14px;
+
+  ::placeholder {
+    color: #4e4e4b;
+  }
 `;
 
 interface IRenderTextArea {
@@ -49,32 +56,41 @@ const RenderTextArea = ({ title, textAreaStyle }: IRenderTextArea) => {
 };
 
 const Upload = () => {
+  const { handleSubmit } = useForm();
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '16px' }}>
       <StyledBox
         style={{
-          width: '100px',
-          height: '100px',
+          width: '160px',
+          aspectRatio: '1/1',
           marginBottom: '40px',
         }}
-        // onClick with Upload Images
+        // onClick with UploadNFT Images
       >
         +
       </StyledBox>
-
-      <form style={{ height: '100%' }}>
+      <form style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <RenderTextArea title="NFT Title" />
-        <RenderTextArea title="Description" textAreaStyle={{ height: '72px' }} />
+        <RenderTextArea title="Description" textAreaStyle={{ height: '140px' }} />
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
           <span style={{ fontWeight: 700, fontSize: '16px', marginBottom: '4px' }}>Price</span>
-          <Input placeholder="write price..." />
+          <Input type="text" placeholder="write price..." />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
           <span style={{ fontWeight: 700, fontSize: '16px', marginBottom: '4px' }}>Product Quantity</span>
-          <Input placeholder="write product quantity..." />
+          <Input type="text" placeholder="write product quantity..." />
         </div>
+
+        <LargeButton
+          type="submit"
+          style={{ textTransform: 'capitalize', marginTop: 'auto' }}
+          onClick={() => uploadNFT()}
+        >
+          Upload
+        </LargeButton>
       </form>
     </div>
   );
