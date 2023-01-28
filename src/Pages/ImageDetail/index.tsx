@@ -85,12 +85,12 @@ const ImageDetail = () => {
       <>
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '28px' }}>
           <RenderSeeMoreDetailsLayout itemList={['아티스트의 다른 작품', '더보기 >']} />
-          <GridImageContainer itemList={recommendedItemList} routeUrl={location.pathname} hideDetails />
+          <GridImageContainer itemList={recommendedItemList} routeUrl="/images" hideDetails />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '56px' }}>
           <RenderSeeMoreDetailsLayout itemList={['유사한 이미지', '더보기 >']} />
-          <GridImageContainer itemList={similarImageItemList} routeUrl={location.pathname} hideDetails />
+          <GridImageContainer itemList={similarImageItemList} routeUrl="/images" hideDetails />
         </div>
       </>
 
