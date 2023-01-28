@@ -30,3 +30,17 @@ export const ImageContainer = styled.div`
 
   background-color: #f2f2f2;
 `;
+
+export const StyledInput = styled.input`
+  background-color: transparent;
+  color: gray;
+  border: 1px solid #4e4e4b;
+  padding: 16px;
+  border-radius: 8px;
+  min-height: 48px;
+  font-size: 14px;
+
+  ::placeholder {
+    color: #4e4e4b;
+  }
+`;

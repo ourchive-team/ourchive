@@ -46,7 +46,6 @@ const ImageDetail = () => {
   const recommendedItemList = [{ id: '0x123' }, { id: '0x124' }];
   const similarImageItemList = [{ id: '0x125' }, { id: '0x126' }];
 
-  const location = useLocation();
   return (
     <div
       style={{

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { LargeButton } from '../../styles';
+import { LargeButton, StyledInput } from '../../styles';
 import { uploadNFT } from '../../func';
 
 const StyledBox = styled.div`
@@ -17,20 +17,6 @@ const TextArea = styled.textarea`
   background-color: transparent;
   color: gray;
   border-color: #4e4e4b;
-  padding: 16px;
-  border-radius: 8px;
-  min-height: 48px;
-  font-size: 14px;
-
-  ::placeholder {
-    color: #4e4e4b;
-  }
-`;
-
-const Input = styled.input`
-  background-color: transparent;
-  color: gray;
-  border: 1px solid #4e4e4b;
   padding: 16px;
   border-radius: 8px;
   min-height: 48px;
@@ -76,12 +62,12 @@ const Upload = () => {
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
           <span style={{ fontWeight: 700, fontSize: '16px', marginBottom: '4px' }}>Price</span>
-          <Input type="text" placeholder="write price..." />
+          <StyledInput type="text" placeholder="write price..." />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
           <span style={{ fontWeight: 700, fontSize: '16px', marginBottom: '4px' }}>Product Quantity</span>
-          <Input type="text" placeholder="write product quantity..." />
+          <StyledInput type="text" placeholder="write product quantity..." />
         </div>
 
         <LargeButton
