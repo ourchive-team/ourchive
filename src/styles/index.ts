@@ -20,6 +20,7 @@ export const LargeButton = styled.button`
 
   text-transform: uppercase;
   color: white;
+  cursor: pointer;
 
   /* Black */
   background: #1a1a1a;

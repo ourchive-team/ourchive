@@ -78,6 +78,8 @@ const Profile = () => {
         </YellowCardBox>
       </div>
 
+      <span style={{ fontSize: '16px', marginBottom: '10px' }}>Click Upload/Purchase/Report Image!</span>
+
       <span>Upload List</span>
       <div style={{ display: 'flex', width: '100%', overflow: 'auto', padding: '16px' }}>
         <RenderImageList

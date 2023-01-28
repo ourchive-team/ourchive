@@ -45,6 +45,8 @@ const Main = () => {
       <img style={{ marginLeft: 'auto', marginBottom: '16px' }} src={searchIcon} alt="search" />
       <span style={{ fontSize: '20px', marginBottom: '10px' }}>Projects you`ll love</span>
       <SelectCategoryBar data={['Recommended', 'Lifestyle', 'Future', 'Normal']} />
+      <span style={{ fontSize: '16px', marginTop: '10px' }}>Click Image!</span>
+
       <GridImageContainer itemList={itemList} routeUrl="/images" />
       <BottomNavigation />
     </div>
