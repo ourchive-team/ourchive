@@ -1,6 +1,8 @@
 export const walletConnect = () => {};
 
-//images
+export const getNFT = () => {};
+export const getNFTList = () => {};
+
 export const downloadNFT = () => {};
 export const uploadNFT = () => {};
 export const buyNFT = () => {};

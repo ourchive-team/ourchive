@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import SelectCategoryBar from '../../Components/SelectCategoryBar';
 import HeaderContainer from '../../Components/Header/HeaderContainer';
 import SearchHeader from '../../Components/Header/SearchHeader';
 import GridImageContainer from '../../Components/GridImageContainer';
+import { getNFT, getNFTList } from '../../func';
 
 const Main = () => {
   const nav = useNavigate();
@@ -34,6 +35,10 @@ const Main = () => {
       creator: 'SH.Kim',
     },
   ];
+
+  useEffect(() => {
+    getNFTList();
+  }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
