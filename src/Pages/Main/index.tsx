@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import searchIcon from '../../icons/search-icon.svg';
 
 import SelectCategoryBar from '../../Components/SelectCategoryBar';
-import HeaderContainer from '../../Components/Header/HeaderContainer';
-import SearchHeader from '../../Components/Header/SearchHeader';
 import GridImageContainer from '../../Components/GridImageContainer';
 import { getNFT, getNFTList } from '../../func';
+import BottomNavigation from '../../Components/BottomNavigation';
 
 const Main = () => {
   const nav = useNavigate();
@@ -41,29 +41,12 @@ const Main = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
-      <HeaderContainer>
-        <SearchHeader />
-      </HeaderContainer>
-      <SelectCategoryBar data={['Recommend', 'Category', 'Category', 'Category']} />
+    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', padding: '16px' }}>
+      <img style={{ marginLeft: 'auto', marginBottom: '16px' }} src={searchIcon} alt="search" />
+      <span style={{ fontSize: '20px', marginBottom: '10px' }}>Projects you`ll love</span>
+      <SelectCategoryBar data={['Recommended', 'Lifestyle', 'Future', 'Normal']} />
       <GridImageContainer itemList={itemList} routeUrl="/images" />
-      <div
-        style={{
-          display: 'flex',
-          marginTop: 'auto',
-          padding: '16px',
-          justifyContent: 'space-between',
-          backgroundColor: 'yellow',
-          color: 'black',
-          fontSize: '24px',
-        }}
-      >
-        <span style={{ marginRight: '10px' }}>home</span>
-        <Link to="/uploadNFT" style={{ marginRight: '10px' }}>
-          upload
-        </Link>
-        <Link to="/profile">profile</Link>
-      </div>
+      <BottomNavigation />
     </div>
   );
 };

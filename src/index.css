@@ -5,7 +5,7 @@
   font-style: normal;
   font-weight: 400;
   src: local("Unbounded"),
-    url("/public/fonts/Unbounded-Regular.woff2") format("woff2");
+    url("/src/fonts/Unbounded-Regular.woff2") format("woff2");
 }
 
 @font-face {
@@ -13,7 +13,7 @@
   font-style: normal;
   font-weight: 700;
   src: local("Unbounded"),
-  url("/public/fonts/Unbounded-Bold.woff2") format("woff2");
+  url("/src/fonts/Unbounded-Bold.woff2") format("woff2");
 }
 
 *{

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { LargeButton } from '../../styles';
+import { baseColor, LargeButton } from '../../styles';
 import { media } from '../../styles/mediaQuery';
 import { loginState } from '../../states/loginState';
 import { walletConnect } from '../../func';
@@ -63,21 +63,36 @@ export const Login = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
 
   return (
-    <LoginPageContainer>
+    <LoginPageContainer style={{ backgroundColor: baseColor.yellow }}>
       <TitleContainer>
         <ImageContainer />
-        <Title>OurChive</Title>
+        <Title style={{ fontFamily: 'unbounded', color: 'black' }}>OurChive</Title>
       </TitleContainer>
 
-      <LargeButton
-        style={{ marginTop: 'auto' }}
-        onClick={() => {
-          setIsLogin({ isLogin: true });
-          walletConnect();
-        }}
-      >
-        Wallet Connect
-      </LargeButton>
+      <div style={{ display: 'flex', flexDirection: 'column', marginTop: 'auto' }}>
+        <LargeButton
+          style={{
+            backgroundColor: 'white',
+            color: 'black',
+            border: '1px solid black',
+            marginBottom: '12px',
+            fontSize: '16px',
+          }}
+          onClick={() => {}}
+        >
+          Sign in
+        </LargeButton>
+
+        <LargeButton
+          style={{ fontSize: '16px' }}
+          onClick={() => {
+            setIsLogin({ isLogin: true });
+            walletConnect();
+          }}
+        >
+          Wallet Connect
+        </LargeButton>
+      </div>
     </LoginPageContainer>
   );
 };
