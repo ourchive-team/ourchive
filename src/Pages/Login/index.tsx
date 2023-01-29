@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton } from '../../styles';
-import { media } from '../../styles/mediaQuery';
 import { loginState } from '../../states/loginState';
 import { walletConnect } from '../../func';
+import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
+
+import our from '../../images/our.svg';
+import chive from '../../images/chive.svg';
 
 const LoginPageContainer = styled.div`
   width: 100%;
@@ -14,86 +18,37 @@ const LoginPageContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-
-  padding: 40px 24px;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-content: center;
-
-  width: 100%;
-
-  border-radius: 4px;
-
-  background-color: #f2f2f2;
-
-  ${media.mobile`
-      min-height: 158px;
-      height: 22.66vh;
-  `}
-`;
-
-const TitleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  ${media.mobile`
-    margin-top: 29.18%;
-    margin-bottom: 26.23%;
-  `}
-`;
-
-const Title = styled.span`
-  font-family: 'Balsamiq Sans';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 56px;
-  text-align: center;
-  padding-top: 16px;
-
-  color: white;
 `;
 
 // need font and image
 
 export const Login = () => {
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-
+  const nav = useNavigate();
   return (
-    <LoginPageContainer style={{ backgroundColor: baseColor.yellow, height: '100%', overflow: 'auto' }}>
-      <TitleContainer>
-        <ImageContainer />
-        <Title style={{ fontFamily: 'unbounded', color: 'black', fontSize: '48px' }}>OurChive</Title>
-        <Title style={{ fontFamily: 'unbounded', color: 'black', fontSize: '48px' }}>OurChieve</Title>
-      </TitleContainer>
-
-      <div style={{ display: 'flex', flexDirection: 'column', marginTop: 'auto' }}>
-        <LargeButton
-          style={{
-            backgroundColor: 'white',
-            color: 'black',
-            border: '1px solid black',
-            marginBottom: '12px',
-            fontSize: '16px',
-          }}
-          onClick={() => {}}
-        >
-          Sign in
-        </LargeButton>
-
+    <LoginPageContainer style={{ backgroundColor: baseColor.yellow, height: '100%' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginTop: '35vh',
+          marginBottom: 'auto',
+        }}
+      >
+        <img src={our} alt="our" style={{ width: '280px', marginBottom: '20px' }} />
+        <img src={chive} alt="chive" style={{ width: '280px' }} />
+      </div>
+      <YellowBottomNavigator>
         <LargeButton
           style={{ fontSize: '16px' }}
           onClick={() => {
-            setIsLogin({ isLogin: true });
             walletConnect();
+            nav('/nickname');
           }}
         >
-          Wallet Connect
+          Connect Wallet
         </LargeButton>
-      </div>
+      </YellowBottomNavigator>
     </LoginPageContainer>
   );
 };

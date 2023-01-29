@@ -24,6 +24,9 @@ module.exports = {
     'operator-linebreak': 'off',
     'react/jsx-no-useless-fragment': 'off',
     'react/require-default-props': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/no-noninteractive-element-interactions': 'off',
+
     '@typescript-eslint/quotes': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
   },

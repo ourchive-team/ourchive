@@ -1,34 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ImageContainer, LargeButton } from '../../styles';
-import GridImageContainer from '../../Components/GridImageContainer';
-
-interface IRenderSeeMoreDetailsLayout {
-  itemList: string[];
-}
-
-const RenderSeeMoreDetailsLayout = ({ itemList }: IRenderSeeMoreDetailsLayout) => {
-  return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-      {itemList.map(el => (
-        <span>{el}</span>
-      ))}
-    </div>
-  );
-};
-
-const Card = styled.div`
-  width: 100%;
-
-  border: 1px solid black;
-  border-radius: 8px;
-
-  margin-bottom: 10px;
-  padding: 16px;
-`;
+import flagIcon from '../../icons/flag.svg';
+import profileIcon from '../../images/profile-icon.png';
+import { baseColor, ImageContainer, LargeButton, PaddingBox } from '../../styles';
+import FeedStatus from '../../Components/FeedStatus';
+import Resolution from '../../Components/Resolution';
+import RenderImageList from '../../Components/RenderImageList';
+import TopNavigator from '../../Components/TopNavigator';
+import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 
 const ImageDetail = () => {
   const nav = useNavigate();
@@ -36,15 +17,54 @@ const ImageDetail = () => {
   const imageData = {
     icon: 'Icon',
     creator: 'SH.Kim',
-    title: 'Title',
-    desc: 'Description',
+    title: 'A Colorful artwork',
+    desc: 'A photo collection of my fashion philosophy. Follow me while Paris Fashion Week 🧤',
   };
 
   const imageDataMap = Object.values(imageData);
   const imageDataMapWithoutProfileData = imageDataMap.slice(2, imageDataMap.length);
 
-  const recommendedItemList = [{ id: '0x123' }, { id: '0x124' }];
-  const similarImageItemList = [{ id: '0x125' }, { id: '0x126' }];
+  const itemList = [
+    {
+      id: '0x',
+    },
+    {
+      id: '0x1',
+    },
+    {
+      id: '0x2',
+    },
+    {
+      id: '0x3',
+    },
+    {
+      id: '0x4',
+    },
+  ];
+
+  const resolutionList = [
+    {
+      size: 'LARGE',
+      resolution: '4000x2500',
+      dpi: '300',
+      format: 'jpg',
+      value: 1,
+    },
+    {
+      size: 'MEDIUM',
+      resolution: '4000x2500',
+      dpi: '300',
+      format: 'jpg',
+      value: 1,
+    },
+    {
+      size: 'SMALL',
+      resolution: '4000x2500',
+      dpi: '300',
+      format: 'jpg',
+      value: 1,
+    },
+  ];
 
   return (
     <div
@@ -53,58 +73,90 @@ const ImageDetail = () => {
         flexDirection: 'column',
         width: '100%',
         height: '100%',
-        padding: '16px 24px',
-        overflow: 'auto',
+        overflowX: 'hidden',
       }}
     >
-      <div>Header</div>
-      <ImageContainer style={{ minHeight: '100px', height: '100px' }} />
-      <div style={{ margin: '12px 0px' }}>Feed Status Bar</div>
+      <TopNavigator>
+        <span>Purchase</span>
+      </TopNavigator>
 
+      <PaddingBox>
+        <ImageContainer style={{ minHeight: '300px', height: '300px' }} />
+      </PaddingBox>
+
+      <PaddingBox style={{ padding: '0px 16px' }}>
+        <span style={{ fontSize: '24px', fontWeight: 700, marginTop: '16px' }}>{imageData.title}</span>
+        <span style={{ fontSize: '13px', opacity: 0.7, margin: '8px 0px' }}>{imageData.desc}</span>
+        <div style={{ display: 'flex', marginBottom: '16px', alignItems: 'center' }}>
+          <img srcSet={profileIcon} alt="profile icon" style={{ width: '24px', marginRight: '8px' }} />
+          <span>Created by &nbsp;</span>
+          <span style={{ color: baseColor.yellow }}>{`${imageData.creator}`}</span>
+        </div>
+      </PaddingBox>
+
+      <PaddingBox>
+        <FeedStatus />
+      </PaddingBox>
+
+      <PaddingBox style={{ padding: '0px 16px', marginBottom: '-16px' }}>
+        <span style={{ fontSize: '20px', fontWeight: 700, marginTop: '24px' }}>Detail</span>
+      </PaddingBox>
+      <Resolution list={resolutionList} />
       {/* Description Card Box */}
-      <div style={{ marginBottom: '28px' }}>
-        <Card>
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex' }}>
-              <div style={{ marginRight: '6px' }}>{imageData.icon}</div>
-              <span>{imageData.creator}</span>
-            </div>
-            {imageDataMapWithoutProfileData.map(el => (
-              <span>{el}</span>
-            ))}
-          </div>
-        </Card>
-        <Card>
-          <RenderSeeMoreDetailsLayout itemList={['사진 형식', '더보기 >']} />
-          <RenderSeeMoreDetailsLayout itemList={['수수료', '더보기 >']} />
-        </Card>
-      </div>
 
       {/*Recommend*/}
-      <>
-        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '28px' }}>
-          <RenderSeeMoreDetailsLayout itemList={['아티스트의 다른 작품', '더보기 >']} />
-          <GridImageContainer itemList={recommendedItemList} routeUrl="/images" hideDetails />
+      <PaddingBox>
+        <span style={{ fontWeight: 700, fontSize: '14px' }}>Other works by this artist</span>
+      </PaddingBox>
+      <div style={{ width: '100%', height: '100%', marginBottom: '32px' }}>
+        <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px' }}>
+          <RenderImageList
+            itemList={itemList}
+            routeUrl="/images"
+            skeletonWidth={140}
+            skeletonHeight={140}
+            style={{ wrapper: { padding: '6px' } }}
+            hideDetails
+          />
         </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '56px' }}>
-          <RenderSeeMoreDetailsLayout itemList={['유사한 이미지', '더보기 >']} />
-          <GridImageContainer itemList={similarImageItemList} routeUrl="/images" hideDetails />
-        </div>
-      </>
-
-      {/*footer*/}
-      <div style={{ display: 'flex', marginTop: 'auto' }}>
-        {/* nav = /reportNFT -> /reportNFT:id */}
-        <LargeButton
-          onClick={() => nav('reportNFT')}
-          style={{ width: '48px', background: 'white', border: '1px solid black', color: 'black', marginRight: '4px' }}
-        >
-          신고
-        </LargeButton>
-        {/* nav = /buyNFT -> /buyNFT:id */}
-        <LargeButton onClick={() => nav('buyNFT')}>Buy This NFT</LargeButton>
       </div>
+
+      <PaddingBox>
+        <span style={{ fontWeight: 700, fontSize: '14px' }}>Similar works</span>
+      </PaddingBox>
+      <div style={{ width: '100%', height: '100%', marginBottom: '32px' }}>
+        <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px' }}>
+          <RenderImageList
+            itemList={itemList}
+            routeUrl="/images"
+            skeletonWidth={140}
+            skeletonHeight={140}
+            style={{ wrapper: { padding: '6px' } }}
+            hideDetails
+          />
+        </div>
+      </div>
+
+      {/*/!* nav = /reportNFT -> /reportNFT:id *!/*/}
+
+      {/* nav = /buyNFT -> /buyNFT:id */}
+      <YellowBottomNavigator>
+        <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+          <LargeButton
+            onClick={() => nav('report')}
+            style={{
+              width: '48px',
+              background: 'white',
+              border: '1px solid black',
+              color: 'black',
+              marginRight: '4px',
+            }}
+          >
+            <img src={flagIcon} alt="report" style={{ width: '15px' }} />
+          </LargeButton>
+          <LargeButton onClick={() => nav('purchase')}>Buy this NFT</LargeButton>
+        </div>
+      </YellowBottomNavigator>
     </div>
   );
 };

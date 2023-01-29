@@ -36,7 +36,7 @@ const BottomNavigation = () => {
         alignItems: 'center',
       }}
     >
-      <NavBox to="/" style={{ color: baseColor.yellow }}>
+      <NavBox to="/main" style={{ color: baseColor.yellow }}>
         <StyledImg src={homeIconActive} alt="home" style={{ width: '20px' }} />
         <span>Home</span>
       </NavBox>
