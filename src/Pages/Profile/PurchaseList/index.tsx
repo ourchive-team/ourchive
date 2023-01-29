@@ -1,7 +1,7 @@
 import React from 'react';
 
 import RenderImageList from '../../../Components/RenderImageList';
-import { buyNFT, downloadNFT } from '../../../func';
+import { buyImage, downloadImage } from '../../../func';
 
 const PurchaseList = () => {
   const requiredData = [
@@ -51,7 +51,7 @@ const PurchaseList = () => {
                   </div>
                   <button
                     type="button"
-                    onClick={() => downloadNFT()}
+                    onClick={() => downloadImage()}
                     style={{
                       marginLeft: 'auto',
                       marginTop: 'auto',
@@ -83,7 +83,7 @@ const PurchaseList = () => {
                   </div>
                   <button
                     type="button"
-                    onClick={() => buyNFT()}
+                    onClick={() => buyImage()}
                     style={{
                       color: 'white',
                       marginLeft: 'auto',

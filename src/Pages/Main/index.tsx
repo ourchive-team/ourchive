@@ -4,7 +4,7 @@ import searchIcon from '../../icons/search-icon.svg';
 
 import SelectCategoryBar from '../../Components/SelectCategoryBar';
 import GridImageContainer from '../../Components/GridImageContainer';
-import { getNFT, getNFTList } from '../../func';
+import { getImageInfo, getImageInfoList } from '../../func';
 import BottomNavigation from '../../Components/BottomNavigation';
 
 const Main = () => {
@@ -37,11 +37,20 @@ const Main = () => {
   ];
 
   useEffect(() => {
-    getNFTList();
+    getImageInfoList();
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', padding: '16px' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        padding: '16px',
+        overflow: 'auto',
+      }}
+    >
       <img style={{ marginLeft: 'auto', marginBottom: '16px' }} src={searchIcon} alt="search" />
       <span style={{ fontSize: '20px', marginBottom: '10px' }}>Projects you`ll love</span>
       <SelectCategoryBar data={['Recommended', 'Lifestyle', 'Future', 'Normal']} />

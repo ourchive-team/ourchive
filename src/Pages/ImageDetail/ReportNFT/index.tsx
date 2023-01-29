@@ -1,10 +1,10 @@
 import React from 'react';
 import { LargeButton } from '../../../styles';
-import { reportNFT } from '../../../func';
+import { reportImage } from '../../../func';
 
 const ReportNFT = () => {
   //request for proof
-  return <LargeButton onClick={() => reportNFT()}>Request for Prove</LargeButton>;
+  return <LargeButton onClick={() => reportImage()}>Request for Prove</LargeButton>;
 };
 
 export default ReportNFT;

@@ -63,10 +63,11 @@ export const Login = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
 
   return (
-    <LoginPageContainer style={{ backgroundColor: baseColor.yellow }}>
+    <LoginPageContainer style={{ backgroundColor: baseColor.yellow, height: '100%', overflow: 'auto' }}>
       <TitleContainer>
         <ImageContainer />
-        <Title style={{ fontFamily: 'unbounded', color: 'black' }}>OurChive</Title>
+        <Title style={{ fontFamily: 'unbounded', color: 'black', fontSize: '48px' }}>OurChive</Title>
+        <Title style={{ fontFamily: 'unbounded', color: 'black', fontSize: '48px' }}>OurChieve</Title>
       </TitleContainer>
 
       <div style={{ display: 'flex', flexDirection: 'column', marginTop: 'auto' }}>

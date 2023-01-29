@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { LargeButton, StyledInput } from '../../styles';
-import { uploadNFT } from '../../func';
+import { uploadImage } from '../../func';
 
 const StyledBox = styled.div`
   background-color: transparent;
@@ -73,7 +73,7 @@ const Upload = () => {
         <LargeButton
           type="submit"
           style={{ textTransform: 'capitalize', marginTop: 'auto' }}
-          onClick={() => uploadNFT()}
+          onClick={() => uploadImage()}
         >
           Upload
         </LargeButton>

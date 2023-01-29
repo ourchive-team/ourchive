@@ -34,7 +34,7 @@ interface ISelectCategoryBarData {
 
 const SelectCategoryBar = ({ data }: ISelectCategoryBarData) => {
   return (
-    <div style={{ display: 'flex', width: '100%', overflow: 'auto', padding: '10px 20px' }}>
+    <div style={{ display: 'flex', width: '100%', height: '52px', overflowX: 'scroll', padding: '10px 20px' }}>
       {data.map(el => {
         return <CategoryBtn>{el}</CategoryBtn>;
       })}
