@@ -1,6 +1,7 @@
 module ourchive::user_manager {
+    use std::vector;
     use std::signer;
-    use std::string::String;
+    use std::string::{Self, String};
 
     use aptos_std::table::{Self, Table};
 
@@ -17,5 +18,20 @@ module ourchive::user_manager {
                 nicknames: table::new() 
             });
         }
+    }
+
+    public fun get_user_nickname(user_address: address): String acquires UserStore {
+        let nicknames = &borrow_global<UserStore>(@ourchive).nicknames;
+        if (table::contains(nicknames, user_address)) {
+            *table::borrow(nicknames, user_address)
+        } else {
+            string::utf8(vector::empty<u8>())
+        }
+    }
+
+    public fun set_user_nickname(user_address: address, user_nickname: String) acquires UserStore {
+        let user_store = borrow_global_mut<UserStore>(@ourchive);
+        assert!(!table::contains(&user_store.nicknames, user_address), 0);
+        table::add(&mut user_store.nicknames, user_address, user_nickname);
     }
 }
