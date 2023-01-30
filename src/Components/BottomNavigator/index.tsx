@@ -23,7 +23,7 @@ const StyledImg = styled.img`
   aspect-ratio: 1/1;
 `;
 
-const BottomNavigation = () => {
+const BottomNavigator = () => {
   // 현재 상태 받아와서 색칠하기
   return (
     <div
@@ -33,23 +33,25 @@ const BottomNavigation = () => {
         height: '60px',
         marginTop: 'auto',
         justifyContent: 'space-around',
+        borderTop: '1px solid #1F1F1F',
         alignItems: 'center',
+        paddingTop: '8px',
       }}
     >
       <NavBox to="/main" style={{ color: baseColor.yellow }}>
         <StyledImg src={homeIconActive} alt="home" style={{ width: '20px' }} />
-        <span>Home</span>
+        <span style={{ fontSize: 10 }}>Home</span>
       </NavBox>
-      <NavBox to="/uploadNFT">
+      <NavBox to="/upload-image">
         <StyledImg src={uploadIcon} alt="upload" style={{ width: '28px' }} />
-        <span>Upload</span>
+        <span style={{ fontSize: 10 }}>Upload</span>
       </NavBox>
       <NavBox to="/profile">
         <StyledImg src={profileIcon} alt="profile" style={{ height: '20px' }} />
-        <span>Profile</span>
+        <span style={{ fontSize: 10 }}>Profile</span>
       </NavBox>
     </div>
   );
 };
 
-export default BottomNavigation;
+export default BottomNavigator;

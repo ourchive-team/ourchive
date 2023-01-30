@@ -6,7 +6,7 @@ import banner from '../../images/banner.png';
 import SelectCategoryBar from '../../Components/SelectCategoryBar';
 import GridImageContainer from '../../Components/GridImageContainer';
 import { getImageInfo, getImageInfoList } from '../../func';
-import BottomNavigation from '../../Components/BottomNavigator';
+import BottomNavigator from '../../Components/BottomNavigator';
 import { PaddingBox } from '../../styles';
 
 const Main = () => {
@@ -64,8 +64,8 @@ const Main = () => {
       </div>
 
       <GridImageContainer itemList={itemList} routeUrl="/images" />
-      <PaddingBox>
-        <BottomNavigation />
+      <PaddingBox style={{ marginTop: 'auto' }}>
+        <BottomNavigator />
       </PaddingBox>
     </div>
   );

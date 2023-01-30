@@ -16,6 +16,7 @@ export const ItemCardDescription = styled.div`
 export interface IRenderImageList {
   itemList: { [x: string]: string | number }[];
   routeUrl: string;
+  routeUrlWithoutId?: boolean;
   hideDetails?: boolean;
   skeletonWidth?: number;
   skeletonHeight?: number;
@@ -25,17 +26,20 @@ export interface IRenderImageList {
 const RenderImageList = ({
   itemList,
   routeUrl,
+  routeUrlWithoutId,
   hideDetails,
   skeletonWidth,
   skeletonHeight,
   style,
 }: IRenderImageList) => {
   const nav = useNavigate();
+
   return (
     <>
       {itemList.map(el => {
+        const navUrl = routeUrlWithoutId ? routeUrl : `${routeUrl}/${el.id}`;
         return (
-          <ItemCardDescription onClick={() => nav(`${routeUrl}/${el.id}`)} style={{ ...style?.wrapper }}>
+          <ItemCardDescription onClick={() => nav(navUrl)} style={{ ...style?.wrapper }}>
             {/*<img src="/public/images/image13.png" alt="test-img" />*/}
             <SkeletonTheme baseColor="#1F1F29" highlightColor="#3F3E3F" borderRadius="8px">
               <Skeleton width={skeletonWidth || 136} height={skeletonHeight || 143} />

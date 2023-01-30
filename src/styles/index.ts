@@ -50,11 +50,12 @@ export const ImageContainer = styled.div`
 export const StyledInput = styled.input`
   background-color: transparent;
   color: gray;
-  border: 1px solid #4e4e4b;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 16px;
   border-radius: 12px;
   min-height: 48px;
   font-size: 14px;
+  color: white;
 
   ::placeholder {
     color: #4e4e4b;

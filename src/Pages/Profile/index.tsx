@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import profileIcon from '../../images/profile-icon.png';
+import navIcon from '../../icons/prev.svg';
+
 import RenderImageList from '../../Components/RenderImageList';
+import { baseColor } from '../../styles';
+import BottomNavigator from '../../Components/BottomNavigator';
+import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 
 const YellowCardBox = styled.div`
   display: flex;
@@ -53,17 +59,21 @@ const Profile = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-
         width: '100%',
         height: '100%',
       }}
     >
-      <div style={{ width: '143px', aspectRatio: '1/1', borderRadius: '50%', border: '1px solid white' }} />
-      <span>H.Shelby</span>
-      <span>I`m daily life artist</span>
-      <span>user ID (0x2b...bsfs)</span>
+      <span style={{ fontSize: '18px', padding: '16px' }}>My Profile</span>
+      <div style={{ padding: '16px' }}>
+        <img alt="profile-icon" src={profileIcon} style={{ width: '120px', height: '120px', borderRadius: '50%' }} />
+      </div>
+      <span style={{ fontSize: '24px', fontWeight: 700 }}>Colorchip</span>
+      <span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>
+        BA in fashion & graphic design tattoo, reiki&thetahealing master✨
+      </span>
+      <span style={{ color: baseColor.purple }}>0x2b...bsfs</span>
 
-      <div style={{ display: 'flex', width: '100%', padding: '16px' }}>
+      <div style={{ display: 'flex', width: '100%', padding: '16px', marginBottom: '28px' }}>
         <YellowCardBox>
           <span>326</span>
           <span>Upload</span>
@@ -78,40 +88,57 @@ const Profile = () => {
         </YellowCardBox>
       </div>
 
-      <span style={{ fontSize: '16px', marginBottom: '10px' }}>Click Upload/Purchase/Report Image!</span>
-
-      <span>Upload List</span>
-      <div style={{ display: 'flex', width: '100%', overflow: 'auto', padding: '16px' }}>
-        <RenderImageList
-          itemList={itemList}
-          routeUrl="uploadList"
-          skeletonWidth={100}
-          skeletonHeight={100}
-          hideDetails
-        />
+      <span style={{ fontSize: '16px', fontWeight: 700, paddingLeft: '16px', marginRight: 'auto' }}>Upload List</span>
+      <div style={{ width: '100%', height: '100%', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px', marginLeft: '-6px' }}>
+          <RenderImageList
+            itemList={itemList}
+            routeUrl="upload-list"
+            routeUrlWithoutId
+            skeletonWidth={100}
+            skeletonHeight={100}
+            style={{ wrapper: { padding: '6px' } }}
+            hideDetails
+          />
+        </div>
       </div>
 
-      <span>Purchase List</span>
-      <div style={{ display: 'flex', width: '100%', overflow: 'auto', padding: '16px' }}>
-        <RenderImageList
-          itemList={itemList}
-          routeUrl="purchaseList"
-          skeletonWidth={100}
-          skeletonHeight={100}
-          hideDetails
-        />
+      <span style={{ fontSize: '16px', fontWeight: 700, paddingLeft: '16px', marginRight: 'auto' }}>Download List</span>
+      <div style={{ width: '100%', height: '100%', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px', marginLeft: '-6px' }}>
+          <RenderImageList
+            itemList={itemList}
+            routeUrl="download-list"
+            routeUrlWithoutId
+            skeletonWidth={100}
+            skeletonHeight={100}
+            style={{ wrapper: { padding: '6px' } }}
+            hideDetails
+          />
+        </div>
       </div>
 
-      <span>Report List</span>
-      <div style={{ display: 'flex', width: '100%', overflow: 'auto', padding: '16px' }}>
-        <RenderImageList
-          itemList={itemList}
-          routeUrl="reportList"
-          skeletonWidth={100}
-          skeletonHeight={100}
-          hideDetails
-        />
+      <div style={{ display: 'flex', padding: '12px 16px', justifyContent: 'space-between', width: '100%' }}>
+        <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Report List</span>
+        <img src={navIcon} alt="go to provement-list" style={{ width: '20px', transform: 'rotate(180deg)' }} />
       </div>
+
+      <div
+        style={{
+          display: 'flex',
+          padding: '12px 16px',
+          justifyContent: 'space-between',
+          width: '100%',
+          marginBottom: '28px',
+        }}
+      >
+        <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Provement List</span>
+        <img src={navIcon} alt="go to provement-list" style={{ width: '20px', transform: 'rotate(180deg)' }} />
+      </div>
+      <BottomNavigator />
+      <YellowBottomNavigator
+        style={{ box: { backgroundColor: 'black', paddingTop: 0 }, bar: { backgroundColor: 'white' } }}
+      />
     </div>
   );
 };

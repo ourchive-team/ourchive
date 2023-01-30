@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 interface IModal {
@@ -34,14 +34,23 @@ const ModalBody = styled.div`
   display: flex;
   width: fit-content;
   height: fit-content;
-  padding: 28px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 16px;
+  padding: 16px;
+  background-color: black;
   position: fixed;
   z-index: 2;
 `;
 
 const Modal = ({ close, children }: IModal) => {
+  useEffect(() => {
+    //@ts-ignore:next-line;
+    document.body.style.overflowY = 'hidden';
+    return () => {
+      //@ts-ignore:next-line;
+      document.body.style.overflowY = 'auto';
+    };
+  });
   return (
     <>
       <ModalWrapper

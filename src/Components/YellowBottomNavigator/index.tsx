@@ -2,10 +2,15 @@ import React from 'react';
 import { baseColor, LargeButton } from '../../styles';
 
 interface IYellowBottomNavigator {
-  children: JSX.Element;
+  children?: JSX.Element;
+  style?: {
+    box?: any;
+    bar?: any;
+  };
   fixed?: boolean;
 }
-const YellowBottomNavigator = ({ children, fixed }: IYellowBottomNavigator) => {
+
+const YellowBottomNavigator = ({ children, style, fixed }: IYellowBottomNavigator) => {
   return (
     <div
       style={{
@@ -16,6 +21,7 @@ const YellowBottomNavigator = ({ children, fixed }: IYellowBottomNavigator) => {
         width: '100%',
         flexDirection: 'column',
         backgroundColor: baseColor.yellow,
+        ...style?.box,
       }}
     >
       {children}
@@ -26,6 +32,7 @@ const YellowBottomNavigator = ({ children, fixed }: IYellowBottomNavigator) => {
           margin: '21px auto 8px',
           backgroundColor: 'black',
           borderRadius: '100px',
+          ...style?.bar,
         }}
       />
     </div>
