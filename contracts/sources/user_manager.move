@@ -29,7 +29,7 @@ module ourchive::user_manager {
         }
     }
 
-    public fun set_user_nickname(user_address: address, user_nickname: String) acquires UserStore {
+    entry public fun set_user_nickname(user_address: address, user_nickname: String) acquires UserStore {
         let user_store = borrow_global_mut<UserStore>(@ourchive);
         assert!(!table::contains(&user_store.nicknames, user_address), 0);
         table::add(&mut user_store.nicknames, user_address, user_nickname);
