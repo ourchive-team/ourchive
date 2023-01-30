@@ -15,7 +15,7 @@ module ourchive::user_manager {
 
         if (!exists<UserStore>(account_addr)) {
             move_to(resource_signer, UserStore { 
-                nicknames: table::new() 
+                nicknames: table::new()
             });
         }
     }
@@ -33,5 +33,10 @@ module ourchive::user_manager {
         let user_store = borrow_global_mut<UserStore>(@ourchive);
         assert!(!table::contains(&user_store.nicknames, user_address), 0);
         table::add(&mut user_store.nicknames, user_address, user_nickname);
+    }
+
+    #[test_only]
+    public fun publish_user_store(account: &signer) {
+        move_to(account, UserStore{ nicknames: table::new() });
     }
 }
