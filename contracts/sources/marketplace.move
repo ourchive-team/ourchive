@@ -1,14 +1,19 @@
 module ourchive::marketplace {
     use std::vector;
     use std::signer;
+    use std::error;
     use std::string::{Self, String};
 
     use aptos_std::table::{Self, Table};
     use aptos_token::token::{Self, TokenDataId, TokenId};
-    use aptos_framework::account::SignerCapability;
+    use aptos_framework::account::{Self, SignerCapability};
     use aptos_framework::coin::{Self, Coin};
     use aptos_framework::aptos_coin::AptosCoin;
     use aptos_framework::resource_account;
+    use ourchive::user_manager;
+
+    const EINSUFFICIENT_BALANCE: u64 = 1;
+    const EINVALID_USER_ADDRESS: u64 = 2;
 
     struct MarketDataStore has key {
         creator_info_table: Table<address, CreatorInfoRecord>,
@@ -98,13 +103,6 @@ module ourchive::marketplace {
         table::add(image_price_table, upload_image, ImagePrice { amount: image_price });
     }
 
-    public fun get_all_images(): vector<TokenDataId> acquires MarketDataStore {
-        let result = vector::empty<TokenDataId>();
-        let market_data_store = borrow_global<MarketDataStore>(@ourchive);
-
-        result
-    }
-
     public fun purchase_image(
         user: &signer,
         creator_address: address,
@@ -112,9 +110,54 @@ module ourchive::marketplace {
         size: String,
         period: u64,
     ) acquires MarketDataStore {
-        let user_purchased_images = &mut borrow_global_mut<MarketDataStore>(@ourchive).user_purchased_images_table;
+        let user_addr = signer::address_of(user);
+        let market_data_store = borrow_global_mut<MarketDataStore>(@ourchive);
+        
+        // Check the user's balance
+        let image_id = get_image_id(creator_address, image_title);
+        let price = table::borrow(&market_data_store.image_price_table, image_id);
+        assert!(coin::balance<AptosCoin>(user_addr) > price.amount, error::invalid_argument(EINSUFFICIENT_BALANCE));
+
+        // Buy and sell the image
+        // TODO: Update the token property
+        let creator_info = table::borrow(&market_data_store.creator_info_table, creator_address);
+        let resource_signer = account::create_signer_with_capability(&creator_info.signer_cap);
+        let image_token_id = token::mint_token(&resource_signer, image_id, 1);
+        token::direct_transfer(&resource_signer, user, image_token_id, 1);
+        coin::transfer<AptosCoin>(user, creator_address, price.amount);
+
+        // Update the user's purchased image list
+        let purchased_images_table = &mut market_data_store.user_purchased_images_table;
+        if (!table::contains(purchased_images_table, user_addr)) {
+            table::add(purchased_images_table, user_addr, vector::empty<TokenId>());
+        };
+        let purchased_images = table::borrow_mut(purchased_images_table, user_addr);
+        vector::push_back(purchased_images, image_token_id);
     }
     
+    fun get_image_id(creator_address: address, image_title: String): TokenDataId {
+        token::create_token_data_id(
+            creator_address,
+            get_collection_name(creator_address),
+            image_title,
+        )
+    }
+
+    fun get_collection_name(creator_address: address): String {
+        let result = user_manager::get_user_nickname(creator_address);
+        assert!(!string::is_empty(&result), error::invalid_argument(EINVALID_USER_ADDRESS));
+        string::append(&mut result, string::utf8(b"'s Collection"));
+        
+        result
+    }
+
+    public fun get_all_images(): vector<TokenDataId> acquires MarketDataStore {
+        let result = vector::empty<TokenDataId>();
+        let market_data_store = borrow_global<MarketDataStore>(@ourchive);
+
+        result
+    }
+
     public fun get_uploaded_images(creator: &signer): vector<TokenDataId> acquires MarketDataStore {
         let creator_uploaded_images = &borrow_global<MarketDataStore>(@ourchive).creator_uploaded_images_table;
         
