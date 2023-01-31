@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import { TokenTypes } from 'aptos';
 import profileIcon from '../../images/profile-icon.png';
 import navIcon from '../../icons/prev.svg';
 
@@ -9,7 +10,8 @@ import RenderImageList from '../../Components/RenderImageList';
 import { baseColor } from '../../styles';
 import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
-import { addressState, nicknameState } from '../../states/loginState';
+import { addressState, nicknameState, publicKeyState } from '../../states/loginState';
+import { getUploadedImageList } from '../../func';
 
 const YellowCardBox = styled.div`
   display: flex;
@@ -58,8 +60,16 @@ const Profile = () => {
 
   const [nickname, setNickname] = useRecoilState(nicknameState);
   const [address, setAddress] = useRecoilState(addressState);
+  const [publicKey] = useRecoilState(publicKeyState);
   const addressString = address as unknown as string;
-  const renderAddressString = `${addressString.slice(0, 4)}...${addressString.slice(-4)}`;
+  const renderAddressString = `${addressString?.slice(0, 4)}...${addressString?.slice(-4)}`;
+
+  const [uploadList, setUploadList] = useState<TokenTypes.TokenDataId[] | null>(null);
+
+  useEffect(() => {
+    getUploadedImageList(addressString).then((data) => { setUploadList(data); });
+    console.log('hihi', uploadList);
+  }, []);
 
   return (
     <div

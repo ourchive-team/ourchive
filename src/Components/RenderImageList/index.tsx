@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Link, { useNavigate } from 'react-router-dom';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { TokenTypes } from 'aptos';
 import { baseColor } from '../../styles';
 import profileIcon from '../../images/profile-icon.png';
 
@@ -14,7 +15,7 @@ export const ItemCardDescription = styled.div`
 `;
 
 export interface IRenderImageList {
-  itemList: { [x: string]: string | number }[];
+  itemList: TokenTypes.Token[];
   routeUrl: string;
   routeUrlWithoutId?: boolean;
   hideDetails?: boolean;
@@ -37,7 +38,7 @@ const RenderImageList = ({
   return (
     <>
       {itemList.map(el => {
-        const navUrl = routeUrlWithoutId ? routeUrl : `${routeUrl}/${el.id}`;
+        const navUrl = routeUrlWithoutId ? routeUrl : `${routeUrl}/${el.id?.token_data_id?.collection}/${el.id?.token_data_id?.name}`;
         return (
           <ItemCardDescription onClick={() => nav(navUrl)} style={{ ...style?.wrapper }}>
             {/*<img src="/public/images/image13.png" alt="test-img" />*/}
@@ -47,13 +48,13 @@ const RenderImageList = ({
             {!hideDetails && typeof el === 'object' && (
               <>
                 <div style={{ display: 'flex', width: '100%', marginTop: '10px', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>{el.title}</span>
+                  <span style={{ fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>{el.id?.token_data_id?.name}</span>
                   <span style={{ fontSize: '12px', color: baseColor.yellow, marginBottom: '8px' }}>
-                    {`${el.price} APT ~`}
+                    {`${el.token_properties?.data?.price} APT ~`}
                   </span>
                   <div style={{ display: 'flex', width: '100%' }}>
                     <img srcSet={profileIcon} alt="profile icon" style={{ width: '16px', marginRight: '4px' }} />
-                    <span>{`Creator ${el.creator}`}</span>
+                    <span>{`Creator ${el.id?.token_data_id?.creator}`}</span>
                   </div>
                 </div>
               </>

@@ -25,9 +25,9 @@ const App = () => {
   //   client.getAccount(address).then(setAccount);
   // }, [address]);
 
-  useEffect(() => {
-    if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
-  }, []);
+  // useEffect(() => {
+  //   if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
+  // }, []);
 
   // console.log(address, account?.sequence_number);
   return (

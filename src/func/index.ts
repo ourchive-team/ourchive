@@ -1,11 +1,13 @@
-import { ApiError, AptosClient } from 'aptos';
+import { ApiError, AptosClient, TokenClient, TokenTypes } from 'aptos';
 import { AptosGeneratedClient, TableItemRequest, ViewRequest } from 'aptos/src/generated';
 import React, { useEffect, useState } from 'react';
 import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { addressState, nicknameState } from '../states/loginState';
 import UploadToIPFS from './ipfs';
 
-const moduleAddress = '0x31042e3e36cf44e07abcd707fb04becaa474141f42933c6dd6e3d29858f46b4c';
+const moduleAddress = '0xc3c01947106a53503685245dd0ffb6d91c7622b590c8a249dab23af5819a3b4';
+const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
+const tokenClient = new TokenClient(client);
 
 export const walletConnect = async (setAddress: any, setPublicKey: any) => {
   /**
@@ -20,12 +22,11 @@ export const walletConnect = async (setAddress: any, setPublicKey: any) => {
 };
 
 export const checkUserExists = async (userAddress: string, setNickname: any) => {
-  const client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
-
   const UserResource: { data: any } = await client.getAccountResource(
     moduleAddress,
     `${moduleAddress}::user_manager::UserStore`,
   );
+
   const { handle }: { handle: string } = UserResource.data.nicknames;
   const { publicKey } = await window.aptos.account();
   const getTableItemRequest: TableItemRequest = {
@@ -75,23 +76,94 @@ interface ImageInfo {
   creator: string;
   imgUrl: string;
 }
-export const getImageInfo = () => { };
+export const getImageInfo = async (creatorAddress: string, imageTitle: string): Promise<ImageInfo | null> => {
+  // const creatorAddress = '0x2e35131572a43a1d82b4678857cb6fa44722367483250dfd7d87a25c1deeaf04';
+  // const imageTitle = '';
 
-export const getImageInfoList = async () => {
-  const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
   const viewRequest: ViewRequest = {
-    function: `${moduleAddress}::user_manager::set_user_nickname`,
+    function: `${moduleAddress}::marketplace::get_image_id`,
+    type_arguments: [],
+    arguments: [creatorAddress, imageTitle],
+  };
+
+  try {
+    const result = await client.view(viewRequest);
+    const tokenDataId = result as unknown as TokenTypes.TokenDataId;
+
+    const tokenData = await tokenClient.getTokenData(tokenDataId.creator, tokenDataId.collection, tokenDataId.name);
+
+    return {
+      id: '',
+      title: tokenData.name,
+      price: 0,
+      expiry: 0,
+      description: tokenData.description,
+      creator: tokenDataId.creator,
+      imgUrl: tokenData.uri,
+    };
+  } catch (error) {
+    console.log('getImageInfo', error);
+    // do sth
+    return null;
+  }
+};
+
+export const getAllImageInfoList = async () => {
+  const viewRequest: ViewRequest = {
+    function: `${moduleAddress}::marketplace::get_all_images`,
     type_arguments: [],
     arguments: [],
   };
 
   try {
-    // const result = await client?.view(viewRequest);
+    // TODO
+    const result = await client.view(viewRequest);
+    const tokenDataIdList = result as TokenTypes.TokenDataId[];
+    console.log(result);
+    return tokenDataIdList;
   } catch (error) {
-    // do sth
+    console.log(error);
+    return [];
   }
 
-  // TODO
+  return [];
+};
+
+export const getUploadedImageList = async (address: string): Promise<TokenTypes.TokenDataId[]> => {
+  const viewRequest: ViewRequest = {
+    function: `${moduleAddress}::marketplace::get_uploaded_images`,
+    type_arguments: [],
+    arguments: [address],
+  };
+
+  try {
+    const result = await client.view(viewRequest);
+    const tokenDataIdList = result as TokenTypes.TokenDataId[];
+    console.log(tokenDataIdList);
+    return tokenDataIdList;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+export const getPurchasedImageList = async (): Promise<TokenTypes.TokenDataId[]> => {
+  const viewRequest: ViewRequest = {
+    function: `${moduleAddress}::marketplace::get_all_images`,
+    type_arguments: [],
+    arguments: [],
+  };
+
+  try {
+    // TODO
+    const result = await client.view(viewRequest);
+    const tokenDataIdList = result as TokenTypes.TokenDataId[];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+
+  return [];
 };
 
 interface IDownloadImage {
@@ -113,7 +185,7 @@ export const uploadImage = async (nft: IUploadImage) => {
   const { publicKey: creator } = await window.aptos.account();
   const creatorName = nft.nickname;
   const imageUri = await UploadToIPFS(nft.img);
-  console.log(imageUri);
+  console.log(creatorName, nft.title, nft.description, imageUri, nft.price);
   const transaction = {
     type: "entry_function_payload",
     function: `${moduleAddress}::marketplace::upload_image`,

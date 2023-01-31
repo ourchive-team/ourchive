@@ -10,9 +10,20 @@ import Resolution from '../../Components/Resolution';
 import RenderImageList from '../../Components/RenderImageList';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
+import { getImageInfo } from '../../func';
 
 const ImageDetail = () => {
   const nav = useNavigate();
+  const nftAddress = window.location.pathname.replace('/images/', '');
+
+  const creatorAddress = '0x2e35131572a43a1d82b4678857cb6fa44722367483250dfd7d87a25c1deeaf04';
+  const imageTitle = '';
+  const imageInfo = getImageInfo(creatorAddress, imageTitle);
+
+  const realImageData = {
+    icon: '???',
+    creator: '',
+  };
 
   const imageData = {
     icon: 'Icon',

@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { TokenTypes } from 'aptos';
 import searchIcon from '../../icons/search-icon.svg';
 import banner from '../../images/banner.png';
 
 import SelectCategoryBar from '../../Components/SelectCategoryBar';
 import GridImageContainer from '../../Components/GridImageContainer';
-import { getImageInfo, getImageInfoList } from '../../func';
+import { getAllImageInfoList } from '../../func';
 import BottomNavigator from '../../Components/BottomNavigator';
 import { PaddingBox } from '../../styles';
 import { nicknameState } from '../../states/loginState';
@@ -40,9 +41,11 @@ const Main = () => {
     },
   ];
 
-  useEffect(() => {
-    getImageInfoList();
-  }, []);
+  const [tokenList, setTokenList] = useState<TokenTypes.TokenDataId[] | null>(null);
+
+  // useEffect(() => {
+  //   getAllImageInfoList().then(setTokenList);
+  // }, []);
 
   const [nickname, setNickname] = useRecoilState(nicknameState);
 
