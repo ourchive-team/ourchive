@@ -4,7 +4,7 @@ module ourchive::marketplace {
     use std::string::{Self, String};
 
     use aptos_std::table::{Self, Table};
-    use aptos_token::token::{TokenDataId, TokenId};
+    use aptos_token::token::{Self, TokenDataId, TokenId};
     use aptos_framework::account::SignerCapability;
     use aptos_framework::coin::Coin;
     use aptos_framework::aptos_coin::AptosCoin;
@@ -42,11 +42,13 @@ module ourchive::marketplace {
         creator_nickname: String,
         image_title: String,
         description: String,
+        image_uri: String,
         price: u64,
     ) acquires MarketDataStore {
         let creator_info_table = &mut borrow_global_mut<MarketDataStore>(@ourchive).creator_info_table;
         let creator_address = signer::address_of(creator);
 
+        // Create and save the newbie creator's information
         if (!table::contains(creator_info_table, creator_address)) {
             let creator_collection_name = copy creator_nickname;
             string::append(&mut creator_collection_name, string::utf8(b"'s Collection"));
@@ -56,8 +58,31 @@ module ourchive::marketplace {
                 nickname: creator_nickname,
                 collection_name: creator_collection_name,
                 signer_cap: creator_signer_cap,
-            })
-        }
+            });
+        };
+
+        let creator_info = table::borrow(creator_info_table, creator_address);
+        let upload_image_data = token::create_tokendata(
+            creator,
+            creator_info.collection_name,
+            image_title,
+            description,
+            0,
+            image_uri,
+            creator_address,
+            1,
+            0,
+            // enable mutation for properties by setting the last boolean in the vector to true.
+            token::create_token_mutability_config(
+                &vector<bool>[ false, false, false, false, true ]
+            ),
+            vector::empty<String>(),
+            vector::empty<vector<u8>>(),
+            vector::empty<String>(),
+        );
+
+        // TODO: Add the image data to creator_uploaded_images
+        // TODO: Add the image data to the price table
     }
 
     public fun get_all_images(): vector<TokenDataId> acquires MarketDataStore {
