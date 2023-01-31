@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import searchIcon from '../../icons/search-icon.svg';
 import banner from '../../images/banner.png';
 
@@ -8,6 +9,7 @@ import GridImageContainer from '../../Components/GridImageContainer';
 import { getImageInfo, getImageInfoList } from '../../func';
 import BottomNavigator from '../../Components/BottomNavigator';
 import { PaddingBox } from '../../styles';
+import { nicknameState } from '../../states/loginState';
 
 const Main = () => {
   const nav = useNavigate();
@@ -41,6 +43,8 @@ const Main = () => {
   useEffect(() => {
     getImageInfoList();
   }, []);
+
+  const [nickname, setNickname] = useRecoilState(nicknameState);
 
   return (
     <div
