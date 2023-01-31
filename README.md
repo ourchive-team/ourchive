@@ -44,3 +44,12 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Compile, Deploy
+
+To use view function, you need to specify bytecode version.
+
+```
+aptos move compile --named-addresses ourchive=default --bytecode-version 6
+aptos move publish --named-addresses ourchive=default --bytecode-version 6
+```
