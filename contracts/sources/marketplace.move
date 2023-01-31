@@ -5,6 +5,7 @@ module ourchive::marketplace {
     use std::bcs;
     use std::string::{Self, String};
 
+    use aptos_std::simple_map::{Self, SimpleMap};
     use aptos_std::table::{Self, Table};
     use aptos_token::token::{Self, TokenDataId, TokenId};
     use aptos_framework::account::{Self, SignerCapability};
@@ -21,7 +22,7 @@ module ourchive::marketplace {
         creator_info_table: Table<address, CreatorInfoRecord>,
         creator_uploaded_images_table: Table<address, vector<TokenDataId>>,
         user_purchased_images_table: Table<address, vector<TokenId>>,
-        image_price_table: Table<TokenDataId, ImagePrice>,
+        image_price_table: SimpleMap<TokenDataId, ImagePrice>,
     }
 
     struct CreatorInfoRecord has store {
@@ -42,7 +43,7 @@ module ourchive::marketplace {
                 creator_info_table: table::new(),
                 creator_uploaded_images_table: table::new(),
                 user_purchased_images_table: table::new(),
-                image_price_table: table::new(),
+                image_price_table: simple_map::create(),
             });
         }
     }
@@ -106,7 +107,7 @@ module ourchive::marketplace {
 
         // Save the image data with its price to the price table
         let image_price_table = &mut market_data_store.image_price_table;
-        table::add(image_price_table, upload_image, ImagePrice { amount: image_price });
+        simple_map::add(image_price_table, upload_image, ImagePrice { amount: image_price });
     }
 
     entry public fun purchase_image(
@@ -143,11 +144,11 @@ module ourchive::marketplace {
         
         // Check the user's balance
         let image_id = get_image_id(resource_address, creator_nickname, image_title);
-        let price = table::borrow(&market_data_store.image_price_table, image_id);
+        let price = simple_map::borrow(&market_data_store.image_price_table, &image_id);
         assert!(coin::balance<CoinType>(user_addr) > price.amount, error::invalid_argument(EINSUFFICIENT_BALANCE));
 
         // Buy and sell the image
-        let image_token_id = token::mint_token(&resource_signer, image_id, 1);
+        let image_token_id = token::mint_token(&resource_signer, copy image_id, 1);
         token::direct_transfer(&resource_signer, user, image_token_id, 1);
         coin::transfer<CoinType>(user, creator_address, price.amount);
 
@@ -190,10 +191,9 @@ module ourchive::marketplace {
     }
 
     #[view]
-    public fun get_all_images(): vector<TokenDataId> {
-        let result = vector::empty<TokenDataId>();
-
-        result
+    public fun get_all_images(): SimpleMap<TokenDataId, ImagePrice> acquires MarketDataStore {
+        let market_data_store = borrow_global<MarketDataStore>(@ourchive);
+        market_data_store.image_price_table
     }
 
     #[view]
@@ -216,7 +216,7 @@ module ourchive::marketplace {
             creator_info_table: table::new(),
             creator_uploaded_images_table: table::new(),
             user_purchased_images_table: table::new(),
-            image_price_table: table::new(),
+            image_price_table: simple_map::create(),
         });
     }
 
