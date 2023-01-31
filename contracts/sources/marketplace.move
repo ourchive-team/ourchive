@@ -2,6 +2,7 @@ module ourchive::marketplace {
     use std::vector;
     use std::signer;
     use std::error;
+    use std::bcs;
     use std::string::{Self, String};
 
     use aptos_std::table::{Self, Table};
@@ -107,8 +108,8 @@ module ourchive::marketplace {
         user: &signer,
         creator_address: address,
         image_title: String,
-        size: String,
-        period: u64,
+        size: u64,
+        expired_date: u64,
     ) acquires MarketDataStore {
         let user_addr = signer::address_of(user);
         let market_data_store = borrow_global_mut<MarketDataStore>(@ourchive);
@@ -119,12 +120,23 @@ module ourchive::marketplace {
         assert!(coin::balance<AptosCoin>(user_addr) > price.amount, error::invalid_argument(EINSUFFICIENT_BALANCE));
 
         // Buy and sell the image
-        // TODO: Update the token property
         let creator_info = table::borrow(&market_data_store.creator_info_table, creator_address);
         let resource_signer = account::create_signer_with_capability(&creator_info.signer_cap);
         let image_token_id = token::mint_token(&resource_signer, image_id, 1);
         token::direct_transfer(&resource_signer, user, image_token_id, 1);
         coin::transfer<AptosCoin>(user, creator_address, price.amount);
+
+        // Update the token property
+        // Size: Large(3), Medium(2), Small(1)
+        // Expired Date Format: YYYYMMDD (e.g. 20230203)
+        token::mutate_one_token(
+            &resource_signer,
+            user_addr,
+            image_token_id,
+            vector<String>[string::utf8(b"size"), string::utf8(b"expired_date")],
+            vector<vector<u8>>[bcs::to_bytes<u64>(&size), bcs::to_bytes<u64>(&expired_date)],
+            vector<String>[string::utf8(b"u64"), string::utf8(b"u64")],
+        );
 
         // Update the user's purchased image list
         let purchased_images_table = &mut market_data_store.user_purchased_images_table;
