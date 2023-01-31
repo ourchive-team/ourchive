@@ -8,9 +8,8 @@ module ourchive::marketplace {
     use aptos_std::table::{Self, Table};
     use aptos_token::token::{Self, TokenDataId, TokenId};
     use aptos_framework::account::{Self, SignerCapability};
-    use aptos_framework::coin::{Self, Coin};
+    use aptos_framework::coin;
     use aptos_framework::aptos_coin::AptosCoin;
-    use aptos_framework::resource_account;
     use ourchive::user_manager;
 
     const EINSUFFICIENT_BALANCE: u64 = 1;
@@ -58,20 +57,24 @@ module ourchive::marketplace {
         let creator_info_table = &mut market_data_store.creator_info_table;
         let creator_address = signer::address_of(creator);
 
-        // Create and save the newbie creator's information
+        // For a new creator
         if (!table::contains(creator_info_table, creator_address)) {
+            let seed = x"01";
+            let (_, resource_cap) = account::create_resource_account(creator, seed);
             let creator_collection_name = copy creator_nickname;
             string::append(&mut creator_collection_name, string::utf8(b"'s Collection"));
-            let creator_signer_cap = resource_account::retrieve_resource_account_cap(creator, @ourchive);
 
             table::add(creator_info_table, creator_address, CreatorInfoRecord {
                 nickname: creator_nickname,
                 collection_name: creator_collection_name,
-                signer_cap: creator_signer_cap,
+                signer_cap: resource_cap,
             });
+            token::create_collection(creator, creator_collection_name, string::utf8(b""), string::utf8(b""), 0, vector<bool>[ false, false, false]);
         };
 
         let creator_info = table::borrow(creator_info_table, creator_address);
+
+        // Create a token data
         let upload_image = token::create_tokendata(
             creator,
             creator_info.collection_name,
@@ -166,9 +169,8 @@ module ourchive::marketplace {
     }
 
     #[view]
-    public fun get_all_images(): vector<TokenDataId> acquires MarketDataStore {
+    public fun get_all_images(): vector<TokenDataId> {
         let result = vector::empty<TokenDataId>();
-        let market_data_store = borrow_global<MarketDataStore>(@ourchive);
 
         result
     }
@@ -185,5 +187,15 @@ module ourchive::marketplace {
         let user_purchased_images = &borrow_global<MarketDataStore>(@ourchive).user_purchased_images_table;
 
         *table::borrow(user_purchased_images, signer::address_of(user))
+    }
+
+    #[test_only]
+    public fun publish_market_data_store(account: &signer) {
+        move_to(account, MarketDataStore {
+            creator_info_table: table::new(),
+            creator_uploaded_images_table: table::new(),
+            user_purchased_images_table: table::new(),
+            image_price_table: table::new(),
+        });
     }
 }
