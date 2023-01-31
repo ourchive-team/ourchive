@@ -19,7 +19,7 @@ module ourchive::marketplace {
         creator_info_table: Table<address, CreatorInfoRecord>,
         creator_uploaded_images_table: Table<address, vector<TokenDataId>>,
         user_purchased_images_table: Table<address, vector<TokenId>>,
-        image_price_table: Table<TokenDataId, ImagePrice<AptosCoin>>,
+        image_price_table: Table<TokenDataId, ImagePrice>,
     }
 
     struct CreatorInfoRecord has store {
@@ -28,7 +28,7 @@ module ourchive::marketplace {
         signer_cap: SignerCapability,
     }
 
-    struct ImagePrice<phantom CoinType> has store, copy, drop {
+    struct ImagePrice has store, copy, drop {
         amount: u64,
     }
     
