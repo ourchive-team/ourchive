@@ -5,7 +5,7 @@ import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { addressState, nicknameState } from '../states/loginState';
 import UploadToIPFS from './ipfs';
 
-const moduleAddress = '0xc3c01947106a53503685245dd0ffb6d91c7622b590c8a249dab23af5819a3b4';
+const moduleAddress = '0x31042e3e36cf44e07abcd707fb04becaa474141f42933c6dd6e3d29858f46b4c';
 
 export const walletConnect = async (setAddress: any, setPublicKey: any) => {
   /**

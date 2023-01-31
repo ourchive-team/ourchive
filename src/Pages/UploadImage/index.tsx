@@ -95,16 +95,6 @@ const Upload = () => {
         file: fileList[0],
         thumbnail: url,
       });
-
-      console.log('uploading broom broom');
-      //and upload image to server
-      await uploadImage({
-        title: inputValues.title,
-        description: inputValues.desc,
-        price: parseInt(inputValues.price, 10),
-        img: fileList[0],
-        nickname: (nickname as unknown) as string,
-      });
     }
   };
 
@@ -212,8 +202,18 @@ const Upload = () => {
           disabled={!enabled}
           type="submit"
           style={{ backgroundColor: enabled ? 'black' : '#8E8E8E', textTransform: 'capitalize', marginTop: 'auto' }}
-          onClick={() => {
+          onClick={async () => {
             setModalOpen(true);
+            console.log('uploading broom broom');
+            //and upload image to server
+            await uploadImage({
+              title: inputValues.title,
+              description: inputValues.desc,
+              price: parseInt(inputValues.price, 10),
+              // eslint-disable-next-line
+              img: imageFile?.file!,
+              nickname: (nickname as unknown) as string,
+            });
           }}
         >
           Upload Image
