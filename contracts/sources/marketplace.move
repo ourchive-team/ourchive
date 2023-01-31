@@ -1,13 +1,14 @@
 module ourchive::marketplace {
     use std::vector;
     use std::signer;
-    use std::string::String;
+    use std::string::{Self, String};
 
     use aptos_std::table::{Self, Table};
     use aptos_token::token::{TokenDataId, TokenId};
     use aptos_framework::account::SignerCapability;
     use aptos_framework::coin::Coin;
     use aptos_framework::aptos_coin::AptosCoin;
+    use aptos_framework::resource_account;
 
     // TODO: Make the coin type use generic
     struct MarketDataStore has key {
@@ -36,7 +37,7 @@ module ourchive::marketplace {
         }
     }
 
-    public fun uploaded_image(
+    public fun upload_image(
         creator: &signer,
         creator_nickname: String,
         image_title: String,
@@ -44,6 +45,19 @@ module ourchive::marketplace {
         price: u64,
     ) acquires MarketDataStore {
         let creator_info_table = &mut borrow_global_mut<MarketDataStore>(@ourchive).creator_info_table;
+        let creator_address = signer::address_of(creator);
+
+        if (!table::contains(creator_info_table, creator_address)) {
+            let creator_collection_name = copy creator_nickname;
+            string::append(&mut creator_collection_name, string::utf8(b"'s Collection"));
+            let creator_signer_cap = resource_account::retrieve_resource_account_cap(creator, @ourchive);
+
+            table::add(creator_info_table, creator_address, CreatorInfoRecord {
+                nickname: creator_nickname,
+                collection_name: creator_collection_name,
+                signer_cap: creator_signer_cap,
+            })
+        }
     }
 
     public fun get_all_images(): vector<TokenDataId> acquires MarketDataStore {
