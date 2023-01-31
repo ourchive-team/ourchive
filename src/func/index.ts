@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { addressState } from '../states/loginState';
 
-const moduleAddress = "0xc3c01947106a53503685245dd0ffb6d91c7622b590c8a249dab23af5819a3b4"; export const walletConnect = async (setAddress : any) => {
+const moduleAddress = "0xc3c01947106a53503685245dd0ffb6d91c7622b590c8a249dab23af5819a3b4"; export const walletConnect = async (setAddress: any) => {
   /**
      * init function
      */
@@ -15,7 +15,7 @@ const moduleAddress = "0xc3c01947106a53503685245dd0ffb6d91c7622b590c8a249dab23af
   return address;
 };
 
-export const checkUserExists = async (userAddress : string) => {
+export const checkUserExists = async (userAddress: string) => {
   const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
 
   const UserResource: { data: any } = await client.getAccountResource(
@@ -23,11 +23,11 @@ export const checkUserExists = async (userAddress : string) => {
     `${moduleAddress}::user_manager::UserStore`,
   );
   const { handle }: { handle: string } = UserResource.data.nicknames;
-
+  const { publicKey } = await window.aptos.account();
   const getTableItemRequest: TableItemRequest = {
     key_type: "address",
     value_type: "0x1::string::String",
-    key: userAddress,
+    key: publicKey,
   };
 
   try {
@@ -41,17 +41,18 @@ export const checkUserExists = async (userAddress : string) => {
   return true;
 };
 
-export const submitUserNickname = async (userAddress: string, userNickname : string) => {
+export const submitUserNickname = async (userAddress: string, userNickname: string) => {
+  const { publicKey } = await window.aptos.account();
   const transaction = {
     type: "entry_function_payload",
     function: `${moduleAddress}::user_manager::set_user_nickname`,
-    arguments: [userAddress, userNickname],
+    arguments: [publicKey, userNickname],
     type_arguments: [],
   };
 
   try {
     await window.aptos.signAndSubmitTransaction(transaction);
-  } catch (error : any) {
+  } catch (error: any) {
     console.log("fuck", error);
   }
 };
@@ -65,13 +66,13 @@ interface ImageInfo {
   creator: string;
   imgUrl: string;
 }
-export const getImageInfo = () => {};
-export const getImageInfoList = () => {};
+export const getImageInfo = () => { };
+export const getImageInfoList = () => { };
 
 interface IDownloadImage {
   id: string;
 }
-export const downloadImage = () => {};
+export const downloadImage = () => { };
 
 interface IUploadImage {
   title: string;
@@ -79,23 +80,23 @@ interface IUploadImage {
   price: number;
   img: any;
 }
-export const uploadImage = () => {};
+export const uploadImage = () => { };
 
 interface IBuyImage {
   id: string;
 }
-export const buyImage = () => {};
+export const buyImage = () => { };
 
 //report, prove
 interface IProveImage {
   address: string;
   phrase: string;
 }
-export const proveNFT = () => {};
+export const proveNFT = () => { };
 
 interface IReportImage {
   address: string;
   email: string;
 }
-export const reportImage = () => {};
+export const reportImage = () => { };
 //image? || images[]?
