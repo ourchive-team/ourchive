@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton } from '../../styles';
-import { loginState } from '../../states/loginState';
-import { walletConnect } from '../../func';
+import { loginState, addressState } from '../../states/loginState';
+import { checkUserExists, walletConnect } from '../../func';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 
 import our from '../../images/our.svg';
@@ -24,6 +24,7 @@ const LoginPageContainer = styled.div`
 
 export const Login = () => {
   const nav = useNavigate();
+  const [address, setAddress] = useRecoilState(addressState);
   return (
     <LoginPageContainer style={{ backgroundColor: baseColor.yellow, height: '100%' }}>
       <div
@@ -41,9 +42,13 @@ export const Login = () => {
       <YellowBottomNavigator>
         <LargeButton
           style={{ fontSize: '16px' }}
-          onClick={() => {
-            walletConnect();
-            nav('/nickname');
+          onClick={async () => {
+            const addr = await walletConnect(setAddress);
+            // nav('/nickname');
+            if (await checkUserExists(addr)) {
+              // SET isLogin to true
+              nav('/main');
+            } else { nav('/nickname'); }
           }}
         >
           Connect Wallet
