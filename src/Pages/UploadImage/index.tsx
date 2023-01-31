@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Link, { useNavigate } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import TopNavigator from '../../Components/TopNavigator';
 import Modal from '../../Components/Modal';
 
-const StyledBox = styled.div`
+const StyledBox = styled.button`
   width: 120px;
   min-height: 120px;
   height: 120px;
@@ -22,6 +22,7 @@ const StyledBox = styled.div`
 
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 8px;
+  padding: 1px;
 `;
 
 const TextArea = styled.textarea`
@@ -77,6 +78,25 @@ const Upload = () => {
     setInputValues({ ...inputValues, [e.target.name]: e.target.value });
   };
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [imageFile, setImageFile] = useState<{ file: any; thumbnail: any } | null>(null);
+
+  const uploadImageToBrowser = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+
+    if (fileList && fileList[0]) {
+      const url = URL.createObjectURL(fileList[0]);
+
+      setImageFile({
+        file: fileList[0],
+        thumbnail: url,
+      });
+
+      //and upload image to server
+      uploadImage();
+    }
+  };
+
   const enabled = inputValues.title && inputValues.desc && Number(inputValues.price) > 0;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
@@ -112,8 +132,21 @@ const Upload = () => {
       </TopNavigator>
 
       <PaddingBox>
-        <StyledBox>
-          <img alt="add-img" src={plusIcon} style={{ width: '20px', height: '20px' }} />
+        <input
+          type="file"
+          accept="image/*"
+          name="file"
+          multiple
+          ref={fileInputRef}
+          onChange={uploadImageToBrowser}
+          style={{ display: 'none' }}
+        />
+        <StyledBox type="button" onClick={() => fileInputRef?.current?.click()}>
+          <img
+            alt="add-img"
+            src={imageFile?.thumbnail || plusIcon}
+            style={{ width: imageFile ? '100%' : '20px', height: imageFile ? '100%' : '20px', borderRadius: '8px' }}
+          />
         </StyledBox>
       </PaddingBox>
 
