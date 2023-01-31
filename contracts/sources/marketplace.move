@@ -10,7 +10,9 @@ module ourchive::marketplace {
     use aptos_framework::account::{Self, SignerCapability};
     use aptos_framework::coin;
     use aptos_framework::aptos_coin::AptosCoin;
-    use ourchive::user_manager;
+
+    #[test_only]
+    use aptos_framework::coin::FakeMoney;
 
     const EINSUFFICIENT_BALANCE: u64 = 1;
     const EINVALID_USER_ADDRESS: u64 = 2;
@@ -56,11 +58,11 @@ module ourchive::marketplace {
         let market_data_store = borrow_global_mut<MarketDataStore>(@ourchive);
         let creator_info_table = &mut market_data_store.creator_info_table;
         let creator_address = signer::address_of(creator);
+        let seed = x"01";
 
         // For a new creator
         if (!table::contains(creator_info_table, creator_address)) {
-            let seed = x"01";
-            let (_, resource_cap) = account::create_resource_account(creator, seed);
+            let (resource_signer, resource_cap) = account::create_resource_account(creator, seed);
             let creator_collection_name = copy creator_nickname;
             string::append(&mut creator_collection_name, string::utf8(b"'s Collection"));
 
@@ -69,14 +71,14 @@ module ourchive::marketplace {
                 collection_name: creator_collection_name,
                 signer_cap: resource_cap,
             });
-            token::create_collection(creator, creator_collection_name, string::utf8(b""), string::utf8(b""), 0, vector<bool>[ false, false, false]);
+            token::create_collection(&resource_signer, creator_collection_name, string::utf8(b""), string::utf8(b""), 0, vector<bool>[ false, false, false]);
         };
 
         let creator_info = table::borrow(creator_info_table, creator_address);
-
+        let resource_signer = account::create_signer_with_capability(&creator_info.signer_cap);
         // Create a token data
         let upload_image = token::create_tokendata(
-            creator,
+            &resource_signer,
             creator_info.collection_name,
             image_title,
             description,
@@ -110,24 +112,44 @@ module ourchive::marketplace {
     entry public fun purchase_image(
         user: &signer,
         creator_address: address,
+        creator_nickname: String,
+        image_title: String,
+        size: u64,
+        expired_date: u64,
+    ) acquires MarketDataStore {
+        purchase_image_internal<AptosCoin>(
+            user,
+            creator_address,
+            creator_nickname,
+            image_title,
+            size,
+            expired_date,
+        );
+    }
+
+    fun purchase_image_internal<CoinType>(
+        user: &signer,
+        creator_address: address,
+        creator_nickname: String,
         image_title: String,
         size: u64,
         expired_date: u64,
     ) acquires MarketDataStore {
         let user_addr = signer::address_of(user);
         let market_data_store = borrow_global_mut<MarketDataStore>(@ourchive);
-        
-        // Check the user's balance
-        let image_id = get_image_id(creator_address, image_title);
-        let price = table::borrow(&market_data_store.image_price_table, image_id);
-        assert!(coin::balance<AptosCoin>(user_addr) > price.amount, error::invalid_argument(EINSUFFICIENT_BALANCE));
-
-        // Buy and sell the image
         let creator_info = table::borrow(&market_data_store.creator_info_table, creator_address);
         let resource_signer = account::create_signer_with_capability(&creator_info.signer_cap);
+        let resource_address = signer::address_of(&resource_signer);
+        
+        // Check the user's balance
+        let image_id = get_image_id(resource_address, creator_nickname, image_title);
+        let price = table::borrow(&market_data_store.image_price_table, image_id);
+        assert!(coin::balance<CoinType>(user_addr) > price.amount, error::invalid_argument(EINSUFFICIENT_BALANCE));
+
+        // Buy and sell the image
         let image_token_id = token::mint_token(&resource_signer, image_id, 1);
         token::direct_transfer(&resource_signer, user, image_token_id, 1);
-        coin::transfer<AptosCoin>(user, creator_address, price.amount);
+        coin::transfer<CoinType>(user, creator_address, price.amount);
 
         // Update the token property
         // Size: Large(3), Medium(2), Small(1)
@@ -151,18 +173,17 @@ module ourchive::marketplace {
     }
     
     #[view]
-    public fun get_image_id(creator_address: address, image_title: String): TokenDataId {
+    public fun get_image_id(creator_address: address, creator_nickname: String, image_title: String): TokenDataId {
         token::create_token_data_id(
             creator_address,
-            get_collection_name(creator_address),
+            get_collection_name(creator_nickname),
             image_title,
         )
     }
 
     #[view]
-    public fun get_collection_name(creator_address: address): String {
-        let result = user_manager::get_user_nickname(creator_address);
-        assert!(!string::is_empty(&result), error::invalid_argument(EINVALID_USER_ADDRESS));
+    public fun get_collection_name(creator_nickname: String): String {
+        let result = creator_nickname;
         string::append(&mut result, string::utf8(b"'s Collection"));
         
         result
@@ -197,5 +218,24 @@ module ourchive::marketplace {
             user_purchased_images_table: table::new(),
             image_price_table: table::new(),
         });
+    }
+
+    #[test_only]
+    public fun purchase_image_for_test(
+        user: &signer,
+        creator_address: address,
+        creator_nickname: String,
+        image_title: String,
+        size: u64,
+        expired_date: u64,
+    ) acquires MarketDataStore {
+        purchase_image_internal<FakeMoney>(
+            user,
+            creator_address,
+            creator_nickname,
+            image_title,
+            size,
+            expired_date,
+        );
     }
 }
