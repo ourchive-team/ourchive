@@ -46,7 +46,7 @@ module ourchive::marketplace {
         }
     }
 
-    public fun upload_image(
+    entry public fun upload_image(
         creator: &signer,
         creator_nickname: String,
         image_title: String,
@@ -104,7 +104,7 @@ module ourchive::marketplace {
         table::add(image_price_table, upload_image, ImagePrice { amount: image_price });
     }
 
-    public fun purchase_image(
+    entry public fun purchase_image(
         user: &signer,
         creator_address: address,
         image_title: String,
@@ -147,7 +147,8 @@ module ourchive::marketplace {
         vector::push_back(purchased_images, image_token_id);
     }
     
-    fun get_image_id(creator_address: address, image_title: String): TokenDataId {
+    #[view]
+    public fun get_image_id(creator_address: address, image_title: String): TokenDataId {
         token::create_token_data_id(
             creator_address,
             get_collection_name(creator_address),
@@ -155,7 +156,8 @@ module ourchive::marketplace {
         )
     }
 
-    fun get_collection_name(creator_address: address): String {
+    #[view]
+    public fun get_collection_name(creator_address: address): String {
         let result = user_manager::get_user_nickname(creator_address);
         assert!(!string::is_empty(&result), error::invalid_argument(EINVALID_USER_ADDRESS));
         string::append(&mut result, string::utf8(b"'s Collection"));
@@ -163,6 +165,7 @@ module ourchive::marketplace {
         result
     }
 
+    #[view]
     public fun get_all_images(): vector<TokenDataId> acquires MarketDataStore {
         let result = vector::empty<TokenDataId>();
         let market_data_store = borrow_global<MarketDataStore>(@ourchive);
@@ -170,12 +173,14 @@ module ourchive::marketplace {
         result
     }
 
+    #[view]
     public fun get_uploaded_images(creator: &signer): vector<TokenDataId> acquires MarketDataStore {
         let creator_uploaded_images = &borrow_global<MarketDataStore>(@ourchive).creator_uploaded_images_table;
         
         *table::borrow(creator_uploaded_images, signer::address_of(creator))
     }
 
+    #[view]
     public fun get_purchased_images(user: &signer): vector<TokenId> acquires MarketDataStore {
         let user_purchased_images = &borrow_global<MarketDataStore>(@ourchive).user_purchased_images_table;
 

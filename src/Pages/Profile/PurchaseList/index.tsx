@@ -83,7 +83,15 @@ const PurchaseList = () => {
                   </div>
                   <button
                     type="button"
-                    onClick={() => buyImage()}
+                    onClick={() => {
+                      buyImage({
+                        id: 'hi',
+                        size: 1,
+                        creator: 'asdf',
+                        imageTitle: 'asdf',
+                        expiry: 0,
+                      });
+                    }}
                     style={{
                       color: 'white',
                       marginLeft: 'auto',

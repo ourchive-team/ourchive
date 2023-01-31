@@ -87,7 +87,15 @@ const BuyNFT = () => {
           </div>
           <LargeButton
             disabled={!requestReady}
-            onClick={() => buyImage()}
+            onClick={() => {
+              buyImage({
+                id: 'hi',
+                size: 1,
+                creator: 'asdf',
+                imageTitle: 'asdf',
+                expiry: 0,
+              });
+            }}
             style={{ backgroundColor: requestReady ? 'black' : '#8E8E8E' }}
           >
             Buy this Image

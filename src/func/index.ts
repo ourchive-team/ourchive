@@ -2,7 +2,8 @@ import { ApiError, AptosClient } from 'aptos';
 import { AptosGeneratedClient, TableItemRequest, ViewRequest } from 'aptos/src/generated';
 import React, { useEffect, useState } from 'react';
 import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
-import { addressState } from '../states/loginState';
+import { addressState, nicknameState } from '../states/loginState';
+import UploadToIPFS from './ipfs';
 
 const moduleAddress = '0xc3c01947106a53503685245dd0ffb6d91c7622b590c8a249dab23af5819a3b4';
 
@@ -74,10 +75,10 @@ interface ImageInfo {
   creator: string;
   imgUrl: string;
 }
-export const getImageInfo = () => {};
+export const getImageInfo = () => { };
 
 export const getImageInfoList = async () => {
-  const client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
+  const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
   const viewRequest: ViewRequest = {
     function: `${moduleAddress}::user_manager::set_user_nickname`,
     type_arguments: [],
@@ -95,32 +96,72 @@ export const getImageInfoList = async () => {
 
 interface IDownloadImage {
   id: string;
+
 }
-export const downloadImage = () => {};
+export const downloadImage = async () => {
+
+};
 
 interface IUploadImage {
+  nickname: string,
   title: string;
   description: string;
   price: number;
-  img: any;
+  img: File;
 }
-export const uploadImage = () => {};
+export const uploadImage = async (nft: IUploadImage) => {
+  const { publicKey: creator } = await window.aptos.account();
+  const creatorName = nft.nickname;
+  const imageUri = await UploadToIPFS(nft.img);
+  console.log(imageUri);
+  const transaction = {
+    type: "entry_function_payload",
+    function: `${moduleAddress}::marketplace::upload_image`,
+    arguments: [creatorName, nft.title, nft.description, imageUri, nft.price],
+    type_arguments: [],
+  };
+  console.log("transaction ready!");
+
+  try {
+    await window.aptos.signAndSubmitTransaction(transaction);
+  } catch (error: any) {
+    console.log("failed uploading stock image", error);
+  }
+};
 
 interface IBuyImage {
   id: string;
+  size: number;
+  creator: string;
+  imageTitle: string;
+  expiry: number;
 }
-export const buyImage = () => {};
+export const buyImage = async (nft: IBuyImage) => {
+  const { publicKey: user } = await window.aptos.account();
+  const transaction = {
+    type: "entry_function_payload",
+    function: `${moduleAddress}::marketplace::purchase_image`,
+    arguments: [user, nft.creator, nft.imageTitle, nft.size, nft.expiry],
+    type_arguments: [],
+  };
+
+  try {
+    await window.aptos.signAndSubmitTransaction(transaction);
+  } catch (error: any) {
+    console.log("damn", error);
+  }
+};
 
 //report, prove
 interface IProveImage {
   address: string;
   phrase: string;
 }
-export const proveNFT = () => {};
+export const proveNFT = () => { };
 
 interface IReportImage {
   address: string;
   email: string;
 }
-export const reportImage = () => {};
+export const reportImage = () => { };
 //image? || images[]?

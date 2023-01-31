@@ -1,3 +1,5 @@
+import { useRecoilState } from 'recoil';
+
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Link, { useNavigate } from 'react-router-dom';
@@ -9,6 +11,7 @@ import { uploadImage } from '../../func';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import TopNavigator from '../../Components/TopNavigator';
 import Modal from '../../Components/Modal';
+import { nicknameState } from '../../states/loginState';
 
 const StyledBox = styled.button`
   width: 120px;
@@ -73,15 +76,16 @@ const Upload = () => {
   const [inputValues, setInputValues] = useState({ title: '', desc: '', price: '' });
   const [modalOpen, setModalOpen] = useState(false);
   const nav = useNavigate();
+  const [nickname] = useRecoilState(nicknameState);
 
   const onChange = (e: any) => {
     setInputValues({ ...inputValues, [e.target.name]: e.target.value });
   };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [imageFile, setImageFile] = useState<{ file: any; thumbnail: any } | null>(null);
+  const [imageFile, setImageFile] = useState<{ file: File; thumbnail: any } | null>(null);
 
-  const uploadImageToBrowser = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadImageToBrowser = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
 
     if (fileList && fileList[0]) {
@@ -92,8 +96,15 @@ const Upload = () => {
         thumbnail: url,
       });
 
+      console.log('uploading broom broom');
       //and upload image to server
-      uploadImage();
+      await uploadImage({
+        title: inputValues.title,
+        description: inputValues.desc,
+        price: parseInt(inputValues.price, 10),
+        img: fileList[0],
+        nickname: (nickname as unknown) as string,
+      });
     }
   };
 
