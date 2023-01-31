@@ -202,7 +202,6 @@ const Upload = () => {
           type="submit"
           style={{ backgroundColor: enabled ? 'black' : '#8E8E8E', textTransform: 'capitalize', marginTop: 'auto' }}
           onClick={() => {
-            uploadImage();
             setModalOpen(true);
           }}
         >
