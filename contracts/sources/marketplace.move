@@ -6,10 +6,13 @@ module ourchive::marketplace {
     use aptos_std::table::{Self, Table};
     use aptos_token::token::{TokenDataId, TokenId};
     use aptos_framework::account::SignerCapability;
+    use aptos_framework::coin::Coin;
+    use aptos_framework::aptos_coin::AptosCoin;
 
+    // TODO: Make the coin type use generic
     struct MarketDataStore has key {
         creator_info_table: Table<address, CreatorInfoRecord>,
-        image_price_table: Table<TokenDataId, ImagePrice>,
+        image_price_table: Table<TokenDataId, Coin<AptosCoin>>,
         creator_uploaded_images: Table<address, vector<TokenDataId>>,
         user_purchased_images: Table<address, vector<TokenId>>,
     }
@@ -20,10 +23,6 @@ module ourchive::marketplace {
         signer_cap: SignerCapability,
     }
     
-    struct ImagePrice has store {
-        value: u64,
-    }
-
     fun init_module(resource_signer: &signer) {
         let account_addr = signer::address_of(resource_signer);
 
