@@ -197,17 +197,17 @@ module ourchive::marketplace {
     }
 
     #[view]
-    public fun get_uploaded_images(creator: &signer): vector<TokenDataId> acquires MarketDataStore {
+    public fun get_uploaded_images(creator_addr: address): vector<TokenDataId> acquires MarketDataStore {
         let creator_uploaded_images = &borrow_global<MarketDataStore>(@ourchive).creator_uploaded_images_table;
         
-        *table::borrow(creator_uploaded_images, signer::address_of(creator))
+        *table::borrow(creator_uploaded_images, creator_addr)
     }
 
     #[view]
-    public fun get_purchased_images(user: &signer): vector<TokenId> acquires MarketDataStore {
+    public fun get_purchased_images(user_addr: address): vector<TokenId> acquires MarketDataStore {
         let user_purchased_images = &borrow_global<MarketDataStore>(@ourchive).user_purchased_images_table;
 
-        *table::borrow(user_purchased_images, signer::address_of(user))
+        *table::borrow(user_purchased_images, user_addr)
     }
 
     #[test_only]

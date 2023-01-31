@@ -27,7 +27,7 @@ module ourchive::marketplace_tests {
         let image_title2 = string::utf8(b"Ourchive2 Lover");
         marketplace::upload_image(creator, nickname2, image_title2, description, uri, price);
         
-        let uploaded_images = marketplace::get_uploaded_images(creator);
+        let uploaded_images = marketplace::get_uploaded_images(signer::address_of(creator));
         assert!(vector::length<TokenDataId>(&uploaded_images) == 2, 0);
     }
     
@@ -52,7 +52,7 @@ module ourchive::marketplace_tests {
 
         marketplace::purchase_image_for_test(user, signer::address_of(creator), nickname, image_title, 3, 20230203);
 
-        let purchased_images = marketplace::get_purchased_images(user);
+        let purchased_images = marketplace::get_purchased_images(signer::address_of(user));
         assert!(vector::length<TokenId>(&purchased_images) == 1, 0);
     }
 
