@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import { Types, AptosClient } from 'aptos';
 import { Login } from './Pages/Login';
 import { loginState } from './states/loginState';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -18,10 +19,17 @@ import ReportList from './Pages/Profile/ReportList';
 import Nickname from './Pages/Login/Nickname';
 
 const App = () => {
+  // const [account, setAccount] = useState<Types.AccountData | null>(null);
   // useEffect(() => {
-  //   if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
-  // }, []);
+  //   if (!address) return;
+  //   client.getAccount(address).then(setAccount);
+  // }, [address]);
 
+  useEffect(() => {
+    if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
+  }, []);
+
+  // console.log(address, account?.sequence_number);
   return (
     <BrowserRouter>
       <Routes>

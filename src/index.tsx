@@ -5,10 +5,16 @@ import './index.css';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <App />
-    </RecoilRoot>
-  </React.StrictMode>,
-);
+window.addEventListener('load', () => {
+  root.render(
+    <React.StrictMode>
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
+    </React.StrictMode>,
+  );
+});
+
+declare global {
+  interface Window { aptos: any; }
+}

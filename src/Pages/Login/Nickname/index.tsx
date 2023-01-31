@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 import { LargeButton, StyledInput } from '../../../styles';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
-import { loginState } from '../../../states/loginState';
+import { addressState, loginState } from '../../../states/loginState';
+import { submitUserNickname } from '../../../func';
 
 const Nickname = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [userNickname, setUserNickname] = useState('');
   const [isAvailable, setIsAvailable] = useState(false);
+  const userAddress = useRecoilValue(addressState);
 
   const nav = useNavigate();
 
@@ -40,7 +42,8 @@ const Nickname = () => {
         <LargeButton
           disabled={!isAvailable}
           style={{ backgroundColor: isAvailable ? 'black' : '#8E8E8E' }}
-          onClick={() => {
+          onClick={async () => {
+            await submitUserNickname(userAddress.address, userNickname);
             setIsLogin({ isLogin: true });
             nav('/main');
           }}

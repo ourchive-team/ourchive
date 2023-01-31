@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import profileIcon from '../../images/profile-icon.png';
@@ -8,6 +9,7 @@ import RenderImageList from '../../Components/RenderImageList';
 import { baseColor } from '../../styles';
 import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
+import { addressState, nicknameState } from '../../states/loginState';
 
 const YellowCardBox = styled.div`
   display: flex;
@@ -53,6 +55,12 @@ const Profile = () => {
       id: '0x4',
     },
   ];
+
+  const [nickname, setNickname] = useRecoilState(nicknameState);
+  const [address, setAddress] = useRecoilState(addressState);
+  const addressString = address as unknown as string;
+  const renderAddressString = `${addressString.slice(0, 4)}...${addressString.slice(-4)}`;
+
   return (
     <div
       style={{
@@ -67,11 +75,11 @@ const Profile = () => {
       <div style={{ padding: '16px' }}>
         <img alt="profile-icon" src={profileIcon} style={{ width: '120px', height: '120px', borderRadius: '50%' }} />
       </div>
-      <span style={{ fontSize: '24px', fontWeight: 700 }}>Colorchip</span>
+      <span style={{ fontSize: '24px', fontWeight: 700 }}>{nickname as unknown as string}</span>
       <span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>
         BA in fashion & graphic design tattoo, reiki&thetahealing master✨
       </span>
-      <span style={{ color: baseColor.purple }}>0x2b...bsfs</span>
+      <span style={{ color: baseColor.purple }}>{renderAddressString}</span>
 
       <div style={{ display: 'flex', width: '100%', padding: '16px', marginBottom: '28px' }}>
         <YellowCardBox>
