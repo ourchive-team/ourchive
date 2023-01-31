@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import RenderImageList from '../../../Components/RenderImageList';
 
 import aptosLogo from '../../../icons/aptos.svg';
-import { baseColor, PaddingBox } from '../../../styles';
+import { baseColor, PaddingBox, StyledSpan } from '../../../styles';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
 import TopNavigator from '../../../Components/TopNavigator';
 
@@ -16,13 +16,6 @@ interface ItemList {
   desc: string;
   profit: string;
 }
-
-const StyledSpan = styled.span`
-  width: 100%;
-  display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
 
 const UploadList = () => {
   const itemList: ItemList[] = [

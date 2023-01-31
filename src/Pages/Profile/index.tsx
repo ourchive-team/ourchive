@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+
+import { useNavigate } from 'react-router-dom';
 
 import profileIcon from '../../images/profile-icon.png';
 import navIcon from '../../icons/prev.svg';
 
 import RenderImageList from '../../Components/RenderImageList';
-import { baseColor } from '../../styles';
 import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
-import { addressState, nicknameState } from '../../states/loginState';
 
 const YellowCardBox = styled.div`
   display: flex;
@@ -56,11 +55,12 @@ const Profile = () => {
     },
   ];
 
-  const [nickname, setNickname] = useRecoilState(nicknameState);
-  const [address, setAddress] = useRecoilState(addressState);
-  const addressString = address as unknown as string;
-  const renderAddressString = `${addressString.slice(0, 4)}...${addressString.slice(-4)}`;
+  // const [nickname, setNickname] = useRecoilState(nicknameState);
+  // const [address, setAddress] = useRecoilState(addressState);
+  // const addressString = address as unknown as string;
+  // const renderAddressString = `${addressString.slice(0, 4)}...${addressString.slice(-4)}`;
 
+  const nav = useNavigate();
   return (
     <div
       style={{
@@ -75,11 +75,11 @@ const Profile = () => {
       <div style={{ padding: '16px' }}>
         <img alt="profile-icon" src={profileIcon} style={{ width: '120px', height: '120px', borderRadius: '50%' }} />
       </div>
-      <span style={{ fontSize: '24px', fontWeight: 700 }}>{nickname as unknown as string}</span>
-      <span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>
-        BA in fashion & graphic design tattoo, reiki&thetahealing master✨
-      </span>
-      <span style={{ color: baseColor.purple }}>{renderAddressString}</span>
+      {/*<span style={{ fontSize: '24px', fontWeight: 700 }}>{nickname as unknown as string}</span>*/}
+      {/*<span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>*/}
+      {/*  BA in fashion & graphic design tattoo, reiki&thetahealing master✨*/}
+      {/*</span>*/}
+      {/*<span style={{ color: baseColor.purple }}>{renderAddressString}</span>*/}
 
       <div style={{ display: 'flex', width: '100%', padding: '16px', marginBottom: '28px' }}>
         <YellowCardBox>
@@ -111,7 +111,9 @@ const Profile = () => {
         </div>
       </div>
 
-      <span style={{ fontSize: '16px', fontWeight: 700, paddingLeft: '16px', marginRight: 'auto' }}>Download List</span>
+      <span style={{ fontSize: '16px', fontWeight: 700, paddingLeft: '16px', marginRight: 'auto', cursor: 'pointer' }}>
+        Download List
+      </span>
       <div style={{ width: '100%', height: '100%', marginBottom: '24px' }}>
         <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px', marginLeft: '-6px' }}>
           <RenderImageList
@@ -126,12 +128,22 @@ const Profile = () => {
         </div>
       </div>
 
-      <div style={{ display: 'flex', padding: '12px 16px', justifyContent: 'space-between', width: '100%' }}>
+      <div
+        style={{
+          display: 'flex',
+          padding: '12px 16px',
+          justifyContent: 'space-between',
+          width: '100%',
+          cursor: 'pointer',
+        }}
+        onClick={() => nav('report-list')}
+      >
         <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Report List</span>
-        <img src={navIcon} alt="go to provement-list" style={{ width: '20px', transform: 'rotate(180deg)' }} />
+        <img src={navIcon} alt="go to report-list" style={{ width: '20px', transform: 'rotate(180deg)' }} />
       </div>
 
       <div
+        onClick={() => nav('provement-list')}
         style={{
           display: 'flex',
           padding: '12px 16px',
@@ -141,7 +153,11 @@ const Profile = () => {
         }}
       >
         <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Provement List</span>
-        <img src={navIcon} alt="go to provement-list" style={{ width: '20px', transform: 'rotate(180deg)' }} />
+        <img
+          src={navIcon}
+          alt="go to provement-list"
+          style={{ width: '20px', transform: 'rotate(180deg)', cursor: 'pointer' }}
+        />
       </div>
       <BottomNavigator />
       <YellowBottomNavigator

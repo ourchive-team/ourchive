@@ -10,6 +10,7 @@ import Resolution from '../../Components/Resolution';
 import RenderImageList from '../../Components/RenderImageList';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
+import CreatedBy from '../../Components/CreatedBy';
 
 const ImageDetail = () => {
   const nav = useNavigate();
@@ -79,31 +80,22 @@ const ImageDetail = () => {
       <TopNavigator>
         <span>Purchase</span>
       </TopNavigator>
-
       <PaddingBox>
         <ImageContainer style={{ minHeight: '300px', height: '300px' }} />
       </PaddingBox>
-
       <PaddingBox style={{ padding: '0px 16px' }}>
         <span style={{ fontSize: '24px', fontWeight: 700, marginTop: '16px' }}>{imageData.title}</span>
         <span style={{ fontSize: '13px', opacity: 0.7, margin: '8px 0px' }}>{imageData.desc}</span>
-        <div style={{ display: 'flex', marginBottom: '16px', alignItems: 'center' }}>
-          <img srcSet={profileIcon} alt="profile icon" style={{ width: '24px', marginRight: '8px' }} />
-          <span>Created by &nbsp;</span>
-          <span style={{ color: baseColor.yellow }}>{`${imageData.creator}`}</span>
-        </div>
+        <CreatedBy profileImg={profileIcon} creator={imageData.creator} />
       </PaddingBox>
-
       <PaddingBox>
         <FeedStatus />
       </PaddingBox>
-
       <PaddingBox style={{ padding: '0px 16px', marginBottom: '-16px' }}>
         <span style={{ fontSize: '20px', fontWeight: 700, marginTop: '24px' }}>Detail</span>
       </PaddingBox>
       <Resolution list={resolutionList} />
       {/* Description Card Box */}
-
       {/*Recommend*/}
       <PaddingBox>
         <span style={{ fontWeight: 700, fontSize: '14px' }}>Other works by this artist</span>
@@ -120,7 +112,6 @@ const ImageDetail = () => {
           />
         </div>
       </div>
-
       <PaddingBox>
         <span style={{ fontWeight: 700, fontSize: '14px' }}>Similar works</span>
       </PaddingBox>
@@ -136,9 +127,7 @@ const ImageDetail = () => {
           />
         </div>
       </div>
-
       {/*/!* nav = /reportNFT -> /reportNFT:id *!/*/}
-
       {/* nav = /buyNFT -> /buyNFT:id */}
       <YellowBottomNavigator>
         <div style={{ display: 'flex', width: '100%', height: '100%' }}>

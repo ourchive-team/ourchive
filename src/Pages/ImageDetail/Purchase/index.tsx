@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { LargeButton, PaddingBox, StyledInput } from '../../../styles';
+import { LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/TopNavigator';
 import Resolution, { IResolutionList } from '../../../Components/Resolution';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
 import { buyImage } from '../../../func';
 
-const BuyNFT = () => {
+const Purchase = () => {
   const resolutionList = [
     {
       size: 'LARGE',
@@ -84,6 +84,11 @@ const BuyNFT = () => {
               &nbsp;
             </span>
             <span>APT</span>
+            {requestReady && (
+              <StyledSpan style={{ fontSize: '13px', height: 'fit-content', marginTop: 'auto', marginLeft: '4px' }}>
+                {`(${selectedSize.value}APT x ${periodNumber} days)`}
+              </StyledSpan>
+            )}
           </div>
           <LargeButton
             disabled={!requestReady}
@@ -106,4 +111,4 @@ const BuyNFT = () => {
   );
 };
 
-export default BuyNFT;
+export default Purchase;

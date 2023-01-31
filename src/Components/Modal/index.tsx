@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { PaddingBox } from '../../styles';
 
 interface IModal {
   close: () => void;
@@ -37,6 +38,7 @@ const ModalBody = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 16px;
   padding: 16px;
+  margin: 24px;
   background-color: black;
   position: fixed;
   z-index: 2;

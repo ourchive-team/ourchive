@@ -12,11 +12,13 @@ import ImageDetail from './Pages/ImageDetail';
 import Upload from './Pages/UploadImage';
 import Profile from './Pages/Profile';
 import UploadList from './Pages/Profile/UploadList';
-import PurchaseList from './Pages/Profile/PurchaseList';
-import BuyNFT from './Pages/ImageDetail/Purchase';
-import Report from './Pages/ImageDetail/Report';
+import PurchaseList from './Pages/Profile/DownloadList';
+import Purchase from './Pages/ImageDetail/Purchase';
+import Report from './Pages/Report';
 import ReportList from './Pages/Profile/ReportList';
 import Nickname from './Pages/Login/Nickname';
+import ProveList from './Pages/Profile/ProveList';
+import ProveOwnershipOfImage from './Pages/ProveOwnershipOfImage';
 
 const App = () => {
   // const [account, setAccount] = useState<Types.AccountData | null>(null);
@@ -25,9 +27,10 @@ const App = () => {
   //   client.getAccount(address).then(setAccount);
   // }, [address]);
 
-  useEffect(() => {
-    if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
-  }, []);
+  // ngrok test error
+  // useEffect(() => {
+  //   if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
+  // }, []);
 
   // console.log(address, account?.sequence_number);
   return (
@@ -40,12 +43,14 @@ const App = () => {
 
         <Route path="/images/:id" element={<ImageDetail />} />
         <Route path="/images/:id/report" element={<Report />} />
-        <Route path="/images/:id/purchase" element={<BuyNFT />} />
+        <Route path="/images/:id/purchase" element={<Purchase />} />
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/upload-list" element={<UploadList />} />
-        <Route path="/profile/purchase-list" element={<PurchaseList />} />
+        <Route path="/profile/download-list" element={<PurchaseList />} />
         <Route path="/profile/report-list" element={<ReportList />} />
+        <Route path="/profile/provement-list" element={<ProveList />} />
+        <Route path="/profile/provement-list/:id" element={<ProveOwnershipOfImage />} />
 
         <Route path="/upload-image" element={<Upload />} />
       </Routes>

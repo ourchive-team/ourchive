@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { baseColor, LargeButton, PaddingBox, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/TopNavigator';
 import RenderImageList from '../../../Components/RenderImageList';
@@ -24,7 +26,7 @@ const EnumProveColor = {
   3: baseColor.orange,
 };
 
-const ProveStatus = ({ proveStatus }: IProveStatus) => {
+export const ProveStatus = ({ proveStatus }: IProveStatus) => {
   const color = EnumProveColor[proveStatus];
   const status = EnumProveStatus[proveStatus];
   return (
@@ -54,6 +56,7 @@ const ProveStatus = ({ proveStatus }: IProveStatus) => {
 
 type TProved = 0 | 1 | 2 | 3;
 interface IProveItem {
+  id: string;
   proved: TProved;
   title: string;
   creator: string;
@@ -64,6 +67,7 @@ interface IProveItem {
 const ReportList = () => {
   const proveList: IProveItem[] = [
     {
+      id: '0x1',
       proved: 0,
       title: 'Greenary duck',
       creator: 'Shelby',
@@ -72,6 +76,7 @@ const ReportList = () => {
       keyPhrase: 'Space',
     },
     {
+      id: '0x2',
       proved: 1,
       title: 'Greenary duck',
       creator: 'Shelby',
@@ -80,6 +85,7 @@ const ReportList = () => {
       keyPhrase: 'Space',
     },
     {
+      id: '0x3',
       proved: 2,
       title: 'Greenary duck',
       creator: 'Shelby',
@@ -88,18 +94,21 @@ const ReportList = () => {
       keyPhrase: 'Space',
     },
     {
+      id: '0x4',
       proved: 3,
       title: 'Greenary duck',
       creator: 'Shelby',
       requestedDate: '2023.01.21 02:30', //timeStamp
       provedDate: 'Not proved yet',
-      keyPhrase: 'Space',
+      keyPhrase: 'Not proved yet',
     },
   ];
+
+  const nav = useNavigate();
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
       <TopNavigator>
-        <span style={{ fontSize: '18px' }}>Report list</span>
+        <span style={{ fontSize: '18px' }}>Prove list</span>
       </TopNavigator>
 
       <PaddingBox>
@@ -107,6 +116,9 @@ const ReportList = () => {
           const highlightsColor = EnumProveColor[el.proved];
           return (
             <div
+              onClick={() => {
+                nav(el.id);
+              }}
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -172,9 +184,9 @@ const ReportList = () => {
           );
         })}
       </PaddingBox>
-      <YellowBottomNavigator>
-        <LargeButton>Report Image</LargeButton>
-      </YellowBottomNavigator>
+      <YellowBottomNavigator
+        style={{ box: { backgroundColor: 'transparent', paddingTop: 0 }, bar: { backgroundColor: 'white' } }}
+      />
     </div>
   );
 };
