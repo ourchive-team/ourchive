@@ -45,7 +45,6 @@ const Main = () => {
   }, []);
 
   const [nickname, setNickname] = useRecoilState(nicknameState);
-  console.log(nickname);
 
   return (
     <div

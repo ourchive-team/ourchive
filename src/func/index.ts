@@ -36,7 +36,6 @@ export const checkUserExists = async (userAddress: string, setNickname: any) => 
   try {
     const result = await client.getTableItem(handle, getTableItemRequest);
     setNickname(result);
-    console.log('nickname set!', result);
   } catch (err) { // FIXME
     const error = err as ApiError;
     if (error.errorCode === "table_item_not_found") {
@@ -61,7 +60,7 @@ export const submitUserNickname = async (userAddress: string, userNickname: stri
   try {
     await window.aptos.signAndSubmitTransaction(transaction);
   } catch (error: any) {
-    console.log("fuck", error);
+    console.log(error);
   }
 };
 
