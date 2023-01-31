@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import profileIcon from '../../images/profile-icon.png';
@@ -8,6 +9,7 @@ import RenderImageList from '../../Components/RenderImageList';
 import { baseColor } from '../../styles';
 import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
+import { addressState, nicknameState } from '../../states/loginState';
 
 const YellowCardBox = styled.div`
   display: flex;
@@ -53,6 +55,11 @@ const Profile = () => {
       id: '0x4',
     },
   ];
+
+  const [nickname, setNickname] = useRecoilState(nicknameState);
+
+  const [address, setAddress] = useRecoilState(addressState);
+
   return (
     <div
       style={{
@@ -71,7 +78,7 @@ const Profile = () => {
       <span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>
         BA in fashion & graphic design tattoo, reiki&thetahealing master✨
       </span>
-      <span style={{ color: baseColor.purple }}>0x2b...bsfs</span>
+      <span style={{ color: baseColor.purple }}>{address.address}</span>
 
       <div style={{ display: 'flex', width: '100%', padding: '16px', marginBottom: '28px' }}>
         <YellowCardBox>

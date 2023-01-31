@@ -1,21 +1,24 @@
-import { AptosClient } from 'aptos';
-import { TableItemRequest } from 'aptos/src/generated';
+import { ApiError, AptosClient } from 'aptos';
+import { AptosGeneratedClient, TableItemRequest, ViewRequest } from 'aptos/src/generated';
 import React, { useEffect, useState } from 'react';
 import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { addressState } from '../states/loginState';
 
-const moduleAddress = "0xc3c01947106a53503685245dd0ffb6d91c7622b590c8a249dab23af5819a3b4"; export const walletConnect = async (setAddress: any) => {
+const moduleAddress = "0xc3c01947106a53503685245dd0ffb6d91c7622b590c8a249dab23af5819a3b4";
+
+export const walletConnect = async (setAddress: any, setPublicKey: any) => {
   /**
      * init function
      */
   // connect
   const { address, publicKey } = await window.aptos.connect();
   setAddress(address);
+  setPublicKey(publicKey);
 
-  return address;
+  return { address, publicKey };
 };
 
-export const checkUserExists = async (userAddress: string) => {
+export const checkUserExists = async (userAddress: string, setNickname: any) => {
   const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
 
   const UserResource: { data: any } = await client.getAccountResource(
@@ -32,11 +35,16 @@ export const checkUserExists = async (userAddress: string) => {
 
   try {
     const result = await client.getTableItem(handle, getTableItemRequest);
-  } catch (error: any) {
-    return false; // FIXME
-    // if (error?.error_code === "table_item_not_found") { // THIS IS THE RIGHT WAY
-    //   return false;
-    // }
+    setNickname(result);
+    console.log('nickname set!', result);
+  } catch (err) { // FIXME
+    const error = err as ApiError;
+    if (error.errorCode === "table_item_not_found") {
+      return false;
+    }
+
+    console.log(error);
+    return false;
   }
   return true;
 };
@@ -67,7 +75,23 @@ interface ImageInfo {
   imgUrl: string;
 }
 export const getImageInfo = () => { };
-export const getImageInfoList = () => { };
+
+export const getImageInfoList = async () => {
+  const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
+  const viewRequest : ViewRequest = {
+    function: `${moduleAddress}::user_manager::set_user_nickname`,
+    type_arguments: [],
+    arguments: [],
+  };
+
+  try {
+    const result = await client.view(viewRequest);
+  } catch (error) {
+    // do sth
+  }
+
+  // TODO
+};
 
 interface IDownloadImage {
   id: string;

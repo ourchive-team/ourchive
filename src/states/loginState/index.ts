@@ -35,3 +35,25 @@ export const addressState = atom<TAddressState>({
     address: '',
   },
 });
+
+type TPublicKeyState = {
+  publicKey: string;
+};
+
+export const publicKeyState = atom<TPublicKeyState>({
+  key: LoginStateEnum.PUBLIC_KEY,
+  default: {
+    publicKey: '',
+  },
+});
+
+type TNicknameState = {
+  nickname: string;
+};
+
+export const nicknameState = atom<TNicknameState>({
+  key: LoginStateEnum.NICKNAME,
+  default: {
+    nickname: '',
+  },
+});

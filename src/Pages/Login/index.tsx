@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton } from '../../styles';
-import { loginState, addressState } from '../../states/loginState';
+import { loginState, addressState, publicKeyState, nicknameState } from '../../states/loginState';
 import { checkUserExists, walletConnect } from '../../func';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 
@@ -25,6 +25,9 @@ const LoginPageContainer = styled.div`
 export const Login = () => {
   const nav = useNavigate();
   const [address, setAddress] = useRecoilState(addressState);
+  const [publicKey, setPublicKey] = useRecoilState(publicKeyState);
+  const [nickname, setNickname] = useRecoilState(nicknameState);
+
   return (
     <LoginPageContainer style={{ backgroundColor: baseColor.yellow, height: '100%' }}>
       <div
@@ -43,9 +46,8 @@ export const Login = () => {
         <LargeButton
           style={{ fontSize: '16px' }}
           onClick={async () => {
-            const addr = await walletConnect(setAddress);
-            // nav('/nickname');
-            if (await checkUserExists(addr)) {
+            const { address: addr, publicKey: pKey } = await walletConnect(setAddress, setPublicKey);
+            if (await checkUserExists(pKey, setNickname)) {
               // SET isLogin to true
               nav('/main');
             } else { nav('/nickname'); }
