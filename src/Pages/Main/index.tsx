@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { TokenTypes } from 'aptos';
 import searchIcon from '../../icons/search-icon.svg';
 import banner from '../../images/banner.png';
 
 import SelectCategoryBar from '../../Components/SelectCategoryBar';
 import GridImageContainer from '../../Components/GridImageContainer';
-import { getImageInfo, getImageInfoList } from '../../func';
+import { getAllImageInfoList } from '../../func';
 import BottomNavigator from '../../Components/BottomNavigator';
 import { PaddingBox } from '../../styles';
 import { nicknameState } from '../../states/loginState';
+import { TokenItem } from '../../Components/RenderImageList';
 
 const Main = () => {
   const nav = useNavigate();
@@ -40,8 +42,15 @@ const Main = () => {
     },
   ];
 
+  const [tokenList, setTokenList] = useState<TokenItem[] | null>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   useEffect(() => {
-    getImageInfoList();
+    getAllImageInfoList().then(data => {
+      console.log(data, 'img');
+      setTokenList(data);
+      setIsLoading(true);
+    });
   }, []);
 
   const [nickname, setNickname] = useRecoilState(nicknameState);
@@ -67,7 +76,8 @@ const Main = () => {
         <SelectCategoryBar data={['Recommended', 'Lifestyle', 'Future', 'Normal']} />
       </div>
 
-      <GridImageContainer itemList={itemList} routeUrl="/images" />
+      {/*@ts-ignore:next-line;*/}
+      {isLoading && tokenList?.length > 0 ? <GridImageContainer itemList={tokenList} routeUrl="/images" /> : <div />}
       <PaddingBox style={{ marginTop: 'auto' }}>
         <BottomNavigator />
       </PaddingBox>

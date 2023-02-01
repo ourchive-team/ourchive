@@ -77,13 +77,7 @@ const UploadList = () => {
                 height: 'fit-content',
               }}
             >
-              <RenderImageList
-                itemList={[{ id: '0x' }]}
-                routeUrl="/Images"
-                skeletonWidth={100}
-                skeletonHeight={100}
-                hideDetails
-              />
+              <RenderImageList itemList={[]} routeUrl="/Images" skeletonWidth={100} skeletonHeight={100} hideDetails />
               <div
                 style={{
                   display: 'flex',
