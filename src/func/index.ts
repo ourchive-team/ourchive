@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { addressState, nicknameState } from '../states/loginState';
 import UploadToIPFS from './ipfs';
+import { TokenItem } from '../Components/RenderImageList';
 
-const moduleAddress = '0xc3c01947106a53503685245dd0ffb6d91c7622b590c8a249dab23af5819a3b4';
+const moduleAddress = "0x13aabca9cb7edee47f7fa6eb8d501c1332307d53e2689f1a763a0442e5101885";
 const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
 const tokenClient = new TokenClient(client);
 
@@ -108,7 +109,13 @@ export const getImageInfo = async (creatorAddress: string, imageTitle: string): 
   }
 };
 
+const tokendataIdToUri = async (tokenDataId: { creator: string, collection: string, name: string }) => {
+  const tokenData = await tokenClient.getTokenData(tokenDataId.creator, tokenDataId.collection, tokenDataId.name);
+  return tokenData.uri;
+};
+
 export const getAllImageInfoList = async () => {
+  const tokens2: TokenItem[] = [];
   const viewRequest: ViewRequest = {
     function: `${moduleAddress}::marketplace::get_all_images`,
     type_arguments: [],
@@ -116,17 +123,22 @@ export const getAllImageInfoList = async () => {
   };
 
   try {
-    // TODO
     const result = await client.view(viewRequest);
-    const tokenDataIdList = result as TokenTypes.TokenDataId[];
-    console.log(result);
-    return tokenDataIdList;
+    const result1 = result as { data: { key: { collection: string, creator: string, name: string }, value: { amount: string } }[] }[];
+    const tokens = result1[0].data;
+
+    // eslint-disable-next-line
+    for (const token of tokens) {
+      // eslint-disable-next-line
+      const uri = await tokendataIdToUri({ creator: token.key.creator, collection: token.key.collection, name: token.key.name });
+      tokens2.push({ creator: token.key.creator, collection: token.key.collection, name: token.key.name, uri, price: parseInt(token.value.amount, 10) });
+    }
+    console.log("tokens", tokens2);
+    return [...tokens2];
   } catch (error) {
     console.log(error);
     return [];
   }
-
-  return [];
 };
 
 export const getUploadedImageList = async (address: string): Promise<TokenTypes.TokenDataId[]> => {

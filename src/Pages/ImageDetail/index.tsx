@@ -122,7 +122,7 @@ const ImageDetail = () => {
       <div style={{ width: '100%', height: '100%', marginBottom: '32px' }}>
         <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px' }}>
           <RenderImageList
-            itemList={itemList}
+            itemList={[]}
             routeUrl="/images"
             skeletonWidth={140}
             skeletonHeight={140}
@@ -138,7 +138,7 @@ const ImageDetail = () => {
       <div style={{ width: '100%', height: '100%', marginBottom: '32px' }}>
         <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px' }}>
           <RenderImageList
-            itemList={itemList}
+            itemList={[]}
             routeUrl="/images"
             skeletonWidth={140}
             skeletonHeight={140}

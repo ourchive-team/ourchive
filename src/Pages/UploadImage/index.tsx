@@ -212,7 +212,7 @@ const Upload = () => {
               price: parseInt(inputValues.price, 10),
               // eslint-disable-next-line
               img: imageFile?.file!,
-              nickname: (nickname as unknown) as string,
+              nickname: (nickname.nickname as unknown) as string,
             });
           }}
         >
