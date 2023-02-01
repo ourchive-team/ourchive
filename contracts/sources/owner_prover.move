@@ -20,12 +20,12 @@ module ourchive::owner_prover {
         user_proof_table: Table<String, vector<ProofElement>>,
     }
 
-    struct ReportElement has store, drop {
+    struct ReportElement has store, drop, copy {
         image: TokenDataId,
         proved: bool,
     }
     
-    struct ProofElement has store, drop {
+    struct ProofElement has store, drop, copy {
         image: TokenDataId,
         phrase: String,
     }
@@ -141,5 +141,19 @@ module ourchive::owner_prover {
             i = i + 1;
         };
         result
+    }
+
+    #[view]
+    public fun get_report_list(creator_nickname: String): SimpleMap<String, ReportElement> acquires OwnerProverStore {
+        let creator_report_table = &borrow_global<OwnerProverStore>(@ourchive).creator_report_table;
+
+        *table::borrow(creator_report_table, creator_nickname)
+    }
+
+    #[view]
+    public fun get_proof_list(user_nickname: String): vector<ProofElement> acquires OwnerProverStore {
+        let user_proof_table = &borrow_global<OwnerProverStore>(@ourchive).user_proof_table;
+
+        *table::borrow(user_proof_table, user_nickname)
     }
 }
