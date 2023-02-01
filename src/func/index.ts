@@ -241,7 +241,7 @@ interface IProveImage {
   address: string;
   phrase: string;
 }
-export const proveNFT = () => { };
+export const proveImage = () => {};
 
 interface IReportImage {
   address: string;

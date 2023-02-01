@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import { TokenTypes } from 'aptos';
 import styled from 'styled-components';
 
-import { TokenTypes } from 'aptos';
+import { useNavigate } from 'react-router-dom';
+
 import profileIcon from '../../images/profile-icon.png';
 import navIcon from '../../icons/prev.svg';
 
 import RenderImageList from '../../Components/RenderImageList';
-import { baseColor } from '../../styles';
 import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import { addressState, nicknameState, publicKeyState } from '../../states/loginState';
@@ -73,6 +74,7 @@ const Profile = () => {
     console.log('hihi', uploadList);
   }, []);
 
+  const nav = useNavigate();
   return (
     <div
       style={{
@@ -123,7 +125,9 @@ const Profile = () => {
         </div>
       </div>
 
-      <span style={{ fontSize: '16px', fontWeight: 700, paddingLeft: '16px', marginRight: 'auto' }}>Download List</span>
+      <span style={{ fontSize: '16px', fontWeight: 700, paddingLeft: '16px', marginRight: 'auto', cursor: 'pointer' }}>
+        Download List
+      </span>
       <div style={{ width: '100%', height: '100%', marginBottom: '24px' }}>
         <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px', marginLeft: '-6px' }}>
           <RenderImageList
@@ -138,12 +142,22 @@ const Profile = () => {
         </div>
       </div>
 
-      <div style={{ display: 'flex', padding: '12px 16px', justifyContent: 'space-between', width: '100%' }}>
+      <div
+        style={{
+          display: 'flex',
+          padding: '12px 16px',
+          justifyContent: 'space-between',
+          width: '100%',
+          cursor: 'pointer',
+        }}
+        onClick={() => nav('report-list')}
+      >
         <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Report List</span>
-        <img src={navIcon} alt="go to provement-list" style={{ width: '20px', transform: 'rotate(180deg)' }} />
+        <img src={navIcon} alt="go to report-list" style={{ width: '20px', transform: 'rotate(180deg)' }} />
       </div>
 
       <div
+        onClick={() => nav('provement-list')}
         style={{
           display: 'flex',
           padding: '12px 16px',
@@ -153,7 +167,11 @@ const Profile = () => {
         }}
       >
         <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Provement List</span>
-        <img src={navIcon} alt="go to provement-list" style={{ width: '20px', transform: 'rotate(180deg)' }} />
+        <img
+          src={navIcon}
+          alt="go to provement-list"
+          style={{ width: '20px', transform: 'rotate(180deg)', cursor: 'pointer' }}
+        />
       </div>
       <BottomNavigator />
       <YellowBottomNavigator

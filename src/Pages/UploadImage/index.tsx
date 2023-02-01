@@ -72,6 +72,7 @@ interface InputValues {
   desc: string;
   price: string;
 }
+
 const Upload = () => {
   const [inputValues, setInputValues] = useState({ title: '', desc: '', price: '' });
   const [modalOpen, setModalOpen] = useState(false);

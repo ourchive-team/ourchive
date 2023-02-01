@@ -33,6 +33,10 @@ export const LargeButton = styled.button`
   background: black;
   border: none;
   border-radius: 4px;
+
+  :disabled {
+    background-color: #8e8e8e;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -60,4 +64,11 @@ export const StyledInput = styled.input`
   ::placeholder {
     color: #4e4e4b;
   }
+`;
+
+export const StyledSpan = styled.span`
+  width: 100%;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
