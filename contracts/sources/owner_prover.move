@@ -2,7 +2,8 @@ module ourchive::owner_prover {
     use std::vector;
     use std::signer;
     use std::error;
-    use std::string::{Self, String};
+    use std::string::String;
+    use std::option::{Self, Option};
     
     use aptos_std::table::{Self, Table};
     use aptos_std::simple_map::{Self, SimpleMap};
@@ -55,29 +56,26 @@ module ourchive::owner_prover {
 
         let creator_address = signer::address_of(creator);
         let uploded_images = marketplace::get_uploaded_images(creator_address);
-        let reported_image = find_image(&uploded_images, creator_address, &image_title);
+        let reported_image = find_image(&uploded_images, &image_title);
+        assert!(!option::is_none(&reported_image), EINCORRECT_IMAGE_TITLE);
         let reports = table::borrow_mut(creator_report_table, creator_nickname);
         if (!simple_map::contains_key(reports, &phrase)) {
             simple_map::add(reports, phrase, ReportElement {
-                image: reported_image,
+                image: option::extract(&mut reported_image),
                 proved: false,
             });
         };
     }
 
-    fun find_image(images: &vector<TokenDataId>, addr: address, title: &String): TokenDataId {
-        let result = token::create_token_data_id(
-            addr,
-            string::utf8(b""),
-            string::utf8(b""),
-        );
+    fun find_image(images: &vector<TokenDataId>, title: &String): Option<TokenDataId> {
+        let result = option::none<TokenDataId>();
         let i = 0;
 
         while (i < vector::length(images)) {
             let image = vector::borrow(images, i);
             let (_, _, name) = token::get_token_data_id_fields(image);
             if (&name == title) {
-                result = *image;
+                result = option::some<TokenDataId>(*image);
                 break
             };
             i = i + 1;
