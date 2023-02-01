@@ -72,6 +72,7 @@ interface InputValues {
   desc: string;
   price: string;
 }
+
 const Upload = () => {
   const [inputValues, setInputValues] = useState({ title: '', desc: '', price: '' });
   const [modalOpen, setModalOpen] = useState(false);
@@ -212,7 +213,7 @@ const Upload = () => {
               price: parseInt(inputValues.price, 10),
               // eslint-disable-next-line
               img: imageFile?.file!,
-              nickname: (nickname as unknown) as string,
+              nickname: nickname as unknown as string,
             });
           }}
         >

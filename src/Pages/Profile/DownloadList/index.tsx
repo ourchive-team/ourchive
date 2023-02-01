@@ -43,7 +43,19 @@ const ReDownloadOrExpiredButton = ({ expireDate }: IExpireStatus) => {
   return (
     <button
       type="button"
-      onClick={() => (isExpired ? buyImage() : downloadImage())}
+      onClick={() => {
+        if (isExpired) {
+          buyImage({
+            id: 'hi',
+            size: 1,
+            creator: 'asdf',
+            imageTitle: 'asdf',
+            expiry: 0,
+          });
+        } else {
+          downloadImage();
+        }
+      }}
       style={{
         fontWeight: 700,
         fontSize: 14,
