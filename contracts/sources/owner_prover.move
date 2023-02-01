@@ -15,7 +15,7 @@ module ourchive::owner_prover {
     const EINVALID_CREATOR_NICKNAME: u64 = 1;
     const EINCORRECT_PHRASE: u64 = 2;
     const EINCORRECT_IMAGE_TITLE: u64 = 3;
-    const EUSER_DONOT_OWN_IMAGE: u64 = 4;
+    const EUSER_NOT_IMAGE_OWNER: u64 = 4;
 
     struct OwnerProverStore has key {
         creator_report_table: Table<String, SimpleMap<String, ReportElement>>,
@@ -111,7 +111,7 @@ module ourchive::owner_prover {
 
         // Check if the image is in the user's purchase list
         let user_address = signer::address_of(user);
-        assert!(check_user_purchase_image(user_address, &creator_report.image), EUSER_DONOT_OWN_IMAGE);
+        assert!(check_user_purchase_image(user_address, &creator_report.image), EUSER_NOT_IMAGE_OWNER);
 
         let user_proof_table = &mut owner_prover_store.user_proof_table;
         if (!table::contains(user_proof_table, user_nickname)) {
