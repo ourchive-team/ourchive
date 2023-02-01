@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 import profileIcon from '../../images/profile-icon.png';
 import navIcon from '../../icons/prev.svg';
+import { baseColor } from '../../styles';
 
-import RenderImageList from '../../Components/RenderImageList';
+import RenderImageList, { TokenItem } from '../../Components/RenderImageList';
 import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import { addressState, nicknameState, publicKeyState } from '../../states/loginState';
-import { getUploadedImageList } from '../../func';
-import { baseColor } from '../../styles';
+import { getUploadedImageList, getUserNickname } from '../../func';
 
 const YellowCardBox = styled.div`
   display: flex;
@@ -48,13 +48,12 @@ const Profile = () => {
   const addressString = address;
   const renderAddressString = `${addressString?.slice(0, 4)}...${addressString?.slice(-4)}`;
 
-  const [uploadList, setUploadList] = useState<TokenTypes.TokenDataId[] | null>(null);
+  const [uploadList, setUploadList] = useState<TokenItem[]>([]);
 
   useEffect(() => {
     getUploadedImageList(addressString).then(data => {
       setUploadList(data);
     });
-    console.log('hihi', uploadList);
   }, []);
 
   const nav = useNavigate();
@@ -97,7 +96,7 @@ const Profile = () => {
       <div style={{ width: '100%', height: '100%', marginBottom: '24px' }}>
         <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px', marginLeft: '-6px' }}>
           <RenderImageList
-            itemList={[]}
+            itemList={uploadList}
             routeUrl="upload-list"
             routeUrlWithoutId
             skeletonWidth={100}

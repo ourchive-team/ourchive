@@ -29,11 +29,11 @@ export const checkUserExists = async (userAddress: string, setNickname: any) => 
   );
 
   const { handle }: { handle: string } = UserResource.data.nicknames;
-  const { publicKey } = await window.aptos.account();
+  const { address, publicKey } = await window.aptos.account();
   const getTableItemRequest: TableItemRequest = {
     key_type: 'address',
     value_type: '0x1::string::String',
-    key: publicKey,
+    key: address,
   };
 
   try {
@@ -57,7 +57,7 @@ export const submitUserNickname = async (userAddress: string, userNickname: stri
   const transaction = {
     type: 'entry_function_payload',
     function: `${moduleAddress}::user_manager::set_user_nickname`,
-    arguments: [publicKey, userNickname],
+    arguments: [userAddress, userNickname],
     type_arguments: [],
   };
 
@@ -66,6 +66,37 @@ export const submitUserNickname = async (userAddress: string, userNickname: stri
   } catch (error: any) {
     console.log(error);
   }
+};
+
+export const getUserNickname = async (userAddress: string) => {
+  const UserResource: { data: any } = await client.getAccountResource(
+    moduleAddress,
+    `${moduleAddress}::user_manager::UserStore`,
+  );
+
+  const { handle }: { handle: string } = UserResource.data.nicknames;
+  const { publicKey } = await window.aptos.account();
+  const getTableItemRequest: TableItemRequest = {
+    key_type: 'address',
+    value_type: '0x1::string::String',
+    key: userAddress,
+  };
+
+  try {
+    const result = await client.getTableItem(handle, getTableItemRequest);
+    return result as string;
+  } catch (err) {
+    // FIXME
+    console.log(err);
+    const error = err as ApiError;
+    if (error.errorCode === 'table_item_not_found') {
+      return '';
+    }
+
+    console.log(error);
+    return '';
+  }
+  return '';
 };
 
 interface ImageInfo {
@@ -163,6 +194,7 @@ export const getAllImageInfoList = async () => {
       });
       tokens2.push({
         creator: token.key.creator,
+        creatorNickname: token.key.collection.replace('\'s Collection', ''), // FIXME
         collection: token.key.collection,
         name: token.key.name,
         uri,
@@ -177,18 +209,28 @@ export const getAllImageInfoList = async () => {
   }
 };
 
-export const getUploadedImageList = async (address: string): Promise<TokenTypes.TokenDataId[]> => {
+export const getUploadedImageList = async (address: string): Promise<TokenItem[]> => {
   const viewRequest: ViewRequest = {
     function: `${moduleAddress}::marketplace::get_uploaded_images`,
     type_arguments: [],
     arguments: [address],
   };
 
+  const tokens: TokenItem[] = [];
+
   try {
     const result = await client.view(viewRequest);
     const tokenDataIdList = result as TokenTypes.TokenDataId[];
-    console.log(tokenDataIdList);
-    return tokenDataIdList;
+    // eslint-disable-next-line
+    for (const t of tokenDataIdList) {
+      const token = t[0];
+      console.log(token.creator, token.collection, token.name);
+      // eslint-disable-next-line
+      const uri = await tokendataIdToUri({ creator: token.creator, collection: token.collection, name: token.name });
+      const creatorName = token.collection.replace('\'s Collection', ''); // FIXME
+      tokens.push({ creator: token.creator, creatorNickname: creatorName, collection: token.collection, name: token.name, uri, price: 0 });
+    }
+    return tokens;
   } catch (error) {
     console.log(error);
     return [];
@@ -311,3 +353,67 @@ export const reportImage = async (report: IReportImage) => {
   }
 };
 //image? || images[]?
+
+// TODO
+export const getReportList = async () => {
+  const OwnerProverStore: { data: any } = await client.getAccountResource(
+    moduleAddress,
+    `${moduleAddress}::owner_prover::OwnerProverStore`,
+  );
+
+  const { handle }: { handle: string } = OwnerProverStore.data.creator_report_table;
+  const { publicKey } = await window.aptos.account();
+  const getTableItemRequest: TableItemRequest = {
+    key_type: 'address',
+    value_type: '0x1::string::String',
+    key: publicKey,
+  };
+
+  try {
+    const result = await client.getTableItem(handle, getTableItemRequest);
+    //TODO
+    console.log(result);
+  } catch (err) {
+    // FIXME
+    const error = err as ApiError;
+    if (error.errorCode === 'table_item_not_found') {
+      return [];
+    }
+
+    console.log(error);
+    return [];
+  }
+  return [];
+};
+
+// TODO
+export const getProveList = async () => {
+  const OwnerProverStore: { data: any } = await client.getAccountResource(
+    moduleAddress,
+    `${moduleAddress}::owner_prover::OwnerProverStore`,
+  );
+
+  const { handle }: { handle: string } = OwnerProverStore.data.user_proof_table;
+  const { publicKey } = await window.aptos.account();
+  const getTableItemRequest: TableItemRequest = {
+    key_type: 'address',
+    value_type: '0x1::string::String',
+    key: publicKey,
+  };
+
+  try {
+    const result = await client.getTableItem(handle, getTableItemRequest);
+    //TODO
+    console.log(result);
+  } catch (err) {
+    // FIXME
+    const error = err as ApiError;
+    if (error.errorCode === 'table_item_not_found') {
+      return [];
+    }
+
+    console.log(error);
+    return [];
+  }
+  return [];
+};

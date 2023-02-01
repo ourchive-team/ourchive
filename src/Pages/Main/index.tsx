@@ -19,7 +19,6 @@ const Main = () => {
 
   useEffect(() => {
     getAllImageInfoList().then(data => {
-      console.log(data, 'img');
       setTokenList(data);
       setIsLoading(true);
     });

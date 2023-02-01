@@ -43,7 +43,7 @@ const Nickname = () => {
           disabled={!isAvailable}
           style={{ backgroundColor: isAvailable ? 'black' : '#8E8E8E' }}
           onClick={async () => {
-            await submitUserNickname(userAddress, userNickname);
+            await submitUserNickname(userAddress as unknown as string, userNickname);
             setIsLogin({ isLogin: true });
             nav('/main');
           }}

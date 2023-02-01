@@ -16,6 +16,7 @@ export const ItemCardDescription = styled.div`
 
 export interface TokenItem {
   creator: string;
+  creatorNickname: string;
   collection: string;
   name: string;
   uri: string;
@@ -72,7 +73,7 @@ const RenderImageList = ({
                     </span>
                     <div style={{ display: 'flex', width: '100%' }}>
                       <img srcSet={profileIcon} alt="profile icon" style={{ width: '16px', marginRight: '4px' }} />
-                      <span>{`Creator ${el.creator}`}</span>
+                      <span>{`Creator ${el.creatorNickname}`}</span>
                     </div>
                   </div>
                 </>
