@@ -159,4 +159,34 @@ module ourchive::owner_prover {
 
         *table::borrow(user_proof_table, user_nickname)
     }
+
+    #[test_only]
+    public fun publish_owner_prover_store(resource_signer: &signer) {
+        move_to(resource_signer, OwnerProverStore {
+            creator_report_table: table::new(),
+            user_proof_table: table::new(),
+        });
+    }
+
+    #[test_only]
+    public fun report_was_proved(report: &ReportElement): bool {
+        report.proved
+    }
+
+    #[test_only]
+    public fun report_has_same_image(report: &ReportElement, image_title: &String): bool {
+        let (_, _, the_image_title) = token::get_token_data_id_fields(&report.image);
+        &the_image_title == image_title
+    }
+
+    #[test_only]
+    public fun proof_has_same_phrase(proof: &ProofElement, phrase: &String): bool {
+        &proof.phrase == phrase
+    }
+
+    #[test_only]
+    public fun proof_has_same_image(proof: &ProofElement, image_title: &String): bool {
+        let (_, _, the_image_title) = token::get_token_data_id_fields(&proof.image);
+        &the_image_title == image_title
+    }
 }
