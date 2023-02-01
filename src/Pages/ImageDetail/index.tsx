@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ import profileIcon from '../../images/profile-icon.png';
 import { ImageContainer, LargeButton, PaddingBox } from '../../styles';
 import FeedStatus from '../../Components/FeedStatus';
 import Resolution from '../../Components/Resolution';
-import RenderImageList from '../../Components/RenderImageList';
+import RenderImageList, { TokenItem } from '../../Components/RenderImageList';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import { getImageInfo } from '../../func';
@@ -17,14 +17,28 @@ const ImageDetail = () => {
   const nav = useNavigate();
   const nftAddress = window.location.pathname.replace('/images/', '');
 
-  const creatorAddress = '0x2e35131572a43a1d82b4678857cb6fa44722367483250dfd7d87a25c1deeaf04';
+  // TODO: fetch creatorAddress, imageTitle from router
+  const creatorAddress = '';
   const imageTitle = '';
-  const imageInfo = getImageInfo(creatorAddress, imageTitle);
+  const [imageInfo, setImageInfo] = useState({
+    title: 'A Colorful artwork',
+    price: 0,
+    expiry: 0,
+    description: 'A photo collection of my fashion philosophy. Follow me while Paris Fashion Week 🧤',
+    creator: 'SH.Kim',
+    imgUrl: '',
+  });
 
-  const realImageData = {
-    icon: '???',
-    creator: '',
-  };
+  useEffect(() => {
+    getImageInfo(creatorAddress, imageTitle).then(info => {
+      setImageInfo(info);
+      console.log('item:', info);
+    });
+  }, []);
+
+  // const realImageData: TokenItem = {
+  //   creator: '',
+  // };
 
   const imageData = {
     icon: 'Icon',
@@ -77,9 +91,9 @@ const ImageDetail = () => {
         <ImageContainer style={{ minHeight: '300px', height: '300px' }} />
       </PaddingBox>
       <PaddingBox style={{ padding: '0px 16px' }}>
-        <span style={{ fontSize: '24px', fontWeight: 700, marginTop: '16px' }}>{imageData.title}</span>
-        <span style={{ fontSize: '13px', opacity: 0.7, margin: '8px 0px' }}>{imageData.desc}</span>
-        <CreatedBy profileImg={profileIcon} creator={imageData.creator} />
+        <span style={{ fontSize: '24px', fontWeight: 700, marginTop: '16px' }}>{imageInfo.title}</span>
+        <span style={{ fontSize: '13px', opacity: 0.7, margin: '8px 0px' }}>{imageInfo.description}</span>
+        <CreatedBy profileImg={profileIcon} creator={imageInfo.creator!} />
       </PaddingBox>
       <PaddingBox>
         <FeedStatus />

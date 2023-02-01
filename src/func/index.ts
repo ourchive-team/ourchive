@@ -6,8 +6,8 @@ import { addressState, nicknameState } from '../states/loginState';
 import UploadToIPFS from './ipfs';
 import { TokenItem } from '../Components/RenderImageList';
 
-const moduleAddress = '0xdec70a3db91524aca895a4d474cec078b491f0dd7cb6bcc734509abff1edb045';
-const client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
+const moduleAddress = "0xab1578313ed48d0c396f7e9700c35699857ce43390ada56cafd98d3b26ac8df6";
+const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
 const tokenClient = new TokenClient(client);
 
 export const walletConnect = async (setAddress: any, setPublicKey: any) => {
@@ -69,7 +69,6 @@ export const submitUserNickname = async (userAddress: string, userNickname: stri
 };
 
 interface ImageInfo {
-  id: string;
   title: string;
   price: number;
   expiry: number;
@@ -77,26 +76,44 @@ interface ImageInfo {
   creator: string;
   imgUrl: string;
 }
-export const getImageInfo = async (creatorAddress: string, imageTitle: string): Promise<ImageInfo | null> => {
-  // const creatorAddress = '0x2e35131572a43a1d82b4678857cb6fa44722367483250dfd7d87a25c1deeaf04';
-  // const imageTitle = '';
+export const getImageInfo = async (creatorAddress: string, imageTitle: string): Promise<ImageInfo> => {
+  let creatorNickname = "";
+  const UserResource: { data: any } = await client.getAccountResource(
+    moduleAddress,
+    `${moduleAddress}::user_manager::UserStore`,
+  );
+
+  const { handle }: { handle: string } = UserResource.data.nicknames;
+  const { publicKey } = await window.aptos.account();
+  const getTableItemRequest: TableItemRequest = {
+    key_type: 'address',
+    value_type: '0x1::string::String',
+    key: publicKey,
+  };
+
+  try {
+    creatorNickname = await client.getTableItem(handle, getTableItemRequest);
+  } catch (e) {
+    console.log("error", e);
+  }
 
   const viewRequest: ViewRequest = {
     function: `${moduleAddress}::marketplace::get_image_id`,
     type_arguments: [],
-    arguments: [creatorAddress, imageTitle],
+    arguments: [creatorAddress, creatorNickname, imageTitle],
   };
 
   try {
     const result = await client.view(viewRequest);
-    const tokenDataId = result as unknown as TokenTypes.TokenDataId;
-
+    console.log('result', result);
+    const tokenDataIds = result as unknown as TokenTypes.TokenDataId[];
+    const tokenDataId = tokenDataIds[0];
+    console.log('tokenDataId', tokenDataId);
     const tokenData = await tokenClient.getTokenData(tokenDataId.creator, tokenDataId.collection, tokenDataId.name);
-
+    console.log('tokenData', tokenData.description, tokenData.uri);
     return {
-      id: '',
-      title: tokenData.name,
-      price: 0,
+      title: tokenDataId.name,
+      price: 0, // TODO
       expiry: 0,
       description: tokenData.description,
       creator: tokenDataId.creator,
@@ -105,7 +122,14 @@ export const getImageInfo = async (creatorAddress: string, imageTitle: string): 
   } catch (error) {
     console.log('getImageInfo', error);
     // do sth
-    return null;
+    return {
+      title: '',
+      price: 0,
+      expiry: 0,
+      description: '',
+      creator: '',
+      imgUrl: '',
+    };
   }
 };
 
@@ -193,7 +217,7 @@ export const getPurchasedImageList = async (): Promise<TokenTypes.TokenDataId[]>
 interface IDownloadImage {
   id: string;
 }
-export const downloadImage = async () => {};
+export const downloadImage = async () => { };
 
 interface IUploadImage {
   nickname: string;
