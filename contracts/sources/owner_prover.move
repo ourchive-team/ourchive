@@ -5,6 +5,7 @@ module ourchive::owner_prover {
     use std::string::String;
     use std::option::{Self, Option};
     
+    use aptos_framework::timestamp;
     use aptos_std::table::{Self, Table};
     use aptos_std::simple_map::{Self, SimpleMap};
     use aptos_token::token::{Self, TokenDataId};
@@ -24,11 +25,13 @@ module ourchive::owner_prover {
     struct ReportElement has store, drop, copy {
         image: TokenDataId,
         proved: bool,
+        timestamp: u64,
     }
     
     struct ProofElement has store, drop, copy {
         image: TokenDataId,
         phrase: String,
+        timestamp: u64,
     }
 
     fun init_module(resource_signer: &signer) {
@@ -63,6 +66,7 @@ module ourchive::owner_prover {
             simple_map::add(reports, phrase, ReportElement {
                 image: option::extract(&mut reported_image),
                 proved: false,
+                timestamp: timestamp::now_seconds(),
             });
         };
     }
@@ -117,6 +121,7 @@ module ourchive::owner_prover {
         vector::push_back(user_proof_list, ProofElement {
             image: creator_report.image,
             phrase: phrase,
+            timestamp: timestamp::now_seconds(),
         });
         creator_report.proved = true;
     }
