@@ -6,8 +6,8 @@ import { addressState, nicknameState } from '../states/loginState';
 import UploadToIPFS from './ipfs';
 import { TokenItem } from '../Components/RenderImageList';
 
-const moduleAddress = "0xdec70a3db91524aca895a4d474cec078b491f0dd7cb6bcc734509abff1edb045";
-const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
+const moduleAddress = '0xdec70a3db91524aca895a4d474cec078b491f0dd7cb6bcc734509abff1edb045';
+const client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
 const tokenClient = new TokenClient(client);
 
 export const walletConnect = async (setAddress: any, setPublicKey: any) => {
@@ -109,7 +109,7 @@ export const getImageInfo = async (creatorAddress: string, imageTitle: string): 
   }
 };
 
-const tokendataIdToUri = async (tokenDataId: { creator: string, collection: string, name: string }) => {
+const tokendataIdToUri = async (tokenDataId: { creator: string; collection: string; name: string }) => {
   const tokenData = await tokenClient.getTokenData(tokenDataId.creator, tokenDataId.collection, tokenDataId.name);
   return tokenData.uri;
 };
@@ -124,16 +124,28 @@ export const getAllImageInfoList = async () => {
 
   try {
     const result = await client.view(viewRequest);
-    const result1 = result as { data: { key: { collection: string, creator: string, name: string }, value: { amount: string } }[] }[];
+    const result1 = result as {
+      data: { key: { collection: string; creator: string; name: string }; value: { amount: string } }[];
+    }[];
     const tokens = result1[0].data;
 
     // eslint-disable-next-line
     for (const token of tokens) {
       // eslint-disable-next-line
-      const uri = await tokendataIdToUri({ creator: token.key.creator, collection: token.key.collection, name: token.key.name });
-      tokens2.push({ creator: token.key.creator, collection: token.key.collection, name: token.key.name, uri, price: parseInt(token.value.amount, 10) });
+      const uri = await tokendataIdToUri({
+        creator: token.key.creator,
+        collection: token.key.collection,
+        name: token.key.name,
+      });
+      tokens2.push({
+        creator: token.key.creator,
+        collection: token.key.collection,
+        name: token.key.name,
+        uri,
+        price: parseInt(token.value.amount, 10),
+      });
     }
-    console.log("tokens", tokens2);
+    console.log('tokens', tokens2);
     return [...tokens2];
   } catch (error) {
     console.log(error);
@@ -180,14 +192,11 @@ export const getPurchasedImageList = async (): Promise<TokenTypes.TokenDataId[]>
 
 interface IDownloadImage {
   id: string;
-
 }
-export const downloadImage = async () => {
-
-};
+export const downloadImage = async () => {};
 
 interface IUploadImage {
-  nickname: string,
+  nickname: string;
   title: string;
   description: string;
   price: number;
@@ -199,17 +208,17 @@ export const uploadImage = async (nft: IUploadImage) => {
   const imageUri = await UploadToIPFS(nft.img);
   console.log(creatorName, nft.title, nft.description, imageUri, nft.price);
   const transaction = {
-    type: "entry_function_payload",
+    type: 'entry_function_payload',
     function: `${moduleAddress}::marketplace::upload_image`,
     arguments: [creatorName, nft.title, nft.description, imageUri, nft.price],
     type_arguments: [],
   };
-  console.log("transaction ready!");
+  console.log('transaction ready!');
 
   try {
     await window.aptos.signAndSubmitTransaction(transaction);
   } catch (error: any) {
-    console.log("failed uploading stock image", error);
+    console.log('failed uploading stock image', error);
   }
 };
 
@@ -222,7 +231,7 @@ interface IBuyImage {
 export const buyImage = async (nft: IBuyImage) => {
   const { publicKey: user } = await window.aptos.account();
   const transaction = {
-    type: "entry_function_payload",
+    type: 'entry_function_payload',
     function: `${moduleAddress}::marketplace::purchase_image`,
     arguments: [user, nft.creator, nft.imageTitle, nft.size, nft.expiry],
     type_arguments: [],
@@ -231,7 +240,7 @@ export const buyImage = async (nft: IBuyImage) => {
   try {
     await window.aptos.signAndSubmitTransaction(transaction);
   } catch (error: any) {
-    console.log("damn", error);
+    console.log('damn', error);
   }
 };
 
@@ -245,7 +254,7 @@ export const proveImage = async (proof: IProveImage) => {
   const [nickname] = useRecoilState(nicknameState);
   const userNickname = nickname;
   const transaction = {
-    type: "entry_function_payload",
+    type: 'entry_function_payload',
     function: `${moduleAddress}::owner_prover::prove_ownership`,
     arguments: [userNickname, proof.creatorNickname, proof.imageTitle, proof.phrase],
     type_arguments: [],
@@ -254,7 +263,7 @@ export const proveImage = async (proof: IProveImage) => {
   try {
     await window.aptos.signAndSubmitTransaction(transaction);
   } catch (error: any) {
-    console.log("damn", error);
+    console.log('damn', error);
   }
 };
 
@@ -265,7 +274,7 @@ interface IReportImage {
 export const reportImage = async (report: IReportImage) => {
   const randomPhrase = (Math.random() + 1).toString(36).substring(8);
   const transaction = {
-    type: "entry_function_payload",
+    type: 'entry_function_payload',
     function: `${moduleAddress}::owner_prover::submit_report`,
     arguments: [report.creatorNickname, report.imageTitle, randomPhrase],
     type_arguments: [],
@@ -274,7 +283,7 @@ export const reportImage = async (report: IReportImage) => {
   try {
     await window.aptos.signAndSubmitTransaction(transaction);
   } catch (error: any) {
-    console.log("damn", error);
+    console.log('damn', error);
   }
 };
 //image? || images[]?

@@ -79,7 +79,6 @@ const PurchaseList = () => {
                     type="button"
                     onClick={() => {
                       buyImage({
-                        id: 'hi',
                         size: 1,
                         creator: 'asdf',
                         imageTitle: 'asdf',

@@ -46,7 +46,6 @@ const ReDownloadOrExpiredButton = ({ expireDate }: IExpireStatus) => {
       onClick={() => {
         if (isExpired) {
           buyImage({
-            id: 'hi',
             size: 1,
             creator: 'asdf',
             imageTitle: 'asdf',
