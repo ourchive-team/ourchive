@@ -95,7 +95,7 @@ const ProveOwnershipOfImage = () => {
         <LargeButton
           disabled={!reqData.nickname || !reqData.phrase || !reqData.title}
           onClick={() => {
-            proveImage();
+            proveImage({ creatorNickname: reqData.nickname, imageTitle: reqData.title, phrase: reqData.phrase });
             setModalOpen(true);
           }}
         >

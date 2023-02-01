@@ -94,11 +94,10 @@ const Purchase = () => {
             disabled={!requestReady}
             onClick={() => {
               buyImage({
-                id: 'hi',
                 size: 1,
                 creator: 'asdf',
                 imageTitle: 'asdf',
-                expiry: 0,
+                expiry: 1000000,
               });
             }}
             style={{ backgroundColor: requestReady ? 'black' : '#8E8E8E' }}

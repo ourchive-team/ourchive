@@ -6,7 +6,7 @@ import { addressState, nicknameState } from '../states/loginState';
 import UploadToIPFS from './ipfs';
 import { TokenItem } from '../Components/RenderImageList';
 
-const moduleAddress = "0x13aabca9cb7edee47f7fa6eb8d501c1332307d53e2689f1a763a0442e5101885";
+const moduleAddress = "0xdec70a3db91524aca895a4d474cec078b491f0dd7cb6bcc734509abff1edb045";
 const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
 const tokenClient = new TokenClient(client);
 
@@ -214,7 +214,6 @@ export const uploadImage = async (nft: IUploadImage) => {
 };
 
 interface IBuyImage {
-  id: string;
   size: number;
   creator: string;
   imageTitle: string;
@@ -238,14 +237,44 @@ export const buyImage = async (nft: IBuyImage) => {
 
 //report, prove
 interface IProveImage {
-  address: string;
+  creatorNickname: string;
+  imageTitle: string;
   phrase: string;
 }
-export const proveImage = () => {};
+export const proveImage = async (proof: IProveImage) => {
+  const [nickname] = useRecoilState(nicknameState);
+  const userNickname = nickname;
+  const transaction = {
+    type: "entry_function_payload",
+    function: `${moduleAddress}::owner_prover::prove_ownership`,
+    arguments: [userNickname, proof.creatorNickname, proof.imageTitle, proof.phrase],
+    type_arguments: [],
+  };
+
+  try {
+    await window.aptos.signAndSubmitTransaction(transaction);
+  } catch (error: any) {
+    console.log("damn", error);
+  }
+};
 
 interface IReportImage {
-  address: string;
-  email: string;
+  creatorNickname: string;
+  imageTitle: string;
 }
-export const reportImage = () => { };
+export const reportImage = async (report: IReportImage) => {
+  const randomPhrase = (Math.random() + 1).toString(36).substring(8);
+  const transaction = {
+    type: "entry_function_payload",
+    function: `${moduleAddress}::owner_prover::submit_report`,
+    arguments: [report.creatorNickname, report.imageTitle, randomPhrase],
+    type_arguments: [],
+  };
+
+  try {
+    await window.aptos.signAndSubmitTransaction(transaction);
+  } catch (error: any) {
+    console.log("damn", error);
+  }
+};
 //image? || images[]?

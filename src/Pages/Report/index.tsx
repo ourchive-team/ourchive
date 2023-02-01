@@ -65,7 +65,7 @@ const Report = () => {
         <LargeButton
           disabled={!reqData.nickname || !reqData.email || !reqData.title}
           onClick={() => {
-            reportImage();
+            reportImage({ creatorNickname: reqData.nickname, imageTitle: reqData.title });
             setModalOpen(true);
           }}
         >
