@@ -57,7 +57,7 @@ const ProveOwnershipOfImage = () => {
             <ProveStatus proveStatus={0} />
           </div>
           <RenderImageList
-            itemList={[{ id: '0x' }]}
+            itemList={[]}
             routeUrl="/Images"
             style={{ wrapper: { padding: '12px 30px 30px' } }}
             skeletonWidth={130}

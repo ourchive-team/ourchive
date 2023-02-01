@@ -35,6 +35,7 @@ const Purchase = () => {
 
   const requestReady = selectedSize && periodDay && Number(periodDay) > 0;
   const periodNumber = Number.isNaN(Number(periodDay)) ? 0 : Number(periodDay);
+
   return (
     <div style={{ display: 'flex', width: '100%', height: '100%', flexDirection: 'column' }}>
       <TopNavigator>

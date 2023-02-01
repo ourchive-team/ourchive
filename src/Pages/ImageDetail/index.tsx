@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import flagIcon from '../../icons/flag.svg';
 import profileIcon from '../../images/profile-icon.png';
-import { baseColor, ImageContainer, LargeButton, PaddingBox } from '../../styles';
+import { ImageContainer, LargeButton, PaddingBox } from '../../styles';
 import FeedStatus from '../../Components/FeedStatus';
 import Resolution from '../../Components/Resolution';
 import RenderImageList from '../../Components/RenderImageList';
@@ -35,24 +35,6 @@ const ImageDetail = () => {
 
   const imageDataMap = Object.values(imageData);
   const imageDataMapWithoutProfileData = imageDataMap.slice(2, imageDataMap.length);
-
-  const itemList = [
-    {
-      id: '0x',
-    },
-    {
-      id: '0x1',
-    },
-    {
-      id: '0x2',
-    },
-    {
-      id: '0x3',
-    },
-    {
-      id: '0x4',
-    },
-  ];
 
   const resolutionList = [
     {
@@ -154,7 +136,7 @@ const ImageDetail = () => {
           >
             <img src={flagIcon} alt="report" style={{ width: '15px' }} />
           </LargeButton>
-          <LargeButton onClick={() => nav('purchase')}>Buy this NFT</LargeButton>
+          <LargeButton onClick={() => nav('purchase')}>Buy this Image</LargeButton>
         </div>
       </YellowBottomNavigator>
     </div>

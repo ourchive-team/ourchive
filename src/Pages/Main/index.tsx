@@ -14,34 +14,6 @@ import { nicknameState } from '../../states/loginState';
 import { TokenItem } from '../../Components/RenderImageList';
 
 const Main = () => {
-  const nav = useNavigate();
-  const itemList = [
-    {
-      id: '0x',
-      title: 'NFT',
-      price: 1000,
-      info: 'Lorem Ipsum',
-      resolution: '1280x720 ~ 2560x1440',
-      creator: 'SH.Kim',
-    },
-    {
-      id: '0x1',
-      title: 'NFT-Shard-01',
-      price: 1000,
-      info: 'Lorem Ipsum',
-      resolution: '1280x720 ~ 2560x1440',
-      creator: 'SH.Kim',
-    },
-    {
-      id: '0x2',
-      title: 'NFT-Shard-02',
-      price: 1000,
-      info: 'Lorem Ipsum',
-      resolution: '1280x720 ~ 2560x1440',
-      creator: 'SH.Kim',
-    },
-  ];
-
   const [tokenList, setTokenList] = useState<TokenItem[] | null>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -67,9 +39,7 @@ const Main = () => {
     >
       <PaddingBox>
         <img style={{ marginLeft: 'auto', marginBottom: '32px' }} src={searchIcon} alt="search" />
-
         <img src={banner} alt="banner" style={{ marginBottom: '32px' }} />
-
         <span style={{ fontSize: '20px', marginBottom: '-6px' }}>Projects you`ll love</span>
       </PaddingBox>
       <div style={{ width: '100%' }}>

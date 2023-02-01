@@ -13,6 +13,7 @@ import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import { addressState, nicknameState, publicKeyState } from '../../states/loginState';
 import { getUploadedImageList } from '../../func';
+import { baseColor } from '../../styles';
 
 const YellowCardBox = styled.div`
   display: flex;
@@ -62,7 +63,7 @@ const Profile = () => {
   const [nickname, setNickname] = useRecoilState(nicknameState);
   const [address, setAddress] = useRecoilState(addressState);
   const [publicKey] = useRecoilState(publicKeyState);
-  const addressString = (address as unknown) as string;
+  const addressString = address as unknown as string;
   const renderAddressString = `${addressString?.slice(0, 4)}...${addressString?.slice(-4)}`;
 
   const [uploadList, setUploadList] = useState<TokenTypes.TokenDataId[] | null>(null);
@@ -89,7 +90,7 @@ const Profile = () => {
       <div style={{ padding: '16px' }}>
         <img alt="profile-icon" src={profileIcon} style={{ width: '120px', height: '120px', borderRadius: '50%' }} />
       </div>
-      <span style={{ fontSize: '24px', fontWeight: 700 }}>{(nickname as unknown) as string}</span>
+      <span style={{ fontSize: '24px', fontWeight: 700 }}>{nickname as unknown as string}</span>
       <span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>
         BA in fashion & graphic design tattoo, reiki&thetahealing master✨
       </span>

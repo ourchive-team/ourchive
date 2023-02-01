@@ -41,9 +41,9 @@ const App = () => {
 
         <Route path="/main" element={<Main />} />
 
-        <Route path="/images/:id" element={<ImageDetail />} />
-        <Route path="/images/:id/report" element={<Report />} />
-        <Route path="/images/:id/purchase" element={<Purchase />} />
+        <Route path="/images/:collection/:name" element={<ImageDetail />} />
+        <Route path="/images/:collection/:name" element={<Report />} />
+        <Route path="/images/:collection/:name" element={<Purchase />} />
 
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/upload-list" element={<UploadList />} />

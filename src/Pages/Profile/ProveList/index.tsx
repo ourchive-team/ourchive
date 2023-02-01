@@ -131,7 +131,7 @@ const ReportList = () => {
               <ProveStatus proveStatus={el.proved} />
               <div style={{ display: 'flex', marginTop: '-4px' }}>
                 <RenderImageList
-                  itemList={[{ id: '0x' }]}
+                  itemList={[]}
                   routeUrl="/Images"
                   style={{ wrapper: { paddingLeft: '0px' } }}
                   skeletonWidth={60}

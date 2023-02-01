@@ -93,13 +93,7 @@ const PurchaseList = () => {
               marginBottom: '16px',
             }}
           >
-            <RenderImageList
-              itemList={[{ id: '0x' }]}
-              routeUrl="/Images"
-              skeletonWidth={100}
-              skeletonHeight={100}
-              hideDetails
-            />
+            <RenderImageList itemList={[]} routeUrl="/Images" skeletonWidth={100} skeletonHeight={100} hideDetails />
 
             <div style={{ display: 'flex', width: '100%', flexDirection: 'column', padding: '16px 16px 16px 0px' }}>
               <ExpireStatus expireDate={el.expireDate} />
