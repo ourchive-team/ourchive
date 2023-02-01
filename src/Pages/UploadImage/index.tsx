@@ -205,7 +205,7 @@ const Upload = () => {
           style={{ backgroundColor: enabled ? 'black' : '#8E8E8E', textTransform: 'capitalize', marginTop: 'auto' }}
           onClick={async () => {
             setModalOpen(true);
-            console.log('uploading broom broom');
+            console.log('uploading broom! broom!');
             //and upload image to server
             await uploadImage({
               title: inputValues.title,
