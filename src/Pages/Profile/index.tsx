@@ -42,28 +42,10 @@ const YellowCardBox = styled.div`
 `;
 
 const Profile = () => {
-  const itemList = [
-    {
-      id: '0x',
-    },
-    {
-      id: '0x1',
-    },
-    {
-      id: '0x2',
-    },
-    {
-      id: '0x3',
-    },
-    {
-      id: '0x4',
-    },
-  ];
-
   const [nickname, setNickname] = useRecoilState(nicknameState);
   const [address, setAddress] = useRecoilState(addressState);
   const [publicKey] = useRecoilState(publicKeyState);
-  const addressString = address as unknown as string;
+  const addressString = address;
   const renderAddressString = `${addressString?.slice(0, 4)}...${addressString?.slice(-4)}`;
 
   const [uploadList, setUploadList] = useState<TokenTypes.TokenDataId[] | null>(null);

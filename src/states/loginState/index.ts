@@ -25,17 +25,6 @@ export const loginState = atom<TLoginState>({
 //   useLoginState: () => useRecoilValue(loginSelector),
 // };
 
-type TAddressState = {
-  address: string;
-};
-
-export const addressState = atom<TAddressState>({
-  key: LoginStateEnum.ADDRESS,
-  default: {
-    address: '',
-  },
-});
-
 type TPublicKeyState = {
   publicKey: string;
 };
@@ -47,13 +36,29 @@ export const publicKeyState = atom<TPublicKeyState>({
   },
 });
 
-type TNicknameState = {
-  nickname: string;
-};
+// default: {} -> default:''
+// object로 사용시 하나로 합쳐서 관리. (nickname, address)
 
+// type TUserInfo = {
+//   nickname: string;
+//   address: string;
+// };
+// export const userInfoState = atom<TUserInfo>({
+//   key: LoginStateEnum.NICKNAME,
+//   default: {
+//     nickname: '',
+//     address: '',
+//   },
+// });
+
+type TNicknameState = string;
 export const nicknameState = atom<TNicknameState>({
   key: LoginStateEnum.NICKNAME,
-  default: {
-    nickname: '',
-  },
+  default: '',
+});
+
+type TAddressState = string;
+export const addressState = atom<TAddressState>({
+  key: LoginStateEnum.ADDRESS,
+  default: '',
 });
