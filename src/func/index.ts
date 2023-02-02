@@ -350,13 +350,13 @@ export const proveImage = async (proof: IProveImage) => {
 interface IReportImage {
   creatorNickname: string;
   imageTitle: string;
+  randomPhrase: string;
 }
 export const reportImage = async (report: IReportImage) => {
-  const randomPhrase = (Math.random() + 1).toString(36).substring(8);
   const transaction = {
     type: 'entry_function_payload',
     function: `${moduleAddress}::owner_prover::submit_report`,
-    arguments: [report.creatorNickname, report.imageTitle, randomPhrase],
+    arguments: [report.creatorNickname, report.imageTitle, report.randomPhrase],
     type_arguments: [],
   };
 
