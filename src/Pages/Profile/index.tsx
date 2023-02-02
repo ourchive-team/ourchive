@@ -59,7 +59,7 @@ const Profile = () => {
     getPurchasedImageList(addressString).then(data => {
       setPurchaseList(data);
     });
-  }, []);
+  }, [nickname]);
 
   const nav = useNavigate();
   return (
@@ -76,7 +76,7 @@ const Profile = () => {
       <div style={{ padding: '16px' }}>
         <img alt="profile-icon" src={profileIcon} style={{ width: '120px', height: '120px', borderRadius: '50%' }} />
       </div>
-      <span style={{ fontSize: '24px', fontWeight: 700 }}>{nickname as unknown as string}</span>
+      <span style={{ fontSize: '24px', fontWeight: 700 }}>{(nickname as unknown) as string}</span>
       <span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>
         BA in fashion & graphic design tattoo, reiki&thetahealing master✨
       </span>
@@ -118,7 +118,7 @@ const Profile = () => {
       <div style={{ width: '100%', height: '100%', marginBottom: '24px' }}>
         <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px', marginLeft: '-6px' }}>
           <RenderImageList
-            itemList={purchaseList.map((e) => e.token)}
+            itemList={purchaseList.map(e => e.token)}
             routeUrl="download-list"
             routeUrlWithoutId
             skeletonWidth={100}
