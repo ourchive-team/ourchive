@@ -1,7 +1,7 @@
 import React from 'react';
 import RenderImageList, { IRenderImageList } from '../RenderImageList';
 
-const GridImageContainer = ({ itemList, routeUrl, hideDetails, skeletonWidth, skeletonHeight }: IRenderImageList) => {
+const GridImageContainer = ({ itemList, routeUrl, hideDetails, skeletonCount }: IRenderImageList) => {
   return (
     <div
       style={{
@@ -13,8 +13,7 @@ const GridImageContainer = ({ itemList, routeUrl, hideDetails, skeletonWidth, sk
         itemList={itemList}
         routeUrl={routeUrl}
         hideDetails={hideDetails}
-        skeletonWidth={skeletonHeight}
-        skeletonHeight={skeletonHeight}
+        skeletonCount={skeletonCount}
       />
     </div>
   );

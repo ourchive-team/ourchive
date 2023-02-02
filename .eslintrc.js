@@ -12,6 +12,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
+    'prefer-spread': 'off',
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'import/no-absolute-path': 'off',
     'max-len': 'off',
