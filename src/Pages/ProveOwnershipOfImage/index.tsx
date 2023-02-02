@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import QueryString from 'qs';
+
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { proveImage, reportImage } from '../../func';
@@ -10,7 +12,14 @@ import { ProveStatus } from '../Profile/ProveList';
 import RenderImageList from '../../Components/RenderImageList';
 
 const ProveOwnershipOfImage = () => {
-  const [reqData, setReqData] = useState({ nickname: '', title: '', phrase: '' });
+  const location = useLocation();
+  const queryData: any = QueryString.parse(location.search, { ignoreQueryPrefix: true });
+
+  const [reqData, setReqData] = useState({
+    nickname: location.pathname.split('/')[3],
+    title: location.pathname.split('/')[4],
+    phrase: queryData?.phrase || '',
+  });
   const [modalOpen, setModalOpen] = useState(false);
   //request for proof
 
@@ -71,6 +80,7 @@ const ProveOwnershipOfImage = () => {
         <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Creator Nickname</span>
         <StyledInput
           name="nickname"
+          value={reqData.nickname}
           placeholder="Put Creator Nickname"
           onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
         />
@@ -79,6 +89,7 @@ const ProveOwnershipOfImage = () => {
         <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Image Title</span>
         <StyledInput
           name="title"
+          value={reqData.title}
           placeholder="Put Image Title"
           onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
         />
@@ -87,6 +98,7 @@ const ProveOwnershipOfImage = () => {
         <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Phrase</span>
         <StyledInput
           name="phrase"
+          value={reqData.phrase}
           placeholder="Put Phrase"
           onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
         />

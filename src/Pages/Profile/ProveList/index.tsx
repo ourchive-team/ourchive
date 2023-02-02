@@ -1,4 +1,5 @@
 import React from 'react';
+import QueryString from 'qs';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton, PaddingBox, StyledSpan } from '../../../styles';
@@ -56,7 +57,6 @@ export const ProveStatus = ({ proveStatus }: IProveStatus) => {
 
 type TProved = 0 | 1 | 2 | 3;
 interface IProveItem {
-  id: string;
   proved: TProved;
   title: string;
   creator: string;
@@ -67,7 +67,6 @@ interface IProveItem {
 const ReportList = () => {
   const proveList: IProveItem[] = [
     {
-      id: '0x1',
       proved: 0,
       title: 'Greenary duck',
       creator: 'Shelby',
@@ -76,7 +75,6 @@ const ReportList = () => {
       keyPhrase: 'Space',
     },
     {
-      id: '0x2',
       proved: 1,
       title: 'Greenary duck',
       creator: 'Shelby',
@@ -85,7 +83,6 @@ const ReportList = () => {
       keyPhrase: 'Space',
     },
     {
-      id: '0x3',
       proved: 2,
       title: 'Greenary duck',
       creator: 'Shelby',
@@ -94,7 +91,6 @@ const ReportList = () => {
       keyPhrase: 'Space',
     },
     {
-      id: '0x4',
       proved: 3,
       title: 'Greenary duck',
       creator: 'Shelby',
@@ -105,6 +101,7 @@ const ReportList = () => {
   ];
 
   const nav = useNavigate();
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
       <TopNavigator>
@@ -117,7 +114,7 @@ const ReportList = () => {
           return (
             <div
               onClick={() => {
-                nav(el.id);
+                nav(`${el.creator}/${el.title}?phrase=${el.keyPhrase}`);
               }}
               style={{
                 display: 'flex',

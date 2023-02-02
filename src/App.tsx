@@ -38,20 +38,16 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/nickname" element={<Nickname />} />
-
         <Route path="/main" element={<Main />} />
-
-        <Route path="/images/:creator/:name" element={<ImageDetail />} />
-        <Route path="/images/:creator/:name" element={<Report />} />
-        <Route path="/images/:creator/:name" element={<Purchase />} />
-
+        <Route path="/images/:creator/:title" element={<ImageDetail />} />
+        <Route path="/images/:creator/:title/report" element={<Report />} />
+        <Route path="/images/:creator/:title/purchase" element={<Purchase />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/upload-list" element={<UploadList />} />
         <Route path="/profile/download-list" element={<PurchaseList />} />
         <Route path="/profile/report-list" element={<ReportList />} />
         <Route path="/profile/provement-list" element={<ProveList />} />
-        <Route path="/profile/provement-list/:id" element={<ProveOwnershipOfImage />} />
-
+        <Route path="/profile/provement-list/:creator/:title" element={<ProveOwnershipOfImage />} />
         <Route path="/upload-image" element={<Upload />} />
       </Routes>
     </BrowserRouter>
