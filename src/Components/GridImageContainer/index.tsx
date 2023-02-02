@@ -6,7 +6,7 @@ const GridImageContainer = ({ itemList, routeUrl, hideDetails, skeletonWidth, sk
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, auto))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
       }}
     >
       <RenderImageList

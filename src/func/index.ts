@@ -6,8 +6,8 @@ import { addressState, nicknameState } from '../states/loginState';
 import UploadToIPFS from './ipfs';
 import { TokenItem } from '../Components/RenderImageList';
 
-const moduleAddress = "0xab1578313ed48d0c396f7e9700c35699857ce43390ada56cafd98d3b26ac8df6";
-const client = new AptosClient("https://fullnode.devnet.aptoslabs.com");
+const moduleAddress = '0xab1578313ed48d0c396f7e9700c35699857ce43390ada56cafd98d3b26ac8df6';
+const client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
 const tokenClient = new TokenClient(client);
 
 export const walletConnect = async (setAddress: any, setPublicKey: any) => {
@@ -108,7 +108,7 @@ interface ImageInfo {
   imgUrl: string;
 }
 export const getImageInfo = async (creatorAddress: string, imageTitle: string): Promise<ImageInfo> => {
-  let creatorNickname = "";
+  let creatorNickname = '';
   const UserResource: { data: any } = await client.getAccountResource(
     moduleAddress,
     `${moduleAddress}::user_manager::UserStore`,
@@ -125,7 +125,7 @@ export const getImageInfo = async (creatorAddress: string, imageTitle: string): 
   try {
     creatorNickname = await client.getTableItem(handle, getTableItemRequest);
   } catch (e) {
-    console.log("error", e);
+    console.log('error', e);
   }
 
   const viewRequest: ViewRequest = {
@@ -194,7 +194,7 @@ export const getAllImageInfoList = async () => {
       });
       tokens2.push({
         creator: token.key.creator,
-        creatorNickname: token.key.collection.replace('\'s Collection', ''), // FIXME
+        creatorNickname: token.key.collection.replace("'s Collection", ''), // FIXME
         collection: token.key.collection,
         name: token.key.name,
         uri,
@@ -223,12 +223,20 @@ export const getUploadedImageList = async (address: string): Promise<TokenItem[]
     const tokenDataIdList = result as TokenTypes.TokenDataId[];
     // eslint-disable-next-line
     for (const t of tokenDataIdList) {
+      //@ts-ignore:next-line;
       const token = t[0];
       console.log(token.creator, token.collection, token.name);
       // eslint-disable-next-line
       const uri = await tokendataIdToUri({ creator: token.creator, collection: token.collection, name: token.name });
-      const creatorName = token.collection.replace('\'s Collection', ''); // FIXME
-      tokens.push({ creator: token.creator, creatorNickname: creatorName, collection: token.collection, name: token.name, uri, price: 0 });
+      const creatorName = token.collection.replace("'s Collection", ''); // FIXME
+      tokens.push({
+        creator: token.creator,
+        creatorNickname: creatorName,
+        collection: token.collection,
+        name: token.name,
+        uri,
+        price: 0,
+      });
     }
     return tokens;
   } catch (error) {
@@ -259,7 +267,7 @@ export const getPurchasedImageList = async (): Promise<TokenTypes.TokenDataId[]>
 interface IDownloadImage {
   id: string;
 }
-export const downloadImage = async () => { };
+export const downloadImage = async () => {};
 
 interface IUploadImage {
   nickname: string;

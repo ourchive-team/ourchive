@@ -14,7 +14,7 @@ import { nicknameState } from '../../states/loginState';
 import { TokenItem } from '../../Components/RenderImageList';
 
 const Main = () => {
-  const [tokenList, setTokenList] = useState<TokenItem[] | null>([]);
+  const [tokenList, setTokenList] = useState<TokenItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -44,9 +44,8 @@ const Main = () => {
       <div style={{ width: '100%' }}>
         <SelectCategoryBar data={['Recommended', 'Lifestyle', 'Future', 'Normal']} />
       </div>
-
       {/*@ts-ignore:next-line;*/}
-      {isLoading && tokenList?.length > 0 ? <GridImageContainer itemList={tokenList} routeUrl="/images" /> : <div />}
+      <GridImageContainer itemList={tokenList} routeUrl="/images" />
       <PaddingBox style={{ marginTop: 'auto' }}>
         <BottomNavigator />
       </PaddingBox>
