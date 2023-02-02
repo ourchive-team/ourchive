@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 import RenderImageList from '../../../Components/RenderImageList';
-import { buyImage, downloadImage } from '../../../func';
+import { buyImage, downloadImage, getPurchasedImageList, TokenPurchaseItem } from '../../../func';
+import { addressState } from '../../../states/loginState';
 import { baseColor, StyledSpan } from '../../../styles';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
@@ -10,7 +12,8 @@ interface IExpireStatus {
   expireDate: number;
 }
 const ExpireStatus = ({ expireDate }: IExpireStatus) => {
-  const isExpired = expireDate <= 0;
+  // TODO: isExpired
+  const isExpired = expireDate > 0;
   const color = isExpired ? baseColor.orange : baseColor.green;
   return (
     <div
@@ -37,8 +40,8 @@ const ExpireStatus = ({ expireDate }: IExpireStatus) => {
   );
 };
 
-const ReDownloadOrExpiredButton = ({ expireDate }: IExpireStatus) => {
-  const isExpired = expireDate <= 0;
+const ReDownloadOrExpiredButton = ({ expireDate, creator, creatorNickname, imageTitle, imageUri }: any) => {
+  const isExpired = expireDate > 0;
   const color = isExpired ? baseColor.orange : 'white';
   return (
     <button
@@ -47,13 +50,13 @@ const ReDownloadOrExpiredButton = ({ expireDate }: IExpireStatus) => {
         if (isExpired) {
           buyImage({
             size: 1,
-            creator: 'asdf',
-            creatorNickname: '',
-            imageTitle: 'asdf',
+            creator,
+            creatorNickname,
+            imageTitle,
             expiry: 0,
           });
         } else {
-          downloadImage();
+          downloadImage({ imageUri, imageTitle });
         }
       }}
       style={{
@@ -74,15 +77,17 @@ const ReDownloadOrExpiredButton = ({ expireDate }: IExpireStatus) => {
 };
 
 const PurchaseList = () => {
-  const requiredData = [
-    { id: '0x1', imgUrl: '/', title: 'Two people standing', description: 'desc', creator: 'Shelby', expireDate: 30 },
-    { id: '0x1', imgUrl: '/', title: 'Two people standing', description: 'desc', creator: 'Shelby', expireDate: 2 },
-    { id: '0x1', imgUrl: '/', title: 'Two people standing', description: 'desc', creator: 'Shelby', expireDate: 0 },
-  ];
+  const [purchaseList, setPurchaseList] = useState<TokenPurchaseItem[]>([]);
+  const [address] = useRecoilState(addressState);
+  useEffect(() => {
+    getPurchasedImageList(address).then(data => {
+      setPurchaseList(data);
+    });
+  }, []);
 
   return (
     <div style={{ display: 'flex', width: '100%', flexDirection: 'column', padding: '16px' }}>
-      {requiredData.map(el => {
+      {purchaseList.map(el => {
         return (
           <div
             style={{
@@ -94,7 +99,16 @@ const PurchaseList = () => {
             }}
           >
             <RenderImageList
-              itemList={[]}
+              itemList={[
+                {
+                  creator: el.token.creator,
+                  creatorNickname: el.token.creatorNickname,
+                  collection: el.token.collection,
+                  name: el.token.name,
+                  uri: el.token.uri,
+                  price: el.token.price,
+                },
+              ]}
               routeUrl="/Images"
               skeletonWidth={100}
               skeletonHeight={100}
@@ -112,20 +126,26 @@ const PurchaseList = () => {
                   marginBottom: '4px',
                 }}
               >
-                {el.title}
+                {el.token.name}
               </StyledSpan>
               <StyledSpan style={{ fontSize: '12px', marginBottom: '4px', color: 'rgba(255,255,255,0.6)' }}>
-                {el.description}
+                good for general purpose videos
               </StyledSpan>
               <CreatedBy
                 profileImg={profileIcon}
-                creator={el.creator}
+                creator={el.token.creatorNickname}
                 style={{
                   img: { width: '16px', height: '16px', marginRight: '4px' },
                   text: { fontSize: '10px', fontWeight: 700 },
                 }}
               />
-              <ReDownloadOrExpiredButton expireDate={el.expireDate} />
+              <ReDownloadOrExpiredButton
+                expireDate={el.expireDate}
+                creator={el.token.creator}
+                creatorNickname={el.token.creatorNickname}
+                imageTitle={el.token.name}
+                imageUri={el.token.uri}
+              />
             </div>
           </div>
         );

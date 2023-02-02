@@ -277,9 +277,29 @@ export const getPurchasedImageList = async (address: string): Promise<TokenPurch
 };
 
 interface IDownloadImage {
-  id: string;
+  imageUri: string;
+  imageTitle: string;
 }
-export const downloadImage = async () => { };
+export const downloadImage = async ({ imageUri, imageTitle }: IDownloadImage) => {
+  console.log("imageUri:", imageUri);
+  fetch(imageUri, {
+    method: "GET",
+    headers: {},
+  })
+    .then(response => {
+      response.arrayBuffer().then((buffer) => {
+        const url = window.URL.createObjectURL(new Blob([buffer]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${imageTitle}.png`); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
 
 interface IUploadImage {
   nickname: string;
@@ -378,15 +398,15 @@ export const reportImage = async (report: IReportImage) => {
 
 // TODO
 export interface IReportResponse {
-  data : {
-    [phrase : string]: {
-      image : {
-        collection : string,
-        creator : string,
-        name : string,
+  data: {
+    [phrase: string]: {
+      image: {
+        collection: string,
+        creator: string,
+        name: string,
       }
-      proved : boolean,
-      timestamp : number,
+      proved: boolean,
+      timestamp: number,
     };
   }[]
 }
@@ -417,7 +437,7 @@ export const getReportList = async (nickname: string) => {
       const rDate = new Date(r.value.timestamp * 1000);
       // eslint-disable-next-line no-nested-ternary
       const proveStatus = r.value.proved ? 1 : rDate.getTime() < new Date().getTime() ? 0 : 2;
-      const reportCase : IProveItem = {
+      const reportCase: IProveItem = {
         proved: proveStatus,
         title: r.value.image.name,
         creator: r.value.image.creator,

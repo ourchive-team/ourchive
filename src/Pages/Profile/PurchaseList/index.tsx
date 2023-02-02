@@ -51,7 +51,9 @@ const PurchaseList = () => {
                   </div>
                   <button
                     type="button"
-                    onClick={() => downloadImage()}
+                    onClick={() => {
+                      downloadImage({ imageUri: el.token.uri, imageTitle: el.token.name });
+                    }}
                     style={{
                       marginLeft: 'auto',
                       marginTop: 'auto',
