@@ -62,7 +62,7 @@ const RenderImageList = ({
     <>
       {itemList.length > 0
         ? itemList.map(el => {
-            const navUrl = routeUrlWithoutId ? routeUrl : `${routeUrl}/${el.creator}/${el.name}`;
+            const navUrl = routeUrlWithoutId ? routeUrl : `${routeUrl}/${el.creator}/${el.creatorNickname}/${el.name}`;
             return (
               <ItemCardDescription onClick={() => nav(navUrl)} style={{ ...style?.wrapper }}>
                 {/*<img src="/public/images/image13.png" alt="test-img" />*/}

@@ -4,7 +4,7 @@ import { baseColor } from '../../styles';
 
 interface ICreatedBy {
   profileImg: any;
-  creator: string;
+  creator: string | undefined;
   style?: {
     img?: any;
     text?: any;

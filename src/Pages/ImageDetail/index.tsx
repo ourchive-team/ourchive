@@ -10,7 +10,7 @@ import Resolution from '../../Components/Resolution';
 import RenderImageList, { TokenItem } from '../../Components/RenderImageList';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
-import { getImageInfo } from '../../func';
+import { getImageInfo, ImageInfo } from '../../func';
 import CreatedBy from '../../Components/CreatedBy';
 
 const ImageDetail = () => {
@@ -20,36 +20,16 @@ const ImageDetail = () => {
   const pathItems = window.location.pathname.split('/');
   console.log('path:', pathItems);
   const creatorAddress = pathItems[2];
-  const imageTitle = pathItems[3];
-  const [imageInfo, setImageInfo] = useState({
-    title: 'A Colorful artwork',
-    price: 0,
-    expiry: 0,
-    description: 'A photo collection of my fashion philosophy. Follow me while Paris Fashion Week 🧤',
-    creator: 'SH.Kim',
-    imgUrl: '',
-  });
+  const nickname = pathItems[3];
+  const imageTitle = pathItems[4];
+  const [imageInfo, setImageInfo] = useState<ImageInfo>();
 
   useEffect(() => {
-    getImageInfo(creatorAddress, imageTitle).then(info => {
+    getImageInfo(creatorAddress, nickname, imageTitle).then(info => {
       setImageInfo(info);
       console.log('item:', info);
     });
   }, []);
-
-  // const realImageData: TokenItem = {
-  //   creator: '',
-  // };
-
-  const imageData = {
-    icon: 'Icon',
-    creator: 'SH.Kim',
-    title: 'A Colorful artwork',
-    desc: 'A photo collection of my fashion philosophy. Follow me while Paris Fashion Week 🧤',
-  };
-
-  const imageDataMap = Object.values(imageData);
-  const imageDataMapWithoutProfileData = imageDataMap.slice(2, imageDataMap.length);
 
   const resolutionList = [
     {
@@ -90,13 +70,13 @@ const ImageDetail = () => {
       </TopNavigator>
       <PaddingBox>
         <ImageContainer style={{ minHeight: '300px', height: '300px' }}>
-          <img src={imageInfo.imgUrl} alt={imageInfo.title} />
+          <img src={imageInfo?.imgUrl} alt={imageInfo?.title} />
         </ImageContainer>
       </PaddingBox>
       <PaddingBox style={{ padding: '0px 16px' }}>
-        <span style={{ fontSize: '24px', fontWeight: 700, marginTop: '16px' }}>{imageInfo.title}</span>
-        <span style={{ fontSize: '13px', opacity: 0.7, margin: '8px 0px' }}>{imageInfo.description}</span>
-        <CreatedBy profileImg={profileIcon} creator={imageInfo.creator!} />
+        <span style={{ fontSize: '24px', fontWeight: 700, marginTop: '16px' }}>{imageInfo?.title}</span>
+        <span style={{ fontSize: '13px', opacity: 0.7, margin: '8px 0px' }}>{imageInfo?.description}</span>
+        <CreatedBy profileImg={profileIcon} creator={imageInfo?.creatorNickname} />
       </PaddingBox>
       <PaddingBox>
         <FeedStatus />

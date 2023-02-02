@@ -44,7 +44,6 @@ const YellowCardBox = styled.div`
 const Profile = () => {
   const [nickname, setNickname] = useRecoilState(nicknameState);
   const [address, setAddress] = useRecoilState(addressState);
-  const [publicKey] = useRecoilState(publicKeyState);
   const addressString = address;
   const renderAddressString = `${addressString?.slice(0, 4)}...${addressString?.slice(-4)}`;
 

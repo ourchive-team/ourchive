@@ -99,36 +99,37 @@ export const getUserNickname = async (userAddress: string) => {
   return '';
 };
 
-interface ImageInfo {
+export interface ImageInfo {
   title: string;
   price: number;
   expiry: number;
   description: string;
   creator: string;
+  creatorNickname: string;
   imgUrl: string;
 }
-export const getImageInfo = async (creatorAddress: string, imageTitle: string): Promise<ImageInfo> => {
-  let creatorNickname = '';
+export const getImageInfo = async (creatorAddress: string, creatorNickname: string, imageTitle: string): Promise<ImageInfo> => {
+  // let creatorNickname = '';
   const UserResource: { data: any } = await client.getAccountResource(
     moduleAddress,
     `${moduleAddress}::user_manager::UserStore`,
   );
 
-  const { handle }: { handle: string } = UserResource.data.nicknames;
-  const { publicKey } = await window.aptos.account();
-  const getTableItemRequest: TableItemRequest = {
-    key_type: 'address',
-    value_type: '0x1::string::String',
-    key: publicKey,
-  };
-  console.log("getTableItemRequest by publicKey");
+  // const { handle }: { handle: string } = UserResource.data.nicknames;
+  // const { publicKey } = await window.aptos.account();
+  // const getTableItemRequest: TableItemRequest = {
+  //   key_type: 'address',
+  //   value_type: '0x1::string::String',
+  //   key: publicKey,
+  // };
+  // console.log("getTableItemRequest by publicKey");
 
-  try {
-    creatorNickname = await client.getTableItem(handle, getTableItemRequest);
-    console.log("creatorNickname", creatorNickname);
-  } catch (e) {
-    console.log('error', e);
-  }
+  // try {
+  //   creatorNickname = await client.getTableItem(handle, getTableItemRequest);
+  //   console.log("creatorNickname", creatorNickname);
+  // } catch (e) {
+  //   console.log('error', e);
+  // }
 
   const viewRequest: ViewRequest = {
     function: `${moduleAddress}::marketplace::get_image_id`,
@@ -150,6 +151,7 @@ export const getImageInfo = async (creatorAddress: string, imageTitle: string): 
       expiry: 0,
       description: tokenData.description,
       creator: tokenDataId.creator,
+      creatorNickname,
       imgUrl: tokenData.uri,
     };
   } catch (error) {
@@ -161,6 +163,7 @@ export const getImageInfo = async (creatorAddress: string, imageTitle: string): 
       expiry: 0,
       description: '',
       creator: '',
+      creatorNickname,
       imgUrl: '',
     };
   }
@@ -222,11 +225,12 @@ export const getUploadedImageList = async (address: string): Promise<TokenItem[]
 
   try {
     const result = await client.view(viewRequest);
-    const tokenDataIdList = result as TokenTypes.TokenDataId[];
+    const tokenDataIdList = result as TokenTypes.TokenDataId[][];
+    console.log('tokenDataIdList', tokenDataIdList);
     // eslint-disable-next-line
-    for (const t of tokenDataIdList) {
+    for (const token of tokenDataIdList[0]) {
       //@ts-ignore:next-line;
-      const token = t[0];
+      console.log('token', token);
       console.log(token.creator, token.collection, token.name);
       // eslint-disable-next-line
       const uri = await tokendataIdToUri({ creator: token.creator, collection: token.collection, name: token.name });
