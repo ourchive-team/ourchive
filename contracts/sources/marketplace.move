@@ -23,6 +23,7 @@ module ourchive::marketplace {
         creator_uploaded_images_table: Table<address, vector<TokenDataId>>,
         user_purchased_images_table: Table<address, vector<TokenId>>,
         image_price_table: SimpleMap<TokenDataId, ImagePrice>,
+        resource_to_creator: SimpleMap<address, address>,
     }
 
     struct CreatorInfoRecord has store {
@@ -44,6 +45,7 @@ module ourchive::marketplace {
                 creator_uploaded_images_table: table::new(),
                 user_purchased_images_table: table::new(),
                 image_price_table: simple_map::create(),
+                resource_to_creator: simple_map::create(),
             });
         }
     }
@@ -73,6 +75,9 @@ module ourchive::marketplace {
                 signer_cap: resource_cap,
             });
             token::create_collection(&resource_signer, creator_collection_name, string::utf8(b""), string::utf8(b""), 0, vector<bool>[ false, false, false]);
+
+            let resource_to_creator = &mut market_data_store.resource_to_creator;
+            simple_map::add(resource_to_creator, signer::address_of(&resource_signer), creator_address);
         };
 
         let creator_info = table::borrow(creator_info_table, creator_address);
@@ -217,6 +222,7 @@ module ourchive::marketplace {
             creator_uploaded_images_table: table::new(),
             user_purchased_images_table: table::new(),
             image_price_table: simple_map::create(),
+            resource_to_creator: simple_map::create(),
         });
     }
 
