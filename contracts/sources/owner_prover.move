@@ -60,7 +60,7 @@ module ourchive::owner_prover {
         let creator_address = signer::address_of(creator);
         let uploded_images = marketplace::get_uploaded_images(creator_address);
         let reported_image = find_image(&uploded_images, &image_title);
-        assert!(!option::is_none(&reported_image), EINCORRECT_IMAGE_TITLE);
+        assert!(!option::is_none(&reported_image), error::invalid_argument(EINCORRECT_IMAGE_TITLE));
         let reports = table::borrow_mut(creator_report_table, creator_nickname);
         if (!simple_map::contains_key(reports, &phrase)) {
             simple_map::add(reports, phrase, ReportElement {
@@ -111,7 +111,7 @@ module ourchive::owner_prover {
 
         // Check if the image is in the user's purchase list
         let user_address = signer::address_of(user);
-        assert!(check_user_purchase_image(user_address, &creator_report.image), EUSER_NOT_IMAGE_OWNER);
+        assert!(check_user_purchase_image(user_address, &creator_report.image), error::permission_denied(EUSER_NOT_IMAGE_OWNER));
 
         let user_proof_table = &mut owner_prover_store.user_proof_table;
         if (!table::contains(user_proof_table, user_nickname)) {
