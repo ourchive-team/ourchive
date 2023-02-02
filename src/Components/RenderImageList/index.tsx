@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Link, { useNavigate } from 'react-router-dom';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { TokenTypes } from 'aptos';
+import heartIcon from '../../icons/heart.svg';
 import { baseColor } from '../../styles';
 import profileIcon from '../../images/profile-icon.png';
 
@@ -10,7 +10,7 @@ export const ItemCardDescription = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: fit-content;
   padding: 16px;
   cursor: pointer;
 `;
@@ -29,6 +29,7 @@ export interface IRenderImageList {
   routeUrl: string;
   routeUrlWithoutId?: boolean;
   hideDetails?: boolean;
+  favorite?: boolean;
   skeletonCount?: number;
   skeletonWidth?: number;
   skeletonHeight?: number;
@@ -53,6 +54,7 @@ const RenderImageList = ({
   routeUrl,
   routeUrlWithoutId,
   hideDetails,
+  favorite,
   skeletonCount,
   skeletonWidth,
   skeletonHeight,
@@ -70,7 +72,44 @@ const RenderImageList = ({
               <ItemCardDescription onClick={() => nav(navUrl)} style={{ ...style?.wrapper }}>
                 {/*<img src="/public/images/image13.png" alt="test-img" />*/}
                 {routeUrl ? (
-                  <img src={el.uri} alt={el.name} style={{ width: skeletonWidth || 136, maxWidth: '100%' }} />
+                  <div
+                    style={{
+                      display: 'flex',
+                      width: '100%',
+                      height: '100%',
+                      minWidth: '136px',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      position: 'relative',
+                    }}
+                  >
+                    {favorite && (
+                      <div
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          position: 'absolute',
+                          // backgroundColor: 'rgba(0,0,0,0.1)',
+                        }}
+                      >
+                        <img
+                          alt="favorite"
+                          src={heartIcon}
+                          style={{
+                            position: 'absolute',
+                            right: 0,
+                            marginTop: '10px',
+                            marginRight: '10px',
+                          }}
+                        />
+                      </div>
+                    )}
+                    <img
+                      src={el.uri}
+                      alt={el.name}
+                      style={{ width: skeletonWidth || 'fit-content', maxWidth: '136px' }}
+                    />
+                  </div>
                 ) : (
                   <SkeletonTheme baseColor="#1F1F29" highlightColor="#3F3E3F" borderRadius="8px">
                     <Skeleton width={skeletonWidth || 136} height={skeletonHeight || 143} />

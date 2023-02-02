@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="contact form example">
+    <title>Contact Form Example</title>
+</head>
+
+<body>
+<script data-cfasync="false" type="text/javascript" src="./form-submission-handler.js"></script>
+
+</aside>
+
+<!-- START HERE -->
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<!-- Style The Contact Form How Ever You Prefer -->
+<link rel="stylesheet" href="style.css">
+
+<form class="gform pure-form pure-form-stacked" method="POST" data-email="sanghyeokkim0522@gmail.com"
+      action="https://script.google.com/macros/s/AKfycby71Mdlf_f5-YR4YbpWDEYTOjbXOixuTpr5TFbwLp6sDRHKYUD8raH13kM72L5WPwse_g/exec">
+    <!-- change the form action to your script url -->
+
+    <div class="form-elements" style="display:flex; flex-direction:column; width: 100%; height: 100%; justify-content: center; align-items:center; box-sizing:border-box">
+        <div style="display:flex;justify-content:center;align-items:center;background-color: #FBFE67; width:100%; height:140px">
+        </div>
+        <div class="form-elements" style="display:flex; flex-direction:column; width: 100%; height: 100%;padding:16px; justify-content: center; align-items:center; box-sizing:border-box">
+
+        <span style="font-family: Unbounded; text-align:center; margin-top:40px; font-size:16px;"><strong>A request for proof of the Image you used has been received.</strong><br/>
+Please visit OURCHIEVE and proceed with the proof of ownership.<br/>
+
+Please be advised that if you can’t prove ownership,<br/>
+            <strong>there may be legal action against your contents.</strong></span>
+        </div>
+        <fieldset class="pure-group">
+            <label for="creator">Name: </label>
+            <input id="creator" name="creator" placeholder="Creator" />
+        </fieldset>
+
+        <fieldset class="pure-group">
+            <label for="email"><em>Your</em> Email Address:</label>
+            <input id="email" name="email" type="email" value=""
+                   required placeholder="your.name@email.com"/>
+        </fieldset>
+
+        <button class="button-success pure-button button-xlarge">
+            <i class="fa fa-paper-plane"></i>&nbsp;Send</button>
+        </div>
+    </div>
+
+    <!-- Customise the Thankyou Message People See when they submit the form: -->
+    <div class="thankyou_message" style="display:none;">
+        <h2><em>Thanks</em> for contacting us!
+            We will get back to you soon!</h2>
+    </div>
+
+</form>
+
+<!-- Submit the Form to Google Using "AJAX" -->
+<script data-cfasync="false" src="form-submission-handler.js"></script>
+<!-- END -->
+
+</body>
+</html>

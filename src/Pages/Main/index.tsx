@@ -44,7 +44,13 @@ const Main = () => {
         <SelectCategoryBar data={['Recommended', 'Lifestyle', 'Future', 'Normal']} />
       </div>
       {/*@ts-ignore:next-line;*/}
-      <GridImageContainer itemList={tokenList} skeletonCount={6} routeUrl="/images" />
+      <GridImageContainer
+        itemList={tokenList}
+        skeletonCount={6}
+        routeUrl="/images"
+        favorite
+        style={{ wrapper: { width: '100%' } }}
+      />
       <PaddingBox style={{ marginTop: 'auto' }}>
         <BottomNavigator />
       </PaddingBox>
