@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import QueryString from 'qs';
 
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { proveImage, reportImage } from '../../func';
@@ -10,6 +11,7 @@ import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import Modal from '../../Components/Modal';
 import { ProveStatus } from '../Profile/ProveList';
 import RenderImageList from '../../Components/RenderImageList';
+import { nicknameState } from '../../states/loginState';
 
 const ProveOwnershipOfImage = () => {
   const location = useLocation();
@@ -21,6 +23,7 @@ const ProveOwnershipOfImage = () => {
     phrase: queryData?.phrase || '',
   });
   const [modalOpen, setModalOpen] = useState(false);
+  const [nickname] = useRecoilState(nicknameState);
   //request for proof
 
   const nav = useNavigate();
@@ -107,8 +110,15 @@ const ProveOwnershipOfImage = () => {
         <LargeButton
           disabled={!reqData.nickname || !reqData.phrase || !reqData.title}
           onClick={() => {
-            proveImage({ creatorNickname: reqData.nickname, imageTitle: reqData.title, phrase: reqData.phrase });
-            setModalOpen(true);
+            console.log('proving brr brr!');
+            proveImage({
+              userNickname: nickname,
+              creatorNickname: reqData.nickname,
+              imageTitle: reqData.title,
+              phrase: reqData.phrase,
+            }).then(data => {
+              setModalOpen(true);
+            });
           }}
         >
           Prove Ownership of Image

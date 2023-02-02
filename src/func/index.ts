@@ -273,7 +273,7 @@ export const getPurchasedImageList = async (): Promise<TokenTypes.TokenDataId[]>
 interface IDownloadImage {
   id: string;
 }
-export const downloadImage = async () => {};
+export const downloadImage = async () => { };
 
 interface IUploadImage {
   nickname: string;
@@ -326,19 +326,19 @@ export const buyImage = async (nft: IBuyImage) => {
 
 //report, prove
 interface IProveImage {
+  userNickname: string;
   creatorNickname: string;
   imageTitle: string;
   phrase: string;
 }
 export const proveImage = async (proof: IProveImage) => {
-  const [nickname] = useRecoilState(nicknameState);
-  const userNickname = nickname;
   const transaction = {
     type: 'entry_function_payload',
     function: `${moduleAddress}::owner_prover::prove_ownership`,
-    arguments: [userNickname, proof.creatorNickname, proof.imageTitle, proof.phrase],
+    arguments: [proof.userNickname, proof.creatorNickname, proof.imageTitle, proof.phrase],
     type_arguments: [],
   };
+  console.log("proving incoming!!");
 
   try {
     await window.aptos.signAndSubmitTransaction(transaction);
