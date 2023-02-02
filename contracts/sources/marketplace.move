@@ -17,6 +17,7 @@ module ourchive::marketplace {
 
     const EINSUFFICIENT_BALANCE: u64 = 1;
     const EINVALID_USER_ADDRESS: u64 = 2;
+    const EINVALID_RESOURCE_ADDRESS: u64 = 3;
 
     struct MarketDataStore has key {
         creator_info_table: Table<address, CreatorInfoRecord>,
@@ -143,6 +144,9 @@ module ourchive::marketplace {
     ) acquires MarketDataStore {
         let user_addr = signer::address_of(user);
         let market_data_store = borrow_global_mut<MarketDataStore>(@ourchive);
+        let resource_to_creator = &market_data_store.resource_to_creator;
+        assert!(simple_map::contains_key(resource_to_creator, &resource_address), error::invalid_argument(EINVALID_RESOURCE_ADDRESS));
+
         let creator_address = *simple_map::borrow(&market_data_store.resource_to_creator, &resource_address);
         let creator_info = table::borrow(&market_data_store.creator_info_table, creator_address);
         let resource_signer = account::create_signer_with_capability(&creator_info.signer_cap);
