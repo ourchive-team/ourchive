@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import QueryString from 'qs';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton, PaddingBox, StyledSpan } from '../../../styles';
@@ -8,7 +7,7 @@ import RenderImageList from '../../../Components/RenderImageList';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
-import { getProveList } from '../../../func';
+import { getProveList, IProveItem } from '../../../func';
 
 interface IProveStatus {
   proveStatus: 0 | 1 | 2 | 3;
@@ -56,17 +55,8 @@ export const ProveStatus = ({ proveStatus }: IProveStatus) => {
   );
 };
 
-type TProved = 0 | 1 | 2 | 3;
-interface IProveItem {
-  proved: TProved;
-  title: string;
-  creator: string;
-  requestedDate: string; //Timestamp?
-  provedDate: string; //Timestamp?
-  keyPhrase: string;
-}
 const ReportList = () => {
-  const [proveList2, setProveList] = useState<TProved[]>([]);
+  const [proveList2, setProveList] = useState<IProveItem[]>([]);
 
   useEffect(() => {
     getProveList().then(data => {
@@ -81,7 +71,7 @@ const ReportList = () => {
       proved: 0,
       title: 'Greenary duck',
       creator: 'Shelby',
-      requestedDate: '2023.01.21 02:30', //timeStamp
+      requestedDate: new Date(), //timeStamp
       provedDate: 'Not proved yet',
       keyPhrase: 'Space',
     },
@@ -89,7 +79,7 @@ const ReportList = () => {
       proved: 1,
       title: 'Greenary duck',
       creator: 'Shelby',
-      requestedDate: '2023.01.21 02:30', //timeStamp
+      requestedDate: new Date(), //timeStamp
       provedDate: 'Not proved yet',
       keyPhrase: 'Space',
     },
@@ -97,7 +87,7 @@ const ReportList = () => {
       proved: 2,
       title: 'Greenary duck',
       creator: 'Shelby',
-      requestedDate: '2023.01.21 02:30', //timeStamp
+      requestedDate: new Date(), //timeStamp
       provedDate: 'Not proved yet',
       keyPhrase: 'Space',
     },
@@ -105,7 +95,7 @@ const ReportList = () => {
       proved: 3,
       title: 'Greenary duck',
       creator: 'Shelby',
-      requestedDate: '2023.01.21 02:30', //timeStamp
+      requestedDate: new Date(), //timeStamp
       provedDate: 'Not proved yet',
       keyPhrase: 'Not proved yet',
     },
@@ -177,7 +167,13 @@ const ReportList = () => {
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>
                     Requested Date
                   </StyledSpan>
-                  <StyledSpan style={{ whiteSpace: 'nowrap' }}>{el.requestedDate}</StyledSpan>
+                  <StyledSpan style={{ whiteSpace: 'nowrap' }}>
+                    {' '}
+                    {el.requestedDate.toISOString().substring(0, 10)}
+                    {' '}
+                    {el.requestedDate.toISOString().substring(11, 16)}
+
+                  </StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Proved Date</StyledSpan>

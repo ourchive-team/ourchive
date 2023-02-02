@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { baseColor, LargeButton, PaddingBox, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/TopNavigator';
 import RenderImageList from '../../../Components/RenderImageList';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
-import { getReportList } from '../../../func';
+import { getReportList, IProveItem } from '../../../func';
+import { nicknameState } from '../../../states/loginState';
 
 interface IProveStatus {
   proveStatus: 0 | 1 | 2 | 3;
@@ -53,58 +55,16 @@ const ProveStatus = ({ proveStatus }: IProveStatus) => {
   );
 };
 
-type TProved = 0 | 1 | 2 | 3;
-interface IProveItem {
-  proved: TProved;
-  title: string;
-  creator: string;
-  requestedDate: string; //Timestamp?
-  provedDate: string; //Timestamp?
-  keyPhrase: string;
-}
 const ReportList = () => {
-  const [reportList, setUploadList] = useState<TProved[]>([]);
+  const [reportList, setUploadList] = useState<IProveItem[]>([]);
+  const [nickname] = useRecoilState(nicknameState);
 
   useEffect(() => {
-    getReportList().then(data => {
+    getReportList(nickname).then(data => {
       setUploadList(data);
     });
   }, []);
 
-  const proveList: IProveItem[] = [
-    {
-      proved: 0,
-      title: 'Greenary duck',
-      creator: 'Shelby',
-      requestedDate: '2023.01.21 02:30', //timeStamp
-      provedDate: 'Not proved yet',
-      keyPhrase: 'Space',
-    },
-    {
-      proved: 1,
-      title: 'Greenary duck',
-      creator: 'Shelby',
-      requestedDate: '2023.01.21 02:30', //timeStamp
-      provedDate: 'Not proved yet',
-      keyPhrase: 'Space',
-    },
-    {
-      proved: 2,
-      title: 'Greenary duck',
-      creator: 'Shelby',
-      requestedDate: '2023.01.21 02:30', //timeStamp
-      provedDate: 'Not proved yet',
-      keyPhrase: 'Space',
-    },
-    {
-      proved: 3,
-      title: 'Greenary duck',
-      creator: 'Shelby',
-      requestedDate: '2023.01.21 02:30', //timeStamp
-      provedDate: 'Not proved yet',
-      keyPhrase: 'Space',
-    },
-  ];
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
       <TopNavigator>
@@ -112,7 +72,7 @@ const ReportList = () => {
       </TopNavigator>
 
       <PaddingBox>
-        {proveList.map(el => {
+        {reportList.map(el => {
           const highlightsColor = EnumProveColor[el.proved];
           return (
             <div
@@ -151,7 +111,7 @@ const ReportList = () => {
                   <div style={{ marginTop: 'auto' }}>
                     <CreatedBy
                       profileImg={profileIcon}
-                      creator={el.creator}
+                      creator={nickname}
                       style={{
                         img: { width: '16px', height: '16px', marginRight: '4px' },
                         text: { fontSize: '10px', fontWeight: 700, marginBottom: '0px', color: 'white' },
@@ -166,7 +126,11 @@ const ReportList = () => {
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>
                     Requested Date
                   </StyledSpan>
-                  <StyledSpan style={{ whiteSpace: 'nowrap' }}>{el.requestedDate}</StyledSpan>
+                  <StyledSpan style={{ whiteSpace: 'nowrap' }}>
+                    {el.requestedDate.toISOString().substring(0, 10)}
+                    {' '}
+                    {el.requestedDate.toISOString().substring(11, 16)}
+                  </StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Proved Date</StyledSpan>

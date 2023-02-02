@@ -43,7 +43,7 @@ const UploadList = () => {
         {uploadList.map(el => {
           return (
             <div
-              onClick={() => nav(`/images/${el.collection}`)}
+              onClick={() => nav(`/images/${el.creator}/${el.creatorNickname}/${el.name}`)}
               style={{
                 display: 'flex',
                 marginBottom: '20px',

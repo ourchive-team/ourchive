@@ -8,7 +8,12 @@ import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import Modal from '../../Components/Modal';
 
 const Report = () => {
-  const [reqData, setReqData] = useState({ nickname: '', title: '', email: '', phrase: '' });
+  const pathItems = window.location.pathname.split('/');
+  const creatorAddress = pathItems[2];
+  const nickname = pathItems[3];
+  const imageTitle = pathItems[4];
+
+  const [reqData, setReqData] = useState({ nickname, title: imageTitle, email: '', phrase: '' });
   const [modalOpen, setModalOpen] = useState(false);
 
   const nav = useNavigate();
@@ -40,6 +45,7 @@ const Report = () => {
         <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Creator Nickname</span>
         <StyledInput
           name="nickname"
+          value={nickname}
           placeholder="Put Creator Nickname"
           onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
         />
@@ -48,6 +54,7 @@ const Report = () => {
         <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Image Title</span>
         <StyledInput
           name="title"
+          value={imageTitle}
           placeholder="Put Image Title"
           onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
         />

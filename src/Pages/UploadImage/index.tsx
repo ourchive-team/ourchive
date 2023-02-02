@@ -77,7 +77,7 @@ const Upload = () => {
   const [inputValues, setInputValues] = useState({ title: '', desc: '', price: '' });
   const [modalOpen, setModalOpen] = useState(false);
   const nav = useNavigate();
-  const [nickname, setUserNickname ] = useRecoilState(nicknameState);
+  const [nickname, setUserNickname] = useRecoilState(nicknameState);
   if (nickname as unknown as string === '') {
     const { address } = window.aptos.account();
     setUserNickname(address);

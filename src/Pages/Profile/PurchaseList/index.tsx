@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import RenderImageList, { TokenItem } from '../../../Components/RenderImageList';
-import { buyImage, downloadImage, getPurchasedImageList } from '../../../func';
+import { buyImage, downloadImage, getPurchasedImageList, TokenPurchaseItem } from '../../../func';
 import { addressState } from '../../../states/loginState';
 
 const PurchaseList = () => {
-  const [purchaseList, setPurchaseList] = useState<TokenItem[]>([]);
+  const [purchaseList, setPurchaseList] = useState<TokenPurchaseItem[]>([]);
   const [address, setAddress] = useRecoilState(addressState);
   const addressString = address;
 
@@ -32,8 +32,8 @@ const PurchaseList = () => {
             <RenderImageList itemList={[]} routeUrl="/Images" skeletonWidth={100} skeletonHeight={100} hideDetails />
 
             <div style={{ display: 'flex', width: '100%', flexDirection: 'column', padding: '16px 16px 16px 0px' }}>
-              <span style={{ fontWeight: 700, fontSize: '14px' }}>{el.title}</span>
-              <span style={{ fontWeight: 400, fontSize: '12px' }}>{el.description}</span>
+              <span style={{ fontWeight: 700, fontSize: '14px' }}>{el.token.name}</span>
+              <span style={{ fontWeight: 400, fontSize: '12px' }}>DESCRIPTION HERE</span>
 
               {el.expireDate > 0 ? (
                 <>
@@ -86,9 +86,10 @@ const PurchaseList = () => {
                     onClick={() => {
                       buyImage({
                         size: 1,
-                        creator: 'asdf',
-                        imageTitle: 'asdf',
-                        expiry: 0,
+                        creator: el.token.creator,
+                        creatorNickname: el.token.creatorNickname,
+                        imageTitle: el.token.name,
+                        expiry: 99999999999, // FIXME
                       });
                     }}
                     style={{
