@@ -117,7 +117,7 @@ module ourchive::marketplace {
 
     entry public fun purchase_image(
         user: &signer,
-        creator_address: address,
+        resource_address: address,
         creator_nickname: String,
         image_title: String,
         size: u64,
@@ -125,7 +125,7 @@ module ourchive::marketplace {
     ) acquires MarketDataStore {
         purchase_image_internal<AptosCoin>(
             user,
-            creator_address,
+            resource_address,
             creator_nickname,
             image_title,
             size,
@@ -135,7 +135,7 @@ module ourchive::marketplace {
 
     fun purchase_image_internal<CoinType>(
         user: &signer,
-        creator_address: address,
+        resource_address: address,
         creator_nickname: String,
         image_title: String,
         size: u64,
@@ -143,9 +143,9 @@ module ourchive::marketplace {
     ) acquires MarketDataStore {
         let user_addr = signer::address_of(user);
         let market_data_store = borrow_global_mut<MarketDataStore>(@ourchive);
+        let creator_address = *simple_map::borrow(&market_data_store.resource_to_creator, &resource_address);
         let creator_info = table::borrow(&market_data_store.creator_info_table, creator_address);
         let resource_signer = account::create_signer_with_capability(&creator_info.signer_cap);
-        let resource_address = signer::address_of(&resource_signer);
         
         // Check the user's balance
         let image_id = get_image_id(resource_address, creator_nickname, image_title);
@@ -235,9 +235,14 @@ module ourchive::marketplace {
         size: u64,
         expired_date: u64,
     ) acquires MarketDataStore {
+        let creator_info_table = &borrow_global<MarketDataStore>(@ourchive).creator_info_table;
+        let creator_info = table::borrow(creator_info_table, creator_address);
+        let resource_signer = &account::create_signer_with_capability(&creator_info.signer_cap);
+
+
         purchase_image_internal<FakeMoney>(
             user,
-            creator_address,
+            signer::address_of(resource_signer),
             creator_nickname,
             image_title,
             size,
