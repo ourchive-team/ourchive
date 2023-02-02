@@ -60,40 +60,51 @@ const RenderImageList = ({
   const nav = useNavigate();
   return (
     <>
-      {itemList &&
-        itemList.map(el => {
-          const navUrl = routeUrlWithoutId ? routeUrl : `${routeUrl}/${el.creator}/${el.name}`;
-          return (
-            <ItemCardDescription onClick={() => nav(navUrl)} style={{ ...style?.wrapper }}>
-              {/*<img src="/public/images/image13.png" alt="test-img" />*/}
-              {routeUrl ? (
-                <img
-                  src={el.uri}
-                  alt={el.name}
-                  style={{ width: skeletonWidth || 136, height: skeletonHeight || 143 }}
-                />
-              ) : (
-                <SkeletonTheme baseColor="#1F1F29" highlightColor="#3F3E3F" borderRadius="8px">
-                  <Skeleton width={skeletonWidth || 136} height={skeletonHeight || 143} />
-                </SkeletonTheme>
-              )}
-              {!hideDetails && typeof el === 'object' && (
-                <>
-                  <div style={{ display: 'flex', width: '100%', marginTop: '10px', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>{el.name}</span>
-                    <span style={{ fontSize: '12px', color: baseColor.yellow, marginBottom: '8px' }}>
-                      {`${el.price} APT ~`}
-                    </span>
-                    <div style={{ display: 'flex', width: '100%' }}>
-                      <img srcSet={profileIcon} alt="profile icon" style={{ width: '16px', marginRight: '4px' }} />
-                      <span>{`Creator ${el.creatorNickname}`}</span>
+      {itemList.length > 0
+        ? itemList.map(el => {
+            const navUrl = routeUrlWithoutId ? routeUrl : `${routeUrl}/${el.creator}/${el.name}`;
+            return (
+              <ItemCardDescription onClick={() => nav(navUrl)} style={{ ...style?.wrapper }}>
+                {/*<img src="/public/images/image13.png" alt="test-img" />*/}
+                {routeUrl ? (
+                  <img
+                    src={el.uri}
+                    alt={el.name}
+                    style={{ width: skeletonWidth || 136, height: skeletonHeight || 143 }}
+                  />
+                ) : (
+                  <SkeletonTheme baseColor="#1F1F29" highlightColor="#3F3E3F" borderRadius="8px">
+                    <Skeleton width={skeletonWidth || 136} height={skeletonHeight || 143} />
+                  </SkeletonTheme>
+                )}
+                {!hideDetails && typeof el === 'object' && (
+                  <>
+                    <div style={{ display: 'flex', width: '100%', marginTop: '10px', flexDirection: 'column' }}>
+                      <span style={{ fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>{el.name}</span>
+                      <span style={{ fontSize: '12px', color: baseColor.yellow, marginBottom: '8px' }}>
+                        {`${el.price} APT ~`}
+                      </span>
+                      <div style={{ display: 'flex', width: '100%' }}>
+                        <img
+                          srcSet={profileIcon}
+                          alt="profile icon"
+                          style={{ width: '16px', height: '16px', marginRight: '4px' }}
+                        />
+                        <span>{`Creator ${el.creatorNickname}`}</span>
+                      </div>
                     </div>
-                  </div>
-                </>
-              )}
-            </ItemCardDescription>
-          );
-        })}
+                  </>
+                )}
+              </ItemCardDescription>
+            );
+          })
+        : skeletonItemList.map(el => {
+            return (
+              <ItemCardDescription>
+                <RenderSkeleton skeletonWidth={skeletonWidth} skeletonHeight={skeletonHeight} />
+              </ItemCardDescription>
+            );
+          })}
     </>
   );
 };
