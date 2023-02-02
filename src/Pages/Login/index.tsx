@@ -47,10 +47,12 @@ export const Login = () => {
           style={{ fontSize: '16px' }}
           onClick={async () => {
             const { address: addr, publicKey: pKey } = await walletConnect(setAddress, setPublicKey);
-            if (await checkUserExists(pKey, setNickname)) {
+            if (await checkUserExists(setNickname)) {
               // SET isLogin to true
               nav('/main');
-            } else { nav('/nickname'); }
+            } else {
+              nav('/nickname');
+            }
           }}
         >
           Connect Wallet

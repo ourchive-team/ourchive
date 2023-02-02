@@ -48,6 +48,7 @@ const ReDownloadOrExpiredButton = ({ expireDate }: IExpireStatus) => {
           buyImage({
             size: 1,
             creator: 'asdf',
+            creatorNickname: '',
             imageTitle: 'asdf',
             expiry: 0,
           });

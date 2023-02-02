@@ -18,11 +18,12 @@ export const walletConnect = async (setAddress: any, setPublicKey: any) => {
   const { address, publicKey } = await window.aptos.connect();
   setAddress(address);
   setPublicKey(publicKey);
+  console.log("setAddress, setPublicKey complete");
 
   return { address, publicKey };
 };
 
-export const checkUserExists = async (userAddress: string, setNickname: any) => {
+export const checkUserExists = async (setNickname: any) => {
   const UserResource: { data: any } = await client.getAccountResource(
     moduleAddress,
     `${moduleAddress}::user_manager::UserStore`,
@@ -114,22 +115,6 @@ export const getImageInfo = async (creatorAddress: string, creatorNickname: stri
     moduleAddress,
     `${moduleAddress}::user_manager::UserStore`,
   );
-
-  // const { handle }: { handle: string } = UserResource.data.nicknames;
-  // const { publicKey } = await window.aptos.account();
-  // const getTableItemRequest: TableItemRequest = {
-  //   key_type: 'address',
-  //   value_type: '0x1::string::String',
-  //   key: publicKey,
-  // };
-  // console.log("getTableItemRequest by publicKey");
-
-  // try {
-  //   creatorNickname = await client.getTableItem(handle, getTableItemRequest);
-  //   console.log("creatorNickname", creatorNickname);
-  // } catch (e) {
-  //   console.log('error', e);
-  // }
 
   const viewRequest: ViewRequest = {
     function: `${moduleAddress}::marketplace::get_image_id`,
@@ -243,14 +228,19 @@ export const getUploadedImageList = async (address: string): Promise<TokenItem[]
   }
 };
 
-export const getPurchasedImageList = async (address: string): Promise<TokenItem[]> => {
+export interface TokenPurchaseItem {
+  token: TokenItem,
+  expireDate: number,
+}
+
+export const getPurchasedImageList = async (address: string): Promise<TokenPurchaseItem[]> => {
   const viewRequest: ViewRequest = {
     function: `${moduleAddress}::marketplace::get_purchased_images`,
     type_arguments: [],
     arguments: [address],
   };
 
-  const tokens: TokenItem[] = [];
+  const tokens: TokenPurchaseItem[] = [];
 
   try {
     const result = await client.view(viewRequest);
@@ -266,12 +256,15 @@ export const getPurchasedImageList = async (address: string): Promise<TokenItem[
 
       const creatorName = token.collection.replace("'s Collection", ''); // FIXME
       tokens.push({
-        creator: token.creator,
-        creatorNickname: creatorName,
-        collection: token.collection,
-        name: token.name,
-        uri,
-        price: 0,
+        token: {
+          creator: token.creator,
+          creatorNickname: creatorName,
+          collection: token.collection,
+          name: token.name,
+          uri,
+          price: 0,
+        },
+        expireDate: 0,
       });
     }
     return tokens;
@@ -368,6 +361,7 @@ interface IReportImage {
   randomPhrase: string;
 }
 export const reportImage = async (report: IReportImage) => {
+  console.log(report.creatorNickname, report.imageTitle, report.randomPhrase);
   const transaction = {
     type: 'entry_function_payload',
     function: `${moduleAddress}::owner_prover::submit_report`,
@@ -381,39 +375,64 @@ export const reportImage = async (report: IReportImage) => {
     console.log('damn', error);
   }
 };
-//image? || images[]?
 
 // TODO
-export const getReportList = async () => {
-  const OwnerProverStore: { data: any } = await client.getAccountResource(
-    moduleAddress,
-    `${moduleAddress}::owner_prover::OwnerProverStore`,
-  );
+export interface IReportResponse {
+  data : {
+    [phrase : string]: {
+      image : {
+        collection : string,
+        creator : string,
+        name : string,
+      }
+      proved : boolean,
+      timestamp : number,
+    };
+  }[]
+}
 
-  const { handle }: { handle: string } = OwnerProverStore.data.creator_report_table;
-  const { address } = await window.aptos.account();
-  console.log('addr', address);
-  const getTableItemRequest: TableItemRequest = {
-    key_type: 'address',
-    value_type: '0x1::string::String',
-    key: address,
+type TProved = 0 | 1 | 2 | 3; // not proved = 0, proved = 1, cannot prove = 2
+export interface IProveItem {
+  proved: TProved;
+  title: string;
+  creator: string;
+  requestedDate: Date; //Timestamp?
+  provedDate: string; //Timestamp?
+  keyPhrase: string;
+}
+
+export const getReportList = async (nickname: string) => {
+  const viewRequest: ViewRequest = {
+    function: `${moduleAddress}::owner_prover::get_report_list`,
+    type_arguments: [],
+    arguments: [nickname],
   };
 
   try {
-    const result = await client.getTableItem(handle, getTableItemRequest);
-    //TODO
-    console.log(result);
-  } catch (err) {
-    // FIXME
-    const error = err as ApiError;
-    if (error.errorCode === 'table_item_not_found') {
-      return [];
-    }
+    const result = await client.view(viewRequest);
+    const reportResponse = result as IReportResponse[];
+    // eslint-disable-next-line
 
+    const reportList = reportResponse[0].data.map((r) => {
+      const rDate = new Date(r.value.timestamp * 1000);
+      // eslint-disable-next-line no-nested-ternary
+      const proveStatus = r.value.proved ? 1 : rDate.getTime() < new Date().getTime() ? 0 : 2;
+      const reportCase : IProveItem = {
+        proved: proveStatus,
+        title: r.value.image.name,
+        creator: r.value.image.creator,
+        requestedDate: new Date(r.value.timestamp * 1000),
+        provedDate: proveStatus === 1 ? "TODO: DATE" : "Not proved yet",
+        keyPhrase: r.key as unknown as string,
+      };
+      return reportCase;
+    });
+
+    return reportList;
+  } catch (error) {
     console.log(error);
     return [];
   }
-  return [];
 };
 
 // TODO
