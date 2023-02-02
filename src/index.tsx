@@ -16,5 +16,7 @@ window.addEventListener('load', () => {
 });
 
 declare global {
-  interface Window { aptos: any; }
+  interface Window {
+    aptos: any;
+  }
 }

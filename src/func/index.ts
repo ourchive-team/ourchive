@@ -18,11 +18,12 @@ export const walletConnect = async (setAddress: any, setPublicKey: any) => {
   const { address, publicKey } = await window.aptos.connect();
   setAddress(address);
   setPublicKey(publicKey);
+  console.log("setAddress, setPublicKey complete");
 
   return { address, publicKey };
 };
 
-export const checkUserExists = async (userAddress: string, setNickname: any) => {
+export const checkUserExists = async (setNickname: any) => {
   const UserResource: { data: any } = await client.getAccountResource(
     moduleAddress,
     `${moduleAddress}::user_manager::UserStore`,
