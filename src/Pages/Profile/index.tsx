@@ -104,6 +104,7 @@ const Profile = () => {
             itemList={uploadList}
             routeUrl="upload-list"
             routeUrlWithoutId
+            skeletonCount={6}
             skeletonWidth={100}
             skeletonHeight={100}
             style={{ wrapper: { padding: '6px' } }}
@@ -121,6 +122,7 @@ const Profile = () => {
             itemList={purchaseList}
             routeUrl="download-list"
             routeUrlWithoutId
+            skeletonCount={6}
             skeletonWidth={100}
             skeletonHeight={100}
             style={{ wrapper: { padding: '6px' } }}

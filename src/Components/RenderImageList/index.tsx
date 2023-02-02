@@ -59,8 +59,8 @@ const RenderImageList = ({
   style,
 }: IRenderImageList) => {
   const skeletonCountMap = Array.apply(null, new Array(skeletonCount));
-
   const nav = useNavigate();
+  console.log(style);
   return (
     <>
       {itemList.length > 0
@@ -106,7 +106,7 @@ const RenderImageList = ({
         : skeletonCountMap.map(el => {
             return (
               <ItemCardDescription>
-                <RenderSkeleton skeletonWidth={134} skeletonHeight={143} />
+                <RenderSkeleton skeletonWidth={skeletonWidth || 134} skeletonHeight={skeletonHeight || 143} />
               </ItemCardDescription>
             );
           })}

@@ -38,7 +38,6 @@ const Main = () => {
     >
       <PaddingBox>
         <img style={{ marginLeft: 'auto', marginBottom: '32px' }} src={searchIcon} alt="search" />
-        <img src={banner} alt="banner" style={{ marginBottom: '32px' }} />
         <span style={{ fontSize: '20px', marginBottom: '-6px' }}>Projects you`ll love</span>
       </PaddingBox>
       <div style={{ width: '100%' }}>

@@ -138,14 +138,16 @@ const ReportList = () => {
             >
               <ProveStatus proveStatus={el.proved} />
               <div style={{ display: 'flex', marginTop: '-4px' }}>
-                <RenderImageList
-                  itemList={[]}
-                  routeUrl="/Images"
-                  style={{ wrapper: { paddingLeft: '0px' } }}
-                  skeletonWidth={60}
-                  skeletonHeight={60}
-                  hideDetails
-                />
+                <div>
+                  <RenderImageList
+                    itemList={[]}
+                    routeUrl="/Images"
+                    style={{ wrapper: { paddingLeft: '0px' } }}
+                    skeletonWidth={60}
+                    skeletonHeight={60}
+                    hideDetails
+                  />
+                </div>
 
                 <div style={{ display: 'flex', width: '100%', flexDirection: 'column', padding: '18px 18px 18px 0px' }}>
                   <StyledSpan
