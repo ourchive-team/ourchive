@@ -121,9 +121,11 @@ export const getImageInfo = async (creatorAddress: string, imageTitle: string): 
     value_type: '0x1::string::String',
     key: publicKey,
   };
+  console.log("getTableItemRequest by publicKey");
 
   try {
     creatorNickname = await client.getTableItem(handle, getTableItemRequest);
+    console.log("creatorNickname", creatorNickname);
   } catch (e) {
     console.log('error', e);
   }

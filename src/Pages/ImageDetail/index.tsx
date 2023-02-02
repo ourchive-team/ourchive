@@ -17,9 +17,10 @@ const ImageDetail = () => {
   const nav = useNavigate();
   const nftAddress = window.location.pathname.replace('/images/', '');
 
-  // TODO: fetch creatorAddress, imageTitle from router
-  const creatorAddress = '';
-  const imageTitle = '';
+  const pathItems = window.location.pathname.split('/');
+  console.log('path:', pathItems);
+  const creatorAddress = pathItems[2];
+  const imageTitle = pathItems[3];
   const [imageInfo, setImageInfo] = useState({
     title: 'A Colorful artwork',
     price: 0,
@@ -88,7 +89,9 @@ const ImageDetail = () => {
         <span>Purchase</span>
       </TopNavigator>
       <PaddingBox>
-        <ImageContainer style={{ minHeight: '300px', height: '300px' }} />
+        <ImageContainer style={{ minHeight: '300px', height: '300px' }}>
+          <img src={imageInfo.imgUrl} alt={imageInfo.title} />
+        </ImageContainer>
       </PaddingBox>
       <PaddingBox style={{ padding: '0px 16px' }}>
         <span style={{ fontSize: '24px', fontWeight: 700, marginTop: '16px' }}>{imageInfo.title}</span>
