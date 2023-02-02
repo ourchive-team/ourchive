@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 
+import { upload } from '@testing-library/user-event/dist/upload';
 import profileIcon from '../../images/profile-icon.png';
 import navIcon from '../../icons/prev.svg';
 import { baseColor } from '../../styles';
@@ -13,7 +14,7 @@ import RenderImageList, { TokenItem } from '../../Components/RenderImageList';
 import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import { addressState, nicknameState, publicKeyState } from '../../states/loginState';
-import { getUploadedImageList, getUserNickname } from '../../func';
+import { getPurchasedImageList, getUploadedImageList, getUserNickname } from '../../func';
 
 const YellowCardBox = styled.div`
   display: flex;
@@ -48,10 +49,15 @@ const Profile = () => {
   const renderAddressString = `${addressString?.slice(0, 4)}...${addressString?.slice(-4)}`;
 
   const [uploadList, setUploadList] = useState<TokenItem[]>([]);
+  const [purchaseList, setPurchaseList] = useState<TokenItem[]>([]);
 
   useEffect(() => {
     getUploadedImageList(addressString).then(data => {
       setUploadList(data);
+    });
+
+    getPurchasedImageList(addressString).then(data => {
+      setPurchaseList(data);
     });
   }, []);
 
@@ -112,7 +118,7 @@ const Profile = () => {
       <div style={{ width: '100%', height: '100%', marginBottom: '24px' }}>
         <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px', marginLeft: '-6px' }}>
           <RenderImageList
-            itemList={[]}
+            itemList={purchaseList}
             routeUrl="download-list"
             routeUrlWithoutId
             skeletonWidth={100}

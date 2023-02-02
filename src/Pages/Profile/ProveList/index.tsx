@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import QueryString from 'qs';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import RenderImageList from '../../../Components/RenderImageList';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
+import { getProveList } from '../../../func';
 
 interface IProveStatus {
   proveStatus: 0 | 1 | 2 | 3;
@@ -65,6 +66,16 @@ interface IProveItem {
   keyPhrase: string;
 }
 const ReportList = () => {
+  const [proveList2, setProveList] = useState<TProved[]>([]);
+
+  useEffect(() => {
+    getProveList().then(data => {
+      setProveList(data);
+    });
+  }, []);
+
+  console.log(proveList2);
+
   const proveList: IProveItem[] = [
     {
       proved: 0,

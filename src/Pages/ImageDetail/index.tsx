@@ -18,7 +18,6 @@ const ImageDetail = () => {
   const nftAddress = window.location.pathname.replace('/images/', '');
 
   const pathItems = window.location.pathname.split('/');
-  console.log('path:', pathItems);
   const creatorAddress = pathItems[2];
   const nickname = pathItems[3];
   const imageTitle = pathItems[4];

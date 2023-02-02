@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { baseColor, LargeButton, PaddingBox, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/TopNavigator';
 import RenderImageList from '../../../Components/RenderImageList';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
+import { getReportList } from '../../../func';
 
 interface IProveStatus {
   proveStatus: 0 | 1 | 2 | 3;
@@ -62,6 +63,14 @@ interface IProveItem {
   keyPhrase: string;
 }
 const ReportList = () => {
+  const [reportList, setUploadList] = useState<TProved[]>([]);
+
+  useEffect(() => {
+    getReportList().then(data => {
+      setUploadList(data);
+    });
+  }, []);
+
   const proveList: IProveItem[] = [
     {
       proved: 0,

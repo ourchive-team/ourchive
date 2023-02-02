@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 
-import RenderImageList from '../../../Components/RenderImageList';
-import { buyImage, downloadImage } from '../../../func';
+import RenderImageList, { TokenItem } from '../../../Components/RenderImageList';
+import { buyImage, downloadImage, getPurchasedImageList } from '../../../func';
+import { addressState } from '../../../states/loginState';
 
 const PurchaseList = () => {
-  const requiredData = [
-    { id: '0x1', imgUrl: '/', title: 'Two people standing', description: 'desc', expireDate: 30 },
-    { id: '0x1', imgUrl: '/', title: 'Two people standing', description: 'desc', expireDate: 2 },
-    { id: '0x1', imgUrl: '/', title: 'Two people standing', description: 'desc', expireDate: 0 },
-  ];
+  const [purchaseList, setPurchaseList] = useState<TokenItem[]>([]);
+  const [address, setAddress] = useRecoilState(addressState);
+  const addressString = address;
+
+  useEffect(() => {
+    getPurchasedImageList(addressString).then(data => {
+      setPurchaseList(data);
+    });
+  }, []);
 
   return (
     <div style={{ display: 'flex', width: '100%', flexDirection: 'column', padding: '16px' }}>
-      {requiredData.map(el => {
+      {purchaseList.map(el => {
         return (
           <div
             style={{

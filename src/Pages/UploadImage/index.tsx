@@ -7,7 +7,7 @@ import Link, { useNavigate } from 'react-router-dom';
 import plusIcon from '../../icons/plus.svg';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
-import { uploadImage } from '../../func';
+import { getUserNickname, uploadImage } from '../../func';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import TopNavigator from '../../Components/TopNavigator';
 import Modal from '../../Components/Modal';
@@ -77,7 +77,11 @@ const Upload = () => {
   const [inputValues, setInputValues] = useState({ title: '', desc: '', price: '' });
   const [modalOpen, setModalOpen] = useState(false);
   const nav = useNavigate();
-  const [nickname] = useRecoilState(nicknameState);
+  const [nickname, setUserNickname ] = useRecoilState(nicknameState);
+  if (nickname as unknown as string === '') {
+    const { address } = window.aptos.account();
+    setUserNickname(address);
+  }
 
   const onChange = (e: any) => {
     setInputValues({ ...inputValues, [e.target.name]: e.target.value });

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import exp from 'constants';
 import { LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/TopNavigator';
 import Resolution, { IResolutionList } from '../../../Components/Resolution';
@@ -6,6 +7,11 @@ import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
 import { buyImage } from '../../../func';
 
 const Purchase = () => {
+  const pathItems = window.location.pathname.split('/');
+  const creatorAddress = pathItems[2];
+  const nickname = pathItems[3];
+  const imageTitle = pathItems[4];
+
   const resolutionList = [
     {
       size: 'LARGE',
@@ -35,6 +41,7 @@ const Purchase = () => {
 
   const requestReady = selectedSize && periodDay && Number(periodDay) > 0;
   const periodNumber = Number.isNaN(Number(periodDay)) ? 0 : Number(periodDay);
+  const expiryTimestamp = Math.floor(Date.now() / 1000) + (periodNumber * 24 * 60 * 60);
 
   return (
     <div style={{ display: 'flex', width: '100%', height: '100%', flexDirection: 'column' }}>
@@ -95,10 +102,11 @@ const Purchase = () => {
             disabled={!requestReady}
             onClick={() => {
               buyImage({
-                size: 1,
-                creator: 'asdf',
-                imageTitle: 'asdf',
-                expiry: 1000000,
+                size: Number(selectedSize?.dpi),
+                creator: creatorAddress,
+                creatorNickname: nickname,
+                imageTitle,
+                expiry: expiryTimestamp,
               });
             }}
             style={{ backgroundColor: requestReady ? 'black' : '#8E8E8E' }}

@@ -6,7 +6,7 @@ import { addressState, nicknameState } from '../states/loginState';
 import UploadToIPFS from './ipfs';
 import { TokenItem } from '../Components/RenderImageList';
 
-const moduleAddress = '0xab1578313ed48d0c396f7e9700c35699857ce43390ada56cafd98d3b26ac8df6';
+const moduleAddress = '0x0820229962fe76cef0a10942fe9031ed357fca0bd47b1bafef3b82e2c5b2a0da';
 const client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
 const tokenClient = new TokenClient(client);
 
@@ -139,12 +139,9 @@ export const getImageInfo = async (creatorAddress: string, creatorNickname: stri
 
   try {
     const result = await client.view(viewRequest);
-    console.log('result', result);
     const tokenDataIds = result as unknown as TokenTypes.TokenDataId[];
     const tokenDataId = tokenDataIds[0];
-    console.log('tokenDataId', tokenDataId);
     const tokenData = await tokenClient.getTokenData(tokenDataId.creator, tokenDataId.collection, tokenDataId.name);
-    console.log('tokenData', tokenData.description, tokenData.uri);
     return {
       title: tokenDataId.name,
       price: 0, // TODO
@@ -155,7 +152,6 @@ export const getImageInfo = async (creatorAddress: string, creatorNickname: stri
       imgUrl: tokenData.uri,
     };
   } catch (error) {
-    console.log('getImageInfo', error);
     // do sth
     return {
       title: '',
@@ -171,6 +167,7 @@ export const getImageInfo = async (creatorAddress: string, creatorNickname: stri
 
 const tokendataIdToUri = async (tokenDataId: { creator: string; collection: string; name: string }) => {
   const tokenData = await tokenClient.getTokenData(tokenDataId.creator, tokenDataId.collection, tokenDataId.name);
+  console.log(tokenData.default_properties);
   return tokenData.uri;
 };
 
@@ -206,7 +203,6 @@ export const getAllImageInfoList = async () => {
         price: parseInt(token.value.amount, 10),
       });
     }
-    console.log('tokens', tokens2);
     return [...tokens2];
   } catch (error) {
     console.log(error);
@@ -226,12 +222,8 @@ export const getUploadedImageList = async (address: string): Promise<TokenItem[]
   try {
     const result = await client.view(viewRequest);
     const tokenDataIdList = result as TokenTypes.TokenDataId[][];
-    console.log('tokenDataIdList', tokenDataIdList);
     // eslint-disable-next-line
     for (const token of tokenDataIdList[0]) {
-      //@ts-ignore:next-line;
-      console.log('token', token);
-      console.log(token.creator, token.collection, token.name);
       // eslint-disable-next-line
       const uri = await tokendataIdToUri({ creator: token.creator, collection: token.collection, name: token.name });
       const creatorName = token.collection.replace("'s Collection", ''); // FIXME
@@ -251,17 +243,38 @@ export const getUploadedImageList = async (address: string): Promise<TokenItem[]
   }
 };
 
-export const getPurchasedImageList = async (): Promise<TokenTypes.TokenDataId[]> => {
+export const getPurchasedImageList = async (address: string): Promise<TokenItem[]> => {
   const viewRequest: ViewRequest = {
-    function: `${moduleAddress}::marketplace::get_all_images`,
+    function: `${moduleAddress}::marketplace::get_purchased_images`,
     type_arguments: [],
-    arguments: [],
+    arguments: [address],
   };
 
+  const tokens: TokenItem[] = [];
+
   try {
-    // TODO
     const result = await client.view(viewRequest);
-    const tokenDataIdList = result as TokenTypes.TokenDataId[];
+    const tokenDataIdList = result as TokenTypes.TokenId[][];
+    console.log('purchase tokenDataIdList', tokenDataIdList);
+    // eslint-disable-next-line
+    for (const tokenId of tokenDataIdList[0]) {
+      //@ts-ignore:next-line;
+      const token = tokenId.token_data_id;
+      console.log(token.creator, token.collection, token.name);
+      // eslint-disable-next-line
+      const uri = await tokendataIdToUri({ creator: token.creator, collection: token.collection, name: token.name });
+
+      const creatorName = token.collection.replace("'s Collection", ''); // FIXME
+      tokens.push({
+        creator: token.creator,
+        creatorNickname: creatorName,
+        collection: token.collection,
+        name: token.name,
+        uri,
+        price: 0,
+      });
+    }
+    return tokens;
   } catch (error) {
     console.log(error);
     return [];
@@ -305,15 +318,17 @@ export const uploadImage = async (nft: IUploadImage) => {
 interface IBuyImage {
   size: number;
   creator: string;
+  creatorNickname: string;
   imageTitle: string;
   expiry: number;
 }
 export const buyImage = async (nft: IBuyImage) => {
-  const { publicKey: user } = await window.aptos.account();
+  const { address: user } = await window.aptos.account();
+  console.log(user, nft);
   const transaction = {
     type: 'entry_function_payload',
     function: `${moduleAddress}::marketplace::purchase_image`,
-    arguments: [user, nft.creator, nft.imageTitle, nft.size, nft.expiry],
+    arguments: [nft.creator, nft.creatorNickname, nft.imageTitle, nft.size, nft.expiry],
     type_arguments: [],
   };
 
@@ -376,11 +391,12 @@ export const getReportList = async () => {
   );
 
   const { handle }: { handle: string } = OwnerProverStore.data.creator_report_table;
-  const { publicKey } = await window.aptos.account();
+  const { address } = await window.aptos.account();
+  console.log('addr', address);
   const getTableItemRequest: TableItemRequest = {
     key_type: 'address',
     value_type: '0x1::string::String',
-    key: publicKey,
+    key: address,
   };
 
   try {
@@ -408,11 +424,11 @@ export const getProveList = async () => {
   );
 
   const { handle }: { handle: string } = OwnerProverStore.data.user_proof_table;
-  const { publicKey } = await window.aptos.account();
+  const { address } = await window.aptos.account();
   const getTableItemRequest: TableItemRequest = {
     key_type: 'address',
     value_type: '0x1::string::String',
-    key: publicKey,
+    key: address,
   };
 
   try {
@@ -422,11 +438,11 @@ export const getProveList = async () => {
   } catch (err) {
     // FIXME
     const error = err as ApiError;
+    console.log(error);
     if (error.errorCode === 'table_item_not_found') {
       return [];
     }
 
-    console.log(error);
     return [];
   }
   return [];
