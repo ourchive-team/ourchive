@@ -55,9 +55,10 @@ const Report = () => {
 
             <PaddingBox style={{ width: '100%', padding: '0px 16px' }}>
               <LargeButton
+                style={{ backgroundColor: baseColor.yellow, color: 'black' }}
                 onClick={() => {
                   nav(-1);
-                  // anchor?.current?.click();
+                  anchor?.current?.click();
                 }}
               >
                 Go to Report List
