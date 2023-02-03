@@ -6,7 +6,7 @@ import RenderImageList from '../../../Components/RenderImageList';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
-import { getReportList, IProveItem } from '../../../func';
+import { dateToString, getReportList, IProveItem } from '../../../func';
 import { nicknameState } from '../../../states/loginState';
 
 interface IProveStatus {
@@ -127,14 +127,12 @@ const ReportList = () => {
                     Requested Date
                   </StyledSpan>
                   <StyledSpan style={{ whiteSpace: 'nowrap' }}>
-                    {el.requestedDate.toISOString().substring(0, 10)}
-                    {' '}
-                    {el.requestedDate.toISOString().substring(11, 16)}
+                    {dateToString(el.requestedDate)}
                   </StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Proved Date</StyledSpan>
-                  <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>{el.provedDate}</StyledSpan>
+                  <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>{dateToString(el.provedDate)}</StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Key Phrase</StyledSpan>

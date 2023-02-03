@@ -18,8 +18,8 @@ const ProveOwnershipOfImage = () => {
   const queryData: any = QueryString.parse(location.search, { ignoreQueryPrefix: true });
 
   const [reqData, setReqData] = useState({
-    nickname: location.pathname.split('/')[3],
-    title: location.pathname.split('/')[4],
+    nickname: location.pathname.split('/')[4],
+    title: location.pathname.split('/')[5],
     phrase: queryData?.phrase || '',
   });
   const [modalOpen, setModalOpen] = useState(false);

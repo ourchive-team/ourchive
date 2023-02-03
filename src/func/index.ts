@@ -396,7 +396,6 @@ export const reportImage = async (report: IReportImage) => {
   }
 };
 
-// TODO
 export interface IReportResponse {
   data: {
     [phrase: string]: {
@@ -416,8 +415,8 @@ export interface IProveItem {
   proved: TProved;
   title: string;
   creator: string;
-  requestedDate: Date; //Timestamp?
-  provedDate: string; //Timestamp?
+  requestedDate: Date | null; //Timestamp?
+  provedDate: Date | null; //Timestamp?
   keyPhrase: string;
 }
 
@@ -442,7 +441,7 @@ export const getReportList = async (nickname: string) => {
         title: r.value.image.name,
         creator: r.value.image.creator,
         requestedDate: new Date(r.value.timestamp * 1000),
-        provedDate: proveStatus === 1 ? "TODO: DATE" : "Not proved yet",
+        provedDate: null,
         keyPhrase: r.key as unknown as string,
       };
       return reportCase;
@@ -455,34 +454,50 @@ export const getReportList = async (nickname: string) => {
   }
 };
 
-// TODO
-export const getProveList = async () => {
-  const OwnerProverStore: { data: any } = await client.getAccountResource(
-    moduleAddress,
-    `${moduleAddress}::owner_prover::OwnerProverStore`,
-  );
+export interface IProofResponse {
+  image : {
+    collection : string,
+    creator : string,
+    name : string,
+  }
+  phrase : string,
+  timestamp : number,
+}
 
-  const { handle }: { handle: string } = OwnerProverStore.data.user_proof_table;
-  const { address } = await window.aptos.account();
-  const getTableItemRequest: TableItemRequest = {
-    key_type: 'address',
-    value_type: '0x1::string::String',
-    key: address,
+export const getProveList = async (nickname: string) => {
+  const viewRequest: ViewRequest = {
+    function: `${moduleAddress}::owner_prover::get_proof_list`,
+    type_arguments: [],
+    arguments: [nickname],
   };
 
   try {
-    const result = await client.getTableItem(handle, getTableItemRequest);
-    //TODO
-    console.log(result);
-  } catch (err) {
-    // FIXME
-    const error = err as ApiError;
-    console.log(error);
-    if (error.errorCode === 'table_item_not_found') {
-      return [];
-    }
+    const result = await client.view(viewRequest);
+    const reportResponse = result[0] as IProofResponse[];
+    // eslint-disable-next-line
+    console.log('result:', reportResponse);
+    const reportList = reportResponse.map((r) => {
+      const rDate = new Date(r.timestamp * 1000);
+      // eslint-disable-next-line no-nested-ternary
+      const proveStatus = 1;
+      const reportCase : IProveItem = {
+        proved: proveStatus,
+        title: r.image.name,
+        creator: r.image.collection.replace('\'s Collection', ''),
+        requestedDate: null,
+        provedDate: rDate,
+        keyPhrase: r.phrase as unknown as string,
+      };
+      return reportCase;
+    });
 
+    return reportList;
+  } catch (error) {
+    console.log(error);
     return [];
   }
-  return [];
+};
+
+export const dateToString = (date : Date | null) => {
+  return `${date?.toISOString().substring(0, 10)} ${date?.toISOString().substring(11, 16)}`;
 };
