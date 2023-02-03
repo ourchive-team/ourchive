@@ -71,6 +71,7 @@ const RenderImageList = ({
             return (
               <ItemCardDescription onClick={() => nav(navUrl)} style={{ ...style?.wrapper }}>
                 {/*<img src="/public/images/image13.png" alt="test-img" />*/}
+
                 {routeUrl ? (
                   <div
                     style={{

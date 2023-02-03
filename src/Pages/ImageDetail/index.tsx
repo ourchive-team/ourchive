@@ -1,6 +1,35 @@
 import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+// @ts-ignore
+import s1 from '../../images/s1.jpg';
+// @ts-ignore
+
+import s2 from '../../images/s2.jpg';
+// @ts-ignore
+
+import s3 from '../../images/s3.jpg';
+// @ts-ignore
+
+import s4 from '../../images/s4.jpg';
+// @ts-ignore
+
+import s5 from '../../images/s5.jpg';
+// @ts-ignore
+
+import o1 from '../../images/o1.jpg';
+// @ts-ignore
+
+import o2 from '../../images/o2.jpg';
+// @ts-ignore
+
+import o3 from '../../images/o3.jpg';
+// @ts-ignore
+
+import o4 from '../../images/o4.jpg';
+// @ts-ignore
+
+import o5 from '../../images/o5.jpg';
 
 import flagIcon from '../../icons/flag.svg';
 import profileIcon from '../../images/profile-icon.png';
@@ -23,12 +52,98 @@ const ImageDetail = () => {
   const imageTitle = pathItems[4].replace(/%20/g, ' ');
   const [imageInfo, setImageInfo] = useState<ImageInfo>();
 
-  const [otherWorks, setOtherWorks] = useState([]);
-  const [smilarWorks, setSmilarWorks] = useState([]);
+  const [otherWorks, setOtherWorks] = useState<TokenItem[]>([]);
+  const [similarWorks, setSimilarWorks] = useState<TokenItem[]>([]);
+
   useEffect(() => {
     getImageInfo(creatorAddress, nickname, imageTitle).then(info => {
       setImageInfo(info);
-      setTimeout(() => {}, 500);
+      setTimeout(() => {
+        setOtherWorks([
+          {
+            creator: '0x7cdcb7db6176fadcdc75ddaa94cc4b5b9246d81956b9b0b01ab3d503e646752c',
+            creatorNickname: '',
+            collection: "'s Collection",
+            name: 'mildpanic',
+            uri: s1,
+            price: 1,
+          },
+          {
+            creator: '0x7cdcb7db6176fadcdc75ddaa94cc4b5b9246d81956b9b0b01ab3d503e646752c',
+            creatorNickname: '',
+            collection: "'s Collection",
+            name: 'testing',
+            uri: s2,
+            price: 1,
+          },
+          {
+            creator: '0x9d2fbc2ade41ba9f720d911e34980768fa555ed77e87e779b1f34fc708543a7e',
+            creatorNickname: 'Michael2',
+            collection: "Michael2's Collection",
+            name: '1234',
+            uri: s3,
+            price: 1,
+          },
+          {
+            creator: '0x225d39dbec63f34bdafdad218a7c79d0d2d9eac46ca43783668ec4c47fbe1e4c',
+            creatorNickname: 'Michael3',
+            collection: "Michael3's Collection",
+            name: 'testinggg',
+            uri: s4,
+            price: 1,
+          },
+          {
+            creator: '0xb1ee0eee34e231fd0236b59a6e96f6027a5576bd65417e59edabd233729470c5',
+            creatorNickname: 'da guzus',
+            collection: "da guzus's Collection",
+            name: 'a',
+            uri: s5,
+            price: 1,
+          },
+        ]);
+        setSimilarWorks([
+          {
+            creator: '0x7cdcb7db6176fadcdc75ddaa94cc4b5b9246d81956b9b0b01ab3d503e646752c',
+            creatorNickname: '',
+            collection: "'s Collection",
+            name: 'mildpanic',
+            uri: o1,
+            price: 1,
+          },
+          {
+            creator: '0x7cdcb7db6176fadcdc75ddaa94cc4b5b9246d81956b9b0b01ab3d503e646752c',
+            creatorNickname: '',
+            collection: "'s Collection",
+            name: 'testing',
+            uri: o2,
+            price: 1,
+          },
+          {
+            creator: '0x9d2fbc2ade41ba9f720d911e34980768fa555ed77e87e779b1f34fc708543a7e',
+            creatorNickname: 'Michael2',
+            collection: "Michael2's Collection",
+            name: '1234',
+            uri: o3,
+            price: 1,
+          },
+          {
+            creator: '0x225d39dbec63f34bdafdad218a7c79d0d2d9eac46ca43783668ec4c47fbe1e4c',
+            creatorNickname: 'Michael3',
+            collection: "Michael3's Collection",
+            name: 'testinggg',
+            uri: o4,
+            price: 1,
+          },
+          {
+            creator: '0xb1ee0eee34e231fd0236b59a6e96f6027a5576bd65417e59edabd233729470c5',
+            creatorNickname: 'da guzus',
+            collection: "da guzus's Collection",
+            name: 'a',
+            uri: o5,
+            price: 1,
+          },
+        ]);
+      }, 2000);
       console.log('item:', info);
     });
   }, []);
@@ -95,7 +210,7 @@ const ImageDetail = () => {
       <div style={{ width: '100%', height: '100%', marginBottom: '32px' }}>
         <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px' }}>
           <RenderImageList
-            itemList={[]}
+            itemList={otherWorks}
             routeUrl="/images"
             skeletonCount={6}
             skeletonWidth={140}
@@ -111,7 +226,7 @@ const ImageDetail = () => {
       <div style={{ width: '100%', height: '100%', marginBottom: '32px' }}>
         <div style={{ display: 'flex', overflowX: 'auto', padding: '0px 16px' }}>
           <RenderImageList
-            itemList={[]}
+            itemList={similarWorks}
             routeUrl="/images"
             skeletonCount={6}
             skeletonWidth={140}
