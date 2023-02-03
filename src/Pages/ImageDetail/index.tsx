@@ -69,7 +69,7 @@ const ImageDetail = () => {
       </TopNavigator>
       <PaddingBox>
         <ImageContainer style={{ minHeight: '300px', height: '300px' }}>
-          <img src={imageInfo?.imgUrl} alt={imageInfo?.title} />
+          <img style={{ width: 'fit-content', maxWidth: '100%' }} src={imageInfo?.imgUrl} alt={imageInfo?.title} />
         </ImageContainer>
       </PaddingBox>
       <PaddingBox style={{ padding: '0px 16px' }}>
