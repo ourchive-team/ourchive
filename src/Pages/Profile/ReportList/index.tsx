@@ -88,7 +88,9 @@ const ReportList = () => {
               <ProveStatus proveStatus={el.proved} />
               <div style={{ display: 'flex', marginTop: '-4px' }}>
                 <RenderImageList
-                  itemList={[]}
+                  itemList={[
+                    { creator: el.creator, creatorNickname: '', collection: '', name: el.title, uri: el.uri, price: 0 },
+                  ]}
                   routeUrl="/Images"
                   style={{ wrapper: { paddingLeft: '0px' } }}
                   skeletonWidth={60}
@@ -126,13 +128,13 @@ const ReportList = () => {
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>
                     Requested Date
                   </StyledSpan>
-                  <StyledSpan style={{ whiteSpace: 'nowrap' }}>
-                    {dateToString(el.requestedDate)}
-                  </StyledSpan>
+                  <StyledSpan style={{ whiteSpace: 'nowrap' }}>{dateToString(el.requestedDate)}</StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Proved Date</StyledSpan>
-                  <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>{dateToString(el.provedDate)}</StyledSpan>
+                  <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>
+                    {dateToString(el.provedDate)}
+                  </StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Key Phrase</StyledSpan>
