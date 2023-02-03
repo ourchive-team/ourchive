@@ -5,4 +5,5 @@ export enum LoginStateEnum {
   NICKNAME = 'NICKNAME',
   IMAGE_STATE = 'IMAGE_STATE',
   USER_INFO = 'USER_INFO',
+  SELECTED_MENU = 'SELECTED_MENU',
 }

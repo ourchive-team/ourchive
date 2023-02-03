@@ -23,9 +23,12 @@ const ImageDetail = () => {
   const imageTitle = pathItems[4].replace(/%20/g, ' ');
   const [imageInfo, setImageInfo] = useState<ImageInfo>();
 
+  const [otherWorks, setOtherWorks] = useState([]);
+  const [smilarWorks, setSmilarWorks] = useState([]);
   useEffect(() => {
     getImageInfo(creatorAddress, nickname, imageTitle).then(info => {
       setImageInfo(info);
+      setTimeout(() => {}, 500);
       console.log('item:', info);
     });
   }, []);

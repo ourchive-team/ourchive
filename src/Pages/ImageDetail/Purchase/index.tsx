@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/TopNavigator';
 import Resolution, { IResolutionList } from '../../../Components/Resolution';

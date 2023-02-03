@@ -36,6 +36,13 @@ export const publicKeyState = atom<TPublicKeyState>({
   },
 });
 
+type TSelectedMenu = string;
+
+export const selectedMenuState = atom<TSelectedMenu>({
+  key: LoginStateEnum.SELECTED_MENU,
+  default: '',
+});
+
 // default: {} -> default:''
 // object로 사용시 하나로 합쳐서 관리. (nickname, address)
 
