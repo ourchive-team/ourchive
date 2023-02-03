@@ -12,6 +12,7 @@ import BottomNavigator from '../../Components/BottomNavigator';
 import { PaddingBox } from '../../styles';
 import { nicknameState } from '../../states/loginState';
 import { TokenItem } from '../../Components/RenderImageList';
+import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 
 const Main = () => {
   const [tokenList, setTokenList] = useState<TokenItem[]>([]);
@@ -51,9 +52,11 @@ const Main = () => {
         favorite
         style={{ wrapper: { width: '100%' } }}
       />
-      <PaddingBox style={{ marginTop: 'auto' }}>
+      <YellowBottomNavigator
+        style={{ box: { backgroundColor: 'black', paddingTop: 0 }, bar: { backgroundColor: 'white' } }}
+      >
         <BottomNavigator />
-      </PaddingBox>
+      </YellowBottomNavigator>
     </div>
   );
 };
