@@ -94,6 +94,7 @@ const ImageDetail = () => {
           <RenderImageList
             itemList={[]}
             routeUrl="/images"
+            skeletonCount={6}
             skeletonWidth={140}
             skeletonHeight={140}
             style={{ wrapper: { padding: '6px' } }}
@@ -109,6 +110,7 @@ const ImageDetail = () => {
           <RenderImageList
             itemList={[]}
             routeUrl="/images"
+            skeletonCount={6}
             skeletonWidth={140}
             skeletonHeight={140}
             style={{ wrapper: { padding: '6px' } }}
