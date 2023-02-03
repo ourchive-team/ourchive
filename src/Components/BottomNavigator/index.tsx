@@ -32,9 +32,12 @@ const BottomNavigator = () => {
         width: '100%',
         height: '60px',
         marginTop: 'auto',
+        position: 'sticky',
+        backgroundColor: 'black',
         justifyContent: 'space-around',
         borderTop: '1px solid #1F1F1F',
         alignItems: 'center',
+        zIndex: 9,
         paddingTop: '8px',
       }}
     >

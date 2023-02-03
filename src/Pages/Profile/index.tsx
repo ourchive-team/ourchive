@@ -76,7 +76,7 @@ const Profile = () => {
       <div style={{ padding: '16px' }}>
         <img alt="profile-icon" src={profileIcon} style={{ width: '120px', height: '120px', borderRadius: '50%' }} />
       </div>
-      <span style={{ fontSize: '24px', fontWeight: 700 }}>{(nickname as unknown) as string}</span>
+      <span style={{ fontSize: '24px', fontWeight: 700 }}>{nickname as unknown as string}</span>
       <span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>
         BA in fashion & graphic design tattoo, reiki&thetahealing master✨
       </span>
@@ -162,10 +162,11 @@ const Profile = () => {
           style={{ width: '20px', transform: 'rotate(180deg)', cursor: 'pointer' }}
         />
       </div>
-      <BottomNavigator />
       <YellowBottomNavigator
         style={{ box: { backgroundColor: 'black', paddingTop: 0 }, bar: { backgroundColor: 'white' } }}
-      />
+      >
+        <BottomNavigator />
+      </YellowBottomNavigator>
     </div>
   );
 };

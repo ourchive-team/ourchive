@@ -16,9 +16,12 @@ const YellowBottomNavigator = ({ children, style, fixed }: IYellowBottomNavigato
       style={{
         display: 'flex',
         marginTop: 'auto',
+        position: 'sticky',
         height: 'fit-content',
         padding: '16px 16px 0px',
         width: '100%',
+        bottom: -1,
+        zIndex: 9,
         flexDirection: 'column',
         backgroundColor: baseColor.yellow,
         ...style?.box,
