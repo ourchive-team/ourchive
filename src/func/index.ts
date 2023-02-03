@@ -6,7 +6,7 @@ import { addressState, nicknameState } from '../states/loginState';
 import UploadToIPFS from './ipfs';
 import { TokenItem } from '../Components/RenderImageList';
 
-const moduleAddress = '0x0820229962fe76cef0a10942fe9031ed357fca0bd47b1bafef3b82e2c5b2a0da';
+const moduleAddress = '0x5163ad43db9b7354a5bc8af9e4c18130ffe5c2d077ab52c0f6553827b2e8c15f';
 const client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
 const tokenClient = new TokenClient(client);
 
