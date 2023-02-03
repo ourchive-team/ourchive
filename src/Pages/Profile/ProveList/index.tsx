@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useRecoilState } from 'recoil';
 import { baseColor, LargeButton, PaddingBox, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/TopNavigator';
 import RenderImageList from '../../../Components/RenderImageList';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
-import { getProveList, IProveItem } from '../../../func';
+import { dateToString, getProveList, IProveItem } from '../../../func';
+import { nicknameState } from '../../../states/loginState';
 
 interface IProveStatus {
   proveStatus: 0 | 1 | 2 | 3;
@@ -56,50 +58,16 @@ export const ProveStatus = ({ proveStatus }: IProveStatus) => {
 };
 
 const ReportList = () => {
-  const [proveList2, setProveList] = useState<IProveItem[]>([]);
+  const [proveList, setProveList] = useState<IProveItem[]>([]);
+  const [nickname] = useRecoilState(nicknameState);
 
   useEffect(() => {
-    getProveList().then(data => {
+    getProveList(nickname).then(data => {
       setProveList(data);
     });
   }, []);
 
-  console.log(proveList2);
-
-  const proveList: IProveItem[] = [
-    {
-      proved: 0,
-      title: 'Greenary duck',
-      creator: 'Shelby',
-      requestedDate: new Date(), //timeStamp
-      provedDate: 'Not proved yet',
-      keyPhrase: 'Space',
-    },
-    {
-      proved: 1,
-      title: 'Greenary duck',
-      creator: 'Shelby',
-      requestedDate: new Date(), //timeStamp
-      provedDate: 'Not proved yet',
-      keyPhrase: 'Space',
-    },
-    {
-      proved: 2,
-      title: 'Greenary duck',
-      creator: 'Shelby',
-      requestedDate: new Date(), //timeStamp
-      provedDate: 'Not proved yet',
-      keyPhrase: 'Space',
-    },
-    {
-      proved: 3,
-      title: 'Greenary duck',
-      creator: 'Shelby',
-      requestedDate: new Date(), //timeStamp
-      provedDate: 'Not proved yet',
-      keyPhrase: 'Not proved yet',
-    },
-  ];
+  console.log(proveList);
 
   const nav = useNavigate();
 
@@ -169,17 +137,11 @@ const ReportList = () => {
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>
                     Requested Date
                   </StyledSpan>
-                  <StyledSpan style={{ whiteSpace: 'nowrap' }}>
-                    {' '}
-                    {el.requestedDate.toISOString().substring(0, 10)}
-                    {' '}
-                    {el.requestedDate.toISOString().substring(11, 16)}
-
-                  </StyledSpan>
+                  <StyledSpan style={{ whiteSpace: 'nowrap' }}>{dateToString(el.requestedDate)}</StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Proved Date</StyledSpan>
-                  <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>{el.provedDate}</StyledSpan>
+                  <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>{dateToString(el.provedDate)}</StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Key Phrase</StyledSpan>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QueryString from 'qs';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
-import { proveImage, reportImage } from '../../func';
+import { proveImage, reportImage, tokendataIdToUri } from '../../func';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import Modal from '../../Components/Modal';
@@ -18,13 +18,23 @@ const ProveOwnershipOfImage = () => {
   const queryData: any = QueryString.parse(location.search, { ignoreQueryPrefix: true });
 
   const [reqData, setReqData] = useState({
-    nickname: location.pathname.split('/')[3],
-    title: location.pathname.split('/')[4],
+    creator: location.pathname.split('/')[3].replace(/%20/g, ' '),
+    nickname: location.pathname.split('/')[4].replace(/%20/g, ' '),
+    title: location.pathname.split('/')[5].replace(/%20/g, ' '),
     phrase: queryData?.phrase || '',
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [nickname] = useRecoilState(nicknameState);
+  const [uri, setUri] = useState('');
   //request for proof
+
+  useEffect(() => {
+    tokendataIdToUri({
+      collection: `${reqData.nickname}'s Collection`,
+      creator: reqData.creator,
+      name: reqData.title,
+    }).then(data => setUri(data));
+  }, [reqData]);
 
   const nav = useNavigate();
   return (
@@ -69,7 +79,16 @@ const ProveOwnershipOfImage = () => {
             <ProveStatus proveStatus={0} />
           </div>
           <RenderImageList
-            itemList={[]}
+            itemList={[
+              {
+                creator: reqData.creator,
+                creatorNickname: reqData.nickname,
+                collection: '',
+                name: reqData.title,
+                uri,
+                price: 0,
+              },
+            ]}
             routeUrl="/Images"
             style={{ wrapper: { padding: '12px 30px 30px' } }}
             skeletonWidth={130}

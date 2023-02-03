@@ -18,9 +18,9 @@ const ImageDetail = () => {
   const nftAddress = window.location.pathname.replace('/images/', '');
 
   const pathItems = window.location.pathname.split('/');
-  const creatorAddress = pathItems[2];
-  const nickname = pathItems[3];
-  const imageTitle = pathItems[4];
+  const creatorAddress = pathItems[2].replace(/%20/g, ' ');
+  const nickname = pathItems[3].replace(/%20/g, ' ');
+  const imageTitle = pathItems[4].replace(/%20/g, ' ');
   const [imageInfo, setImageInfo] = useState<ImageInfo>();
 
   useEffect(() => {
