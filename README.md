@@ -1,49 +1,16 @@
-# Getting Started with Create React App
+# Ourchive
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Description
 
-## Available Scripts
+The global stock images market is continuously growing. It is expected that the market will be accelerate at a compound annual growth rate (CAGR) of 5.61% between 2021 and 2025. The growth of the stock images market is mainly driven by the increasing popularity of stock images for digital and social media marketing.
 
-In the project directory, you can run:
+There are several stock images marketplaces such as Shutterstock, Getty Images, and Adobe Stock. However, these marketplaces have several problems such as high trading fee, large costs to handle copyright issues, and inconvenient mobile user experience. These problems make people hesitate to join the stock images market.
 
-### `npm start`
+To tackle these problems, our team suggests *Ourchive*, which is an Aptos-based stock image marketplace where you can trade stock images with no regards for copyright issues, reasonable low trading fees, and user-friendly mobile interfaces.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In Ourchive, stock images are minted as non-fungible tokens (NFTs) for transparent and effective ownership management. With Ourchive, the copyright issues can be easily managed with a fast and transparent proof of ownership based on the Aptos blockchain. Ourchive also provides integrated UX solution where creators and users can experience uploading and downloading images all at once.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Hope you are interested in our Ourchive marketplace!
 
 ## Compile, Deploy
 
