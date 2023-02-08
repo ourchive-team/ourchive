@@ -18,6 +18,11 @@ In Ourchive, stock images are minted as non-fungible tokens (NFTs) for transpare
 
 Hope you are interested in our Ourchive marketplace!
 
+## Start Frontend
+
+### `npm start`
+
+
 
 ## Compile, Deploy
 
