@@ -1,5 +1,11 @@
 # Ourchive
 
+## Skill
+  <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/>
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white"/>
+ <img src="https://img.shields.io/badge/StyledComponents-DB7093?style=flat&logo=StyledComponents&logoColor=white"/>
+
+
 ## Project Description
 
 The global stock images market is continuously growing. It is expected that the market will be accelerate at a compound annual growth rate (CAGR) of 5.61% between 2021 and 2025. The growth of the stock images market is mainly driven by the increasing popularity of stock images for digital and social media marketing.
@@ -11,6 +17,7 @@ To tackle these problems, our team suggests *Ourchive*, which is an Aptos-based 
 In Ourchive, stock images are minted as non-fungible tokens (NFTs) for transparent and effective ownership management. With Ourchive, the copyright issues can be easily managed with a fast and transparent proof of ownership based on the Aptos blockchain. Ourchive also provides integrated UX solution where creators and users can experience uploading and downloading images all at once.
 
 Hope you are interested in our Ourchive marketplace!
+
 
 ## Compile, Deploy
 
