@@ -25,11 +25,15 @@ Hope you are interested in our Ourchive marketplace!
 
 
 
-## Compile, Deploy
+## Compile, Deploy Smart Contracts
 
-To use view function, you need to specify bytecode version.
+Move contracts can be found [here](https://github.com/usdc-snu-aptos/ourchive/tree/main/contracts).
+
+To use view functions, you need to specify bytecode version when compile & deploy.
 
 ```
 aptos move compile --named-addresses ourchive=default --bytecode-version 6
 aptos move publish --named-addresses ourchive=default --bytecode-version 6
-```
+``` 
+
+The demo version smart contracts are deployed to [Devnet](https://explorer.aptoslabs.com/account/0x5163ad43db9b7354a5bc8af9e4c18130ffe5c2d077ab52c0f6553827b2e8c15f/modules)
