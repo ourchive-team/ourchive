@@ -24,9 +24,9 @@ const LoginPageContainer = styled.div`
 
 export const Login = () => {
   const nav = useNavigate();
-  const [address, setAddress] = useRecoilState(addressState);
-  const [publicKey, setPublicKey] = useRecoilState(publicKeyState);
-  const [nickname, setNickname] = useRecoilState(nicknameState);
+  const [, setAddress] = useRecoilState(addressState);
+  const [, setPublicKey] = useRecoilState(publicKeyState);
+  const [, setNickname] = useRecoilState(nicknameState);
 
   return (
     <LoginPageContainer style={{ backgroundColor: baseColor.yellow, height: '100%' }}>
@@ -46,7 +46,7 @@ export const Login = () => {
         <LargeButton
           style={{ fontSize: '16px' }}
           onClick={async () => {
-            const { address: addr, publicKey: pKey } = await walletConnect(setAddress, setPublicKey);
+            await walletConnect(setAddress, setPublicKey);
             if (await checkUserExists(setNickname)) {
               // SET isLogin to true
               nav('/main');

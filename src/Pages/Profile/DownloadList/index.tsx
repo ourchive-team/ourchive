@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import RenderImageList from '../../../Components/RenderImageList';
-import { buyImage, downloadImage, getPurchasedImageList, TokenPurchaseItem } from '../../../func';
+import { buyImage, downloadImage, getPurchasedImageList } from '../../../func';
+import { TokenPurchaseItem } from '../../../func/type';
 import { addressState } from '../../../states/loginState';
 import { baseColor, StyledSpan } from '../../../styles';
 import CreatedBy from '../../../Components/CreatedBy';

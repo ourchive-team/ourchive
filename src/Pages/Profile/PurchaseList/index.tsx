@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import RenderImageList, { TokenItem } from '../../../Components/RenderImageList';
-import { buyImage, downloadImage, getPurchasedImageList, TokenPurchaseItem } from '../../../func';
+import RenderImageList from '../../../Components/RenderImageList';
+import { buyImage, downloadImage, getPurchasedImageList } from '../../../func';
+import { TokenPurchaseItem } from '../../../func/type';
 import { addressState } from '../../../states/loginState';
 
 const PurchaseList = () => {

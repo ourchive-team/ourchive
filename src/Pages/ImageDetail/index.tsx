@@ -39,7 +39,8 @@ import Resolution from '../../Components/Resolution';
 import RenderImageList, { TokenItem } from '../../Components/RenderImageList';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
-import { getImageInfo, ImageInfo } from '../../func';
+import { getImageInfo } from '../../func';
+import { ImageInfo } from '../../func/type';
 import CreatedBy from '../../Components/CreatedBy';
 
 const ImageDetail = () => {
