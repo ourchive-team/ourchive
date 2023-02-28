@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import RenderImageList from '../../../Components/RenderImageList';
-import { buyImage, downloadImage, getPurchasedImageList } from '../../../func';
+import { buyImage, getPurchasedImageList } from '../../../func';
+import { downloadFromIPFS } from '../../../func/ipfs';
 import { TokenPurchaseItem } from '../../../func/type';
 import { addressState } from '../../../states/loginState';
 import { baseColor, StyledSpan } from '../../../styles';
@@ -57,7 +58,7 @@ const ReDownloadOrExpiredButton = ({ expireDate, creator, creatorNickname, image
             expiry: 0,
           });
         } else {
-          downloadImage({ imageUri, imageTitle });
+          downloadFromIPFS({ imageUri, imageTitle });
         }
       }}
       style={{

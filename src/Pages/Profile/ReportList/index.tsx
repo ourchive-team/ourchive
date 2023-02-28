@@ -6,7 +6,8 @@ import RenderImageList from '../../../Components/RenderImageList';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
-import { dateToString, getReportList } from '../../../func';
+import { getReportList } from '../../../func';
+import { dateToString } from '../../../func/util';
 import { IProveItem } from '../../../func/type';
 import { nicknameState } from '../../../states/loginState';
 
