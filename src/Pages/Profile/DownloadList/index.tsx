@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import RenderImageList from '../../../Components/RenderImageList';
-import { buyImage, getPurchasedImageList } from '../../../func';
+import { onchain } from '../../../func';
 import { downloadFromIPFS } from '../../../func/ipfs';
 import { TokenPurchaseItem } from '../../../func/type';
 import { addressState } from '../../../states/loginState';
@@ -50,7 +50,7 @@ const ReDownloadOrExpiredButton = ({ expireDate, creator, creatorNickname, image
       type="button"
       onClick={() => {
         if (isExpired) {
-          buyImage({
+          onchain.buyImage({
             size: 1,
             creator,
             creatorNickname,
@@ -82,7 +82,7 @@ const PurchaseList = () => {
   const [purchaseList, setPurchaseList] = useState<TokenPurchaseItem[]>([]);
   const [address] = useRecoilState(addressState);
   useEffect(() => {
-    getPurchasedImageList(address).then(data => {
+    onchain.getPurchasedImageList(address).then(data => {
       setPurchaseList(data);
     });
   }, []);

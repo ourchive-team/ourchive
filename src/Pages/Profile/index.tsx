@@ -13,7 +13,7 @@ import RenderImageList, { TokenItem } from '../../Components/RenderImageList';
 import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import { addressState, nicknameState } from '../../states/loginState';
-import { getPurchasedImageList, getUploadedImageList } from '../../func';
+import { onchain } from '../../func';
 import { TokenPurchaseItem } from '../../func/type';
 
 const YellowCardBox = styled.div`
@@ -52,11 +52,11 @@ const Profile = () => {
   const [purchaseList, setPurchaseList] = useState<TokenPurchaseItem[]>([]);
 
   useEffect(() => {
-    getUploadedImageList(addressString).then(data => {
+    onchain.getUploadedImageList(addressString).then(data => {
       setUploadList(data);
     });
 
-    getPurchasedImageList(addressString).then(data => {
+    onchain.getPurchasedImageList(addressString).then(data => {
       setPurchaseList(data);
     });
   }, [nickname]);

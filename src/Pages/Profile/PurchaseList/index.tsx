@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import RenderImageList from '../../../Components/RenderImageList';
-import { buyImage, getPurchasedImageList } from '../../../func';
+import { onchain } from '../../../func';
 import { downloadFromIPFS } from '../../../func/ipfs';
 import { TokenPurchaseItem } from '../../../func/type';
 import { addressState } from '../../../states/loginState';
@@ -13,7 +13,7 @@ const PurchaseList = () => {
   const addressString = address;
 
   useEffect(() => {
-    getPurchasedImageList(addressString).then(data => {
+    onchain.getPurchasedImageList(addressString).then(data => {
       setPurchaseList(data);
     });
   }, []);
@@ -88,7 +88,7 @@ const PurchaseList = () => {
                   <button
                     type="button"
                     onClick={() => {
-                      buyImage({
+                      onchain.buyImage({
                         size: 1,
                         creator: el.token.creator,
                         creatorNickname: el.token.creatorNickname,

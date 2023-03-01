@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton } from '../../styles';
 import { loginState, addressState, publicKeyState, nicknameState } from '../../states/loginState';
-import { checkUserExists, walletConnect } from '../../func';
+import { onchain } from '../../func';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 
 import our from '../../images/our.svg';
@@ -46,8 +46,8 @@ export const Login = () => {
         <LargeButton
           style={{ fontSize: '16px' }}
           onClick={async () => {
-            await walletConnect(setAddress, setPublicKey);
-            if (await checkUserExists(setNickname)) {
+            await onchain.walletConnect(setAddress, setPublicKey);
+            if (await onchain.checkUserExists(setNickname)) {
               // SET isLogin to true
               nav('/main');
             } else {
