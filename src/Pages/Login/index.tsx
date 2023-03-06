@@ -5,7 +5,6 @@ import { Buffer } from 'buffer';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../images/logo.svg';
 import profileIcon from '../../images/profile-icon.png';
 
 import { baseColor, LargeButton } from '../../styles';
@@ -32,19 +31,8 @@ export const Login = () => {
   const [address, setAddress] = useRecoilState(addressState);
   const [publicKey, setPublicKey] = useRecoilState(publicKeyState);
   const [nickname, setNickname] = useRecoilState(nicknameState);
-  const [imaage, setImaage] = useState<any>();
 
   const a = 'asdf';
-  const imageToBase64DataUri = async (img: any) => {
-    const getImage = await axios.get(img, {
-      responseType: 'arraybuffer',
-    });
-
-    const imageToBase64 = Buffer.from(getImage.data, 'binary').toString('base64');
-    const dataUri = `data:image/svg+xml;base64,${encodeURIComponent(imageToBase64)}`;
-
-    return dataUri;
-  };
 
   async function sendEmail() {
     const sheetId = '1OMNwC1Ub4tsCb5UeMMIyI4IW2uLzdpvWj1AAEQrsHmM';
@@ -52,17 +40,12 @@ export const Login = () => {
       'https://script.google.com/macros/s/AKfycbyrtd9GcC-D3nmtEWLhJHV-j2SfxaXQck79BqacEKgr232NXBSitPvwSNzPdY8MtDAINQ/exec';
 
     // 이미지를 선택합니다.
-    const logos = logo;
-
-    // 이미지를 base64 데이터 uri로 변환합니다.
-    const imageDataUri = await imageToBase64DataUri(logos);
-    setImaage(imageDataUri);
 
     const emailHTML = `
 <table style="table-layout: fixed; border-collapse: collapse; width: 100%; max-width: 600px; margin-bottom:72px;">
     <thead>
         <tr>
-            <th style="background-color: #FBFE67; height:140px; font-family: Unbounded; width:100%; margin: 0px auto;">OUR CHIVE</th>
+            <th style="background-color: #FBFE67; height:140px; font-family: Unbounded; width:100%; margin: 0px auto;"><img src="https://i.ibb.co/xX8QzPc/logo.png" alt="logo" border="0"></th>
         </tr>
     </thead>
     <tbody>
@@ -169,14 +152,12 @@ export const Login = () => {
       console.log('Email sent!');
     };
   }
-  console.log(imaage);
 
   return (
     <div style={{ backgroundColor: 'white' }}>
       <button type="button" onClick={sendEmail}>
         sadfkjo
       </button>
-      <img style={{ width: 200, height: 200 }} alt="a" src={imaage} />
       <LoginPageContainer style={{ backgroundColor: baseColor.yellow, height: '100%' }}>
         <div
           style={{
