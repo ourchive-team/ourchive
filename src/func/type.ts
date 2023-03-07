@@ -87,7 +87,6 @@ export interface IProofResponse {
   timestamp: number,
 }
 
-// TODO
 export interface OnChainCommunicator {
   walletConnect(setAddress: SetterOrUpdater<string>, setPublicKey: SetterOrUpdater<TPublicKeyState>): Promise<void>
   checkUserExists(setNickname: SetterOrUpdater<string>): Promise<boolean>
