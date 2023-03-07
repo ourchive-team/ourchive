@@ -6,6 +6,7 @@ import { reportImage } from '../../func';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import Modal from '../../Components/Modal';
+import { sendEmail } from './func';
 
 const Report = () => {
   const pathItems = window.location.pathname.split('/');
@@ -18,6 +19,7 @@ const Report = () => {
 
   const anchor = useRef<any>();
   const nav = useNavigate();
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
       <a
@@ -107,9 +109,19 @@ const Report = () => {
               creatorNickname: reqData.nickname,
               imageTitle: reqData.title,
               randomPhrase,
-            }).then(data => {
-              setModalOpen(true);
-            });
+            })
+              .then(data => {
+                sendEmail({
+                  creatorNickname: reqData.nickname,
+                  imageTitle: reqData.title,
+                  phrase: reqData.phrase,
+                  emailToRequest: reqData.email,
+                });
+                setModalOpen(true);
+              })
+              .catch(err => {
+                console.log('report fail');
+              });
           }}
         >
           Request for Proof
