@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { LargeButton, StyledInput } from '../../../styles';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
 import { addressState, loginState } from '../../../states/loginState';
-import { submitUserNickname } from '../../../func';
+import { onchain } from '../../../func';
 
 const Nickname = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
@@ -43,7 +43,7 @@ const Nickname = () => {
           disabled={!isAvailable}
           style={{ backgroundColor: isAvailable ? 'black' : '#8E8E8E' }}
           onClick={async () => {
-            await submitUserNickname(userAddress as unknown as string, userNickname);
+            await onchain.submitUserNickname((userAddress as unknown) as string, userNickname);
             setIsLogin({ isLogin: true });
             nav('/main');
           }}

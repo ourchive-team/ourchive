@@ -7,7 +7,7 @@ import Link, { useNavigate } from 'react-router-dom';
 import plusIcon from '../../icons/plus.svg';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
-import { getUserNickname, uploadImage } from '../../func';
+import { onchain } from '../../func';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import TopNavigator from '../../Components/TopNavigator';
 import Modal from '../../Components/Modal';
@@ -78,7 +78,7 @@ const Upload = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const nav = useNavigate();
   const [nickname, setUserNickname] = useRecoilState(nicknameState);
-  if (nickname as unknown as string === '') {
+  if (((nickname as unknown) as string) === '') {
     const { address } = window.aptos.account();
     setUserNickname(address);
   }
@@ -211,7 +211,7 @@ const Upload = () => {
             setModalOpen(true);
             console.log('uploading broom! broom!');
             //and upload image to server
-            await uploadImage({
+            await onchain.uploadImage({
               title: inputValues.title,
               description: inputValues.desc,
               price: parseInt(inputValues.price, 10),

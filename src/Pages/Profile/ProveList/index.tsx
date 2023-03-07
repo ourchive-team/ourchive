@@ -8,7 +8,9 @@ import RenderImageList from '../../../Components/RenderImageList';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
-import { dateToString, getProveList, IProveItem } from '../../../func';
+import { onchain } from '../../../func';
+import { dateToString } from '../../../func/util';
+import { IProveItem } from '../../../func/type';
 import { nicknameState } from '../../../states/loginState';
 
 interface IProveStatus {
@@ -62,7 +64,7 @@ const ReportList = () => {
   const [nickname] = useRecoilState(nicknameState);
 
   useEffect(() => {
-    getProveList(nickname).then(data => {
+    onchain.getProveList(nickname).then(data => {
       setProveList(data);
     });
   }, []);
@@ -141,7 +143,9 @@ const ReportList = () => {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Proved Date</StyledSpan>
-                  <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>{dateToString(el.provedDate)}</StyledSpan>
+                  <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>
+                    {dateToString(el.provedDate)}
+                  </StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Key Phrase</StyledSpan>

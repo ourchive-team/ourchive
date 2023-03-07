@@ -1,23 +1,20 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { loginState, addressState, publicKeyState, nicknameState } from '../../states/loginState';
-import { checkUserExists, walletConnect } from '../../func';
+import { addressState, publicKeyState, nicknameState } from '../../states/loginState';
+import { onchain } from '../../func';
 
 interface ILoginWrapper {
   children: JSX.Element;
 }
 
 const LoginWrapper = ({ children }: ILoginWrapper) => {
-  const [isLogin, setIsLogin] = useState(false);
-  const [address, setAddress] = useRecoilState(addressState);
-  const [publicKey, setPublicKey] = useRecoilState(publicKeyState);
-  const [nickname, setNickname] = useRecoilState(nicknameState);
-  const location = useLocation();
+  const [, setAddress] = useRecoilState(addressState);
+  const [, setPublicKey] = useRecoilState(publicKeyState);
+  const [, setNickname] = useRecoilState(nicknameState);
 
   useEffect(() => {
-    walletConnect(setAddress, setPublicKey);
-    checkUserExists(setNickname);
+    onchain.walletConnect(setAddress, setPublicKey);
+    onchain.checkUserExists(setNickname);
   });
 
   return children;
