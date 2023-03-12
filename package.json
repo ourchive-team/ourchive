@@ -27,11 +27,14 @@
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
+  "homepage":"https://ourchive-team.github.io/ourchive",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build",
     "lint": "eslint \"./src/**/*.{ts,tsx,js,jsx}\"",
     "lint:fix": "eslint --fix \"./src/**/*.{ts,tsx,js,jsx}\""
   },
