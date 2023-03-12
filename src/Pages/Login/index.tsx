@@ -14,6 +14,7 @@ import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 
 import our from '../../images/our.svg';
 import chive from '../../images/chive.svg';
+import { sendEmail } from '../Report/func';
 
 const LoginPageContainer = styled.div`
   width: 100%;
