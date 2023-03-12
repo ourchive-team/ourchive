@@ -29,7 +29,7 @@ const App = () => {
 
   // console.log(address, account?.sequence_number);
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <LoginWrapper>
         <Routes>
           <Route path="/" element={<Login />} />
