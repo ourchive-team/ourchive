@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/ourchive/static/css/main.0bbf0ce1.css",
+    "main.js": "/ourchive/static/js/main.591131be.js",
+    "static/media/Unbounded-Bold.woff2": "/ourchive/static/media/Unbounded-Bold.5ea95a1d98b00da655c3.woff2",
+    "static/media/o3.jpg": "/ourchive/static/media/o3.9ba458b9ceb68a1e77d0.jpg",
+    "static/media/Unbounded-Regular.woff2": "/ourchive/static/media/Unbounded-Regular.36c3505a4f7484de7876.woff2",
+    "static/media/o2.jpg": "/ourchive/static/media/o2.7f5cba0a541ba2f7af35.jpg",
+    "static/media/o4.jpg": "/ourchive/static/media/o4.425f71906c5002576703.jpg",
+    "static/media/s2.jpg": "/ourchive/static/media/s2.92dc2d9bc1fb8dff87b9.jpg",
+    "static/media/o5.jpg": "/ourchive/static/media/o5.01038c346c00df2366ca.jpg",
+    "static/media/s5.jpg": "/ourchive/static/media/s5.e39f6054e6f27d9605e8.jpg",
+    "static/media/s3.jpg": "/ourchive/static/media/s3.04590d60e54009bbd027.jpg",
+    "static/media/s1.jpg": "/ourchive/static/media/s1.ae86c101696e3e89d836.jpg",
+    "static/media/profile-icon.png": "/ourchive/static/media/profile-icon.5d01f63b7a23e8475b5c.png",
+    "static/media/aptos.svg": "/ourchive/static/media/aptos.f7cc7b5a227c9d43e216150139bf8eec.svg",
+    "static/media/chive.svg": "/ourchive/static/media/chive.aa1457c8645ba7a6eb9de4568aa0ecdd.svg",
+    "static/media/our.svg": "/ourchive/static/media/our.8131ce3d7b5f52a943c0c7947d53102c.svg",
+    "static/media/prev.svg": "/ourchive/static/media/prev.96fa9746a32fa70fe495f72d2086e378.svg",
+    "index.html": "/ourchive/index.html",
+    "static/media/search-icon.svg": "/ourchive/static/media/search-icon.2e6cb02aa59a5dab1daf54c7fcddeccf.svg",
+    "static/media/visitors.svg": "/ourchive/static/media/visitors.12a6a6a2bf159502a446192d723ac2b1.svg",
+    "static/media/owners.svg": "/ourchive/static/media/owners.147ae67c079c041eec4cb02ece5ef672.svg",
+    "static/media/plus.svg": "/ourchive/static/media/plus.b39b3dbb6beb94b79d3d238d200f9c2a.svg",
+    "static/media/heart.svg": "/ourchive/static/media/heart.b2a9c8791027d740b787569ec307c642.svg",
+    "static/media/upload.svg": "/ourchive/static/media/upload.39fd8fb5d7616723c84080a9e992aa3d.svg",
+    "static/media/flag.svg": "/ourchive/static/media/flag.b9833c86ed790404ca3db1d2e6e49c7c.svg",
+    "main.0bbf0ce1.css.map": "/ourchive/static/css/main.0bbf0ce1.css.map",
+    "main.591131be.js.map": "/ourchive/static/js/main.591131be.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0bbf0ce1.css",
+    "static/js/main.591131be.js"
+  ]
+}
