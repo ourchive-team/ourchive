@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ourchive/static/css/main.0bbf0ce1.css",
-    "main.js": "/ourchive/static/js/main.fdfd7ae0.js",
+    "main.js": "/ourchive/static/js/main.7a353c34.js",
     "static/media/Unbounded-Bold.woff2": "/ourchive/static/media/Unbounded-Bold.5ea95a1d98b00da655c3.woff2",
     "static/media/o3.jpg": "/ourchive/static/media/o3.9ba458b9ceb68a1e77d0.jpg",
     "static/media/Unbounded-Regular.woff2": "/ourchive/static/media/Unbounded-Regular.36c3505a4f7484de7876.woff2",
@@ -26,10 +26,10 @@
     "static/media/upload.svg": "/ourchive/static/media/upload.39fd8fb5d7616723c84080a9e992aa3d.svg",
     "static/media/flag.svg": "/ourchive/static/media/flag.b9833c86ed790404ca3db1d2e6e49c7c.svg",
     "main.0bbf0ce1.css.map": "/ourchive/static/css/main.0bbf0ce1.css.map",
-    "main.fdfd7ae0.js.map": "/ourchive/static/js/main.fdfd7ae0.js.map"
+    "main.7a353c34.js.map": "/ourchive/static/js/main.7a353c34.js.map"
   },
   "entrypoints": [
     "static/css/main.0bbf0ce1.css",
-    "static/js/main.fdfd7ae0.js"
+    "static/js/main.7a353c34.js"
   ]
 }
