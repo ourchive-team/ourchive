@@ -7,6 +7,7 @@ import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import Modal from '../../Components/Modal';
 import { sendEmail } from './func';
+import { sendEmailByEmailJS } from './sendEmailByEmailJS';
 
 const Report = () => {
   const pathItems = window.location.pathname.split('/');
@@ -111,12 +112,13 @@ const Report = () => {
               randomPhrase,
             })
               .then(data => {
-                sendEmail({
-                  creatorNickname: reqData.nickname,
+                sendEmailByEmailJS({
+                  toEmail: reqData.email,
                   imageTitle: reqData.title,
+                  creatorNickname: reqData.nickname,
                   phrase: reqData.phrase,
-                  emailToRequest: reqData.email,
                 });
+
                 setModalOpen(true);
               })
               .catch(err => {
