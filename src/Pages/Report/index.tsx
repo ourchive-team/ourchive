@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
-import { reportImage } from '../../func';
+import { getImageInfo, reportImage } from '../../func';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import Modal from '../../Components/Modal';
@@ -112,11 +112,14 @@ const Report = () => {
               randomPhrase,
             })
               .then(data => {
-                sendEmailByEmailJS({
-                  toEmail: reqData.email,
-                  imageTitle: reqData.title,
-                  creatorNickname: reqData.nickname,
-                  phrase: reqData.phrase,
+                getImageInfo(creatorAddress, reqData.nickname, reqData.title).then(res => {
+                  sendEmailByEmailJS({
+                    toEmail: reqData.email,
+                    imageTitle: reqData.title,
+                    creatorNickname: reqData.nickname,
+                    phrase: reqData.phrase,
+                    url: res.imgUrl,
+                  });
                 });
 
                 setModalOpen(true);
