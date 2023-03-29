@@ -3,7 +3,7 @@ import { LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../style
 import TopNavigator from '../../../Components/TopNavigator';
 import Resolution, { IResolutionList } from '../../../Components/Resolution';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
-import { buyImage } from '../../../func';
+import { onchain } from '../../../func';
 
 const Purchase = () => {
   const pathItems = window.location.pathname.split('/');
@@ -98,7 +98,7 @@ const Purchase = () => {
           <LargeButton
             disabled={!requestReady}
             onClick={() => {
-              buyImage({
+              onchain.buyImage({
                 size: Number(selectedSize?.dpi),
                 creator: creatorAddress,
                 creatorNickname: nickname,
