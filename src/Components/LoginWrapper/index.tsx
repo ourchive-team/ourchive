@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { addressState, publicKeyState, nicknameState } from '../../states/loginState';
 import { onchain } from '../../func';
 
@@ -8,9 +8,9 @@ interface ILoginWrapper {
 }
 
 const LoginWrapper = ({ children }: ILoginWrapper) => {
-  const [, setAddress] = useRecoilState(addressState);
-  const [, setPublicKey] = useRecoilState(publicKeyState);
-  const [, setNickname] = useRecoilState(nicknameState);
+  const setAddress = useSetRecoilState(addressState);
+  const setPublicKey = useSetRecoilState(publicKeyState);
+  const setNickname = useSetRecoilState(nicknameState);
 
   useEffect(() => {
     onchain.walletConnect(setAddress, setPublicKey);

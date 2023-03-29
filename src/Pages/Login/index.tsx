@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton } from '../../styles';
@@ -24,9 +24,9 @@ const LoginPageContainer = styled.div`
 
 export const Login = () => {
   const nav = useNavigate();
-  const [, setAddress] = useRecoilState(addressState);
-  const [, setPublicKey] = useRecoilState(publicKeyState);
-  const [, setNickname] = useRecoilState(nicknameState);
+  const setAddress = useSetRecoilState(addressState);
+  const setPublicKey = useSetRecoilState(publicKeyState);
+  const setNickname = useSetRecoilState(nicknameState);
 
   return (
     <LoginPageContainer style={{ backgroundColor: baseColor.yellow, height: '100%' }}>
