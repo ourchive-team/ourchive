@@ -118,7 +118,8 @@ const Report = () => {
                     imageTitle: reqData.title,
                     creatorNickname: reqData.nickname,
                     phrase: reqData.phrase,
-                    url: res.imgUrl,
+                    imageUrl: res.imgUrl,
+                    proveUrl: `https://${res.imgUrl}/profile/provement-list/${creatorAddress}/${nickname}/${reqData.title}?phrase=${reqData.phrase}`,
                   });
                 });
 

@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { Buffer } from 'buffer';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import profileIcon from '../../images/profile-icon.png';
 
 import { baseColor, LargeButton } from '../../styles';
-import { loginState, addressState, publicKeyState, nicknameState } from '../../states/loginState';
+import { addressState, publicKeyState, nicknameState } from '../../states/loginState';
 import { checkUserExists, walletConnect } from '../../func';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 
 import our from '../../images/our.svg';
 import chive from '../../images/chive.svg';
-import { sendEmail } from '../Report/func';
 
 const LoginPageContainer = styled.div`
   width: 100%;
