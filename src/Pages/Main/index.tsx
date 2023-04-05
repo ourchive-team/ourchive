@@ -7,7 +7,7 @@ import banner from '../../images/banner.png';
 
 import SelectCategoryBar from '../../Components/SelectCategoryBar';
 import GridImageContainer from '../../Components/GridImageContainer';
-import { getAllImageInfoList } from '../../func';
+import { onchain } from '../../func';
 import BottomNavigator from '../../Components/BottomNavigator';
 import { PaddingBox } from '../../styles';
 import { nicknameState } from '../../states/loginState';
@@ -19,7 +19,7 @@ const Main = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getAllImageInfoList().then(data => {
+    onchain.getAllImageInfoList().then(data => {
       setTokenList(data);
       setIsLoading(true);
     });

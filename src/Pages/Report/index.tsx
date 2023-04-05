@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
+import { onchain } from '../../func';
 import { getImageInfo, reportImage } from '../../func';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
@@ -106,13 +107,14 @@ const Report = () => {
           onClick={() => {
             const randomPhrase = (Math.random() + 1).toString(36).substring(8);
             setReqData({ ...reqData, phrase: randomPhrase });
-            reportImage({
-              creatorNickname: reqData.nickname,
-              imageTitle: reqData.title,
-              randomPhrase,
-            })
+            onchain
+              .reportImage({
+                creatorNickname: reqData.nickname,
+                imageTitle: reqData.title,
+                randomPhrase,
+              })
               .then(data => {
-                getImageInfo(creatorAddress, reqData.nickname, reqData.title).then(res => {
+                getImageInfo(creatorAddress, reqData.nickname, reqData.title).then((res: any) => {
                   sendEmailByEmailJS({
                     toEmail: reqData.email,
                     imageTitle: reqData.title,
