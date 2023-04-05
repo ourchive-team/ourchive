@@ -6,9 +6,7 @@ import RenderImageList from '../../../Components/RenderImageList';
 import CreatedBy from '../../../Components/CreatedBy';
 import profileIcon from '../../../images/profile-icon.png';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
-import { onchain } from '../../../func';
-import { dateToString } from '../../../func/util';
-import { IProveItem } from '../../../func/type';
+import { dateToString, getReportList, IProveItem } from '../../../func';
 import { nicknameState } from '../../../states/loginState';
 
 interface IProveStatus {
@@ -62,7 +60,7 @@ const ReportList = () => {
   const [nickname] = useRecoilState(nicknameState);
 
   useEffect(() => {
-    onchain.getReportList(nickname).then(data => {
+    getReportList(nickname).then(data => {
       setUploadList(data);
     });
   }, []);

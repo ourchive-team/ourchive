@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
+
+import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton } from '../../styles';
-import { loginState, addressState, publicKeyState, nicknameState } from '../../states/loginState';
-import { onchain } from '../../func';
+import { addressState, publicKeyState, nicknameState } from '../../states/loginState';
+import { checkUserExists, walletConnect } from '../../func';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 
 import our from '../../images/our.svg';
@@ -24,9 +25,9 @@ const LoginPageContainer = styled.div`
 
 export const Login = () => {
   const nav = useNavigate();
-  const setAddress = useSetRecoilState(addressState);
-  const setPublicKey = useSetRecoilState(publicKeyState);
-  const setNickname = useSetRecoilState(nicknameState);
+  const [address, setAddress] = useRecoilState(addressState);
+  const [publicKey, setPublicKey] = useRecoilState(publicKeyState);
+  const [nickname, setNickname] = useRecoilState(nicknameState);
 
   return (
     <LoginPageContainer style={{ backgroundColor: baseColor.yellow, height: '100%' }}>
@@ -46,8 +47,8 @@ export const Login = () => {
         <LargeButton
           style={{ fontSize: '16px' }}
           onClick={async () => {
-            await onchain.walletConnect(setAddress, setPublicKey);
-            if (await onchain.checkUserExists(setNickname)) {
+            const { address: addr, publicKey: pKey } = await walletConnect(setAddress, setPublicKey);
+            if (await checkUserExists(setNickname)) {
               // SET isLogin to true
               nav('/main');
             } else {

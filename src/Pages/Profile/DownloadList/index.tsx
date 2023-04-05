@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import RenderImageList from '../../../Components/RenderImageList';
-import { onchain } from '../../../func';
-import { downloadFromIPFS } from '../../../func/ipfs';
-import { TokenPurchaseItem } from '../../../func/type';
+import { buyImage, downloadImage, getPurchasedImageList, TokenPurchaseItem } from '../../../func';
 import { addressState } from '../../../states/loginState';
 import { baseColor, StyledSpan } from '../../../styles';
 import CreatedBy from '../../../Components/CreatedBy';
@@ -50,7 +48,7 @@ const ReDownloadOrExpiredButton = ({ expireDate, creator, creatorNickname, image
       type="button"
       onClick={() => {
         if (isExpired) {
-          onchain.buyImage({
+          buyImage({
             size: 1,
             creator,
             creatorNickname,
@@ -58,7 +56,7 @@ const ReDownloadOrExpiredButton = ({ expireDate, creator, creatorNickname, image
             expiry: 0,
           });
         } else {
-          downloadFromIPFS({ imageUri, imageTitle });
+          downloadImage({ imageUri, imageTitle });
         }
       }}
       style={{
@@ -82,7 +80,7 @@ const PurchaseList = () => {
   const [purchaseList, setPurchaseList] = useState<TokenPurchaseItem[]>([]);
   const [address] = useRecoilState(addressState);
   useEffect(() => {
-    onchain.getPurchasedImageList(address).then(data => {
+    getPurchasedImageList(address).then(data => {
       setPurchaseList(data);
     });
   }, []);

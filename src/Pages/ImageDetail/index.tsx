@@ -39,8 +39,7 @@ import Resolution from '../../Components/Resolution';
 import RenderImageList, { TokenItem } from '../../Components/RenderImageList';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
-import { onchain } from '../../func';
-import { ImageInfo } from '../../func/type';
+import { getImageInfo, ImageInfo } from '../../func';
 import CreatedBy from '../../Components/CreatedBy';
 
 const ImageDetail = () => {
@@ -57,7 +56,7 @@ const ImageDetail = () => {
   const [similarWorks, setSimilarWorks] = useState<TokenItem[]>([]);
 
   useEffect(() => {
-    onchain.getImageInfo(creatorAddress, nickname, imageTitle).then(info => {
+    getImageInfo(creatorAddress, nickname, imageTitle).then(info => {
       setImageInfo(info);
       setTimeout(() => {
         setOtherWorks([

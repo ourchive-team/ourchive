@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import RenderImageList from '../../../Components/RenderImageList';
-import { onchain } from '../../../func';
-import { downloadFromIPFS } from '../../../func/ipfs';
-import { TokenPurchaseItem } from '../../../func/type';
+import RenderImageList, { TokenItem } from '../../../Components/RenderImageList';
+import { buyImage, downloadImage, getPurchasedImageList, TokenPurchaseItem } from '../../../func';
 import { addressState } from '../../../states/loginState';
 
 const PurchaseList = () => {
@@ -13,7 +11,7 @@ const PurchaseList = () => {
   const addressString = address;
 
   useEffect(() => {
-    onchain.getPurchasedImageList(addressString).then(data => {
+    getPurchasedImageList(addressString).then(data => {
       setPurchaseList(data);
     });
   }, []);
@@ -54,7 +52,7 @@ const PurchaseList = () => {
                   <button
                     type="button"
                     onClick={() => {
-                      downloadFromIPFS({ imageUri: el.token.uri, imageTitle: el.token.name });
+                      downloadImage({ imageUri: el.token.uri, imageTitle: el.token.name });
                     }}
                     style={{
                       marginLeft: 'auto',
@@ -88,7 +86,7 @@ const PurchaseList = () => {
                   <button
                     type="button"
                     onClick={() => {
-                      onchain.buyImage({
+                      buyImage({
                         size: 1,
                         creator: el.token.creator,
                         creatorNickname: el.token.creatorNickname,

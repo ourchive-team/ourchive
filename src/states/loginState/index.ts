@@ -25,7 +25,7 @@ export const loginState = atom<TLoginState>({
 //   useLoginState: () => useRecoilValue(loginSelector),
 // };
 
-export type TPublicKeyState = {
+type TPublicKeyState = {
   publicKey: string;
 };
 

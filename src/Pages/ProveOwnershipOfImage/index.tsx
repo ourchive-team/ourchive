@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
-import { onchain } from '../../func';
+import { proveImage, reportImage, tokendataIdToUri } from '../../func';
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import Modal from '../../Components/Modal';
@@ -29,13 +29,11 @@ const ProveOwnershipOfImage = () => {
   //request for proof
 
   useEffect(() => {
-    onchain
-      .tokendataIdToUri({
-        collection: `${reqData.nickname}'s Collection`,
-        creator: reqData.creator,
-        name: reqData.title,
-      })
-      .then(data => setUri(data));
+    tokendataIdToUri({
+      collection: `${reqData.nickname}'s Collection`,
+      creator: reqData.creator,
+      name: reqData.title,
+    }).then(data => setUri(data));
   }, [reqData]);
 
   const nav = useNavigate();
@@ -132,16 +130,14 @@ const ProveOwnershipOfImage = () => {
           disabled={!reqData.nickname || !reqData.phrase || !reqData.title}
           onClick={() => {
             console.log('proving brr brr!');
-            onchain
-              .proveImage({
-                userNickname: nickname,
-                creatorNickname: reqData.nickname,
-                imageTitle: reqData.title,
-                phrase: reqData.phrase,
-              })
-              .then(data => {
-                setModalOpen(true);
-              });
+            proveImage({
+              userNickname: nickname,
+              creatorNickname: reqData.nickname,
+              imageTitle: reqData.title,
+              phrase: reqData.phrase,
+            }).then(data => {
+              setModalOpen(true);
+            });
           }}
         >
           Prove Ownership of Image
