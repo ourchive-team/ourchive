@@ -1,11 +1,33 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { PaddingBox } from '../../styles';
 
 interface IModal {
   close: () => void;
   children: JSX.Element;
 }
+
+const Modal = ({ close, children }: IModal) => {
+  useEffect(() => {
+    //@ts-ignore:next-line;
+    document.body.style.overflowY = 'hidden';
+    return () => {
+      //@ts-ignore:next-line;
+      document.body.style.overflowY = 'auto';
+    };
+  });
+  return (
+    <>
+      <ModalWrapper
+        onClickCapture={e => {
+          e.preventDefault();
+        }}
+      >
+        <ModalBody>{children}</ModalBody>
+        <CloseModalLayer onClick={() => close()} />
+      </ModalWrapper>
+    </>
+  );
+};
 
 const ModalWrapper = styled.div`
   display: flex;
@@ -43,28 +65,5 @@ const ModalBody = styled.div`
   position: fixed;
   z-index: 2;
 `;
-
-const Modal = ({ close, children }: IModal) => {
-  useEffect(() => {
-    //@ts-ignore:next-line;
-    document.body.style.overflowY = 'hidden';
-    return () => {
-      //@ts-ignore:next-line;
-      document.body.style.overflowY = 'auto';
-    };
-  });
-  return (
-    <>
-      <ModalWrapper
-        onClickCapture={e => {
-          e.preventDefault();
-        }}
-      >
-        <ModalBody>{children}</ModalBody>
-        <CloseModalLayer onClick={() => close()} />
-      </ModalWrapper>
-    </>
-  );
-};
 
 export default Modal;

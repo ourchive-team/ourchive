@@ -2,21 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { baseColor } from '../../styles';
 
-const Button = styled.button`
-  background-color: transparent;
-  border: none;
-`;
-
-const DetailBox = styled.div`
-  white-space: nowrap;
-  background-color: transparent;
-  margin-right: 4px;
-  border-radius: 4px;
-  font-size: 12px;
-  padding: 4px 8px;
-  color: inherit;
-`;
-
 export interface IResolutionList {
   size: string;
   resolution: string;
@@ -70,5 +55,20 @@ const Resolution = ({ list, selectedSize, selector }: IResolution) => {
     </div>
   );
 };
+
+const Button = styled.button`
+  background-color: transparent;
+  border: none;
+`;
+
+const DetailBox = styled.div`
+  white-space: nowrap;
+  background-color: transparent;
+  margin-right: 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 4px 8px;
+  color: inherit;
+`;
 
 export default Resolution;

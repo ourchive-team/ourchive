@@ -3,8 +3,19 @@ import { TableItemRequest, ViewRequest } from 'aptos/src/generated';
 import { SetterOrUpdater } from 'recoil';
 import { TPublicKeyState } from '../states/loginState';
 import { uploadToIPFS } from './ipfs';
-import { ImageInfo, TokenPurchaseItem, IUploadImage, IBuyImage, IProveImage, IReportImage, IReportResponse, IProveItem, IProofResponse, OnChainCommunicator } from './type';
-import { TokenItem } from '../Components/RenderImageList';
+import {
+  ImageInfo,
+  TokenPurchaseItem,
+  IUploadImage,
+  IBuyImage,
+  IProveImage,
+  IReportImage,
+  IReportResponse,
+  IProveItem,
+  IProofResponse,
+  OnChainCommunicator,
+} from './type';
+import { TokenItem } from '../Components/ImageComponents/ImageSkeletonRenderer';
 
 export class AptosOnChainImpl implements OnChainCommunicator {
   private moduleAddress: string;
@@ -21,11 +32,14 @@ export class AptosOnChainImpl implements OnChainCommunicator {
     this.moduleAddress = '0x5163ad43db9b7354a5bc8af9e4c18130ffe5c2d077ab52c0f6553827b2e8c15f';
     this.client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
     this.tokenClient = new TokenClient(this.client);
-    this.address = "";
-    this.publicKey = "";
+    this.address = '';
+    this.publicKey = '';
   }
 
-  public async walletConnect(setAddress: SetterOrUpdater<string>, setPublicKey: SetterOrUpdater<TPublicKeyState>): Promise<void> {
+  public async walletConnect(
+    setAddress: SetterOrUpdater<string>,
+    setPublicKey: SetterOrUpdater<TPublicKeyState>,
+  ): Promise<void> {
     const { address, publicKey } = await window.aptos.connect();
     setAddress(address);
     setPublicKey(publicKey);
@@ -118,7 +132,11 @@ export class AptosOnChainImpl implements OnChainCommunicator {
       const result = await this.client.view(viewRequest);
       const tokenDataIds = result as unknown as TokenTypes.TokenDataId[];
       const tokenDataId = tokenDataIds[0];
-      const tokenData = await this.tokenClient.getTokenData(tokenDataId.creator, tokenDataId.collection, tokenDataId.name);
+      const tokenData = await this.tokenClient.getTokenData(
+        tokenDataId.creator,
+        tokenDataId.collection,
+        tokenDataId.name,
+      );
       return {
         title: tokenDataId.name,
         price: 0, // TODO
@@ -143,7 +161,11 @@ export class AptosOnChainImpl implements OnChainCommunicator {
   }
 
   public async tokendataIdToUri(tokenDataId: { creator: string; collection: string; name: string }): Promise<string> {
-    const tokenData = await this.tokenClient.getTokenData(tokenDataId.creator, tokenDataId.collection, tokenDataId.name);
+    const tokenData = await this.tokenClient.getTokenData(
+      tokenDataId.creator,
+      tokenDataId.collection,
+      tokenDataId.name,
+    );
     return tokenData.uri;
   }
 
@@ -201,7 +223,11 @@ export class AptosOnChainImpl implements OnChainCommunicator {
       // eslint-disable-next-line
       for (const token of tokenDataIdList) {
         // eslint-disable-next-line
-        const uri = await this.tokendataIdToUri({ creator: token.creator, collection: token.collection, name: token.name });
+        const uri = await this.tokendataIdToUri({
+          creator: token.creator,
+          collection: token.collection,
+          name: token.name,
+        });
         const creatorName = token.collection.replace("'s Collection", ''); // FIXME
         tokens.push({
           creator: token.creator,
@@ -236,7 +262,11 @@ export class AptosOnChainImpl implements OnChainCommunicator {
         //@ts-ignore:next-line;
         const token = tokenId.token_data_id;
         // eslint-disable-next-line
-        const uri = await this.tokendataIdToUri({ creator: token.creator, collection: token.collection, name: token.name });
+        const uri = await this.tokendataIdToUri({
+          creator: token.creator,
+          collection: token.collection,
+          name: token.name,
+        });
 
         const creatorName = token.collection.replace("'s Collection", ''); // FIXME
         tokens.push({
@@ -269,22 +299,28 @@ export class AptosOnChainImpl implements OnChainCommunicator {
       const result = await this.client.view(viewRequest);
       const reportResponse = result as IReportResponse[];
 
-      const reportList = await Promise.all(reportResponse[0].data.map(async (r) => {
-        const rDate = new Date(r.value.timestamp * 1000);
-        const uri = await this.tokendataIdToUri({ creator: r.value.image.creator, collection: r.value.image.collection, name: r.value.image.name });
-        // eslint-disable-next-line no-nested-ternary
-        const proveStatus = r.value.proved ? 1 : rDate.getTime() < new Date().getTime() ? 0 : 2;
-        const reportCase: IProveItem = {
-          proved: proveStatus,
-          title: r.value.image.name,
-          creator: r.value.image.creator,
-          requestedDate: new Date(r.value.timestamp * 1000),
-          provedDate: null,
-          keyPhrase: r.key as unknown as string,
-          uri,
-        };
-        return reportCase;
-      }));
+      const reportList = await Promise.all(
+        reportResponse[0].data.map(async r => {
+          const rDate = new Date(r.value.timestamp * 1000);
+          const uri = await this.tokendataIdToUri({
+            creator: r.value.image.creator,
+            collection: r.value.image.collection,
+            name: r.value.image.name,
+          });
+          // eslint-disable-next-line no-nested-ternary
+          const proveStatus = r.value.proved ? 1 : rDate.getTime() < new Date().getTime() ? 0 : 2;
+          const reportCase: IProveItem = {
+            proved: proveStatus,
+            title: r.value.image.name,
+            creator: r.value.image.creator,
+            requestedDate: new Date(r.value.timestamp * 1000),
+            provedDate: null,
+            keyPhrase: r.key as unknown as string,
+            uri,
+          };
+          return reportCase;
+        }),
+      );
 
       return reportList;
     } catch (error) {
@@ -303,21 +339,27 @@ export class AptosOnChainImpl implements OnChainCommunicator {
     try {
       const result = await this.client.view(viewRequest);
       const reportResponse = result[0] as IProofResponse[];
-      const reportList = await Promise.all(reportResponse.map(async (r) => {
-        const rDate = new Date(r.timestamp * 1000);
-        const proveStatus = 1;
-        const uri = await this.tokendataIdToUri({ creator: r.image.creator, collection: r.image.collection, name: r.image.name });
-        const reportCase: IProveItem = {
-          proved: proveStatus,
-          title: r.image.name,
-          creator: r.image.collection.replace('\'s Collection', ''),
-          requestedDate: null,
-          provedDate: rDate,
-          keyPhrase: r.phrase as unknown as string,
-          uri,
-        };
-        return reportCase;
-      }));
+      const reportList = await Promise.all(
+        reportResponse.map(async r => {
+          const rDate = new Date(r.timestamp * 1000);
+          const proveStatus = 1;
+          const uri = await this.tokendataIdToUri({
+            creator: r.image.creator,
+            collection: r.image.collection,
+            name: r.image.name,
+          });
+          const reportCase: IProveItem = {
+            proved: proveStatus,
+            title: r.image.name,
+            creator: r.image.collection.replace("'s Collection", ''),
+            requestedDate: null,
+            provedDate: rDate,
+            keyPhrase: r.phrase as unknown as string,
+            uri,
+          };
+          return reportCase;
+        }),
+      );
 
       return reportList;
     } catch (error) {
