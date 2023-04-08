@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
-import { getImageInfo, reportImage } from '../../func';
 import { onchain } from '../../func';
 
 import TopNavigator from '../../Components/TopNavigator';
