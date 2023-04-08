@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { getImageInfo, reportImage } from '../../func';
+import { onchain } from '../../func';
+
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import Modal from '../../Components/Modal';
@@ -106,27 +108,15 @@ const Report = () => {
           onClick={() => {
             const randomPhrase = (Math.random() + 1).toString(36).substring(8);
             setReqData({ ...reqData, phrase: randomPhrase });
-            reportImage({
-              creatorNickname: reqData.nickname,
-              imageTitle: reqData.title,
-              randomPhrase,
-            })
-              .then(data => {
-                getImageInfo(creatorAddress, reqData.nickname, reqData.title).then(res => {
-                  sendEmailByEmailJS({
-                    toEmail: reqData.email,
-                    imageTitle: reqData.title,
-                    creatorNickname: reqData.nickname,
-                    phrase: reqData.phrase,
-                    imageUrl: res.imgUrl,
-                    proveUrl: `https://${res.imgUrl}/profile/provement-list/${creatorAddress}/${nickname}/${reqData.title}?phrase=${reqData.phrase}`,
-                  });
-                });
 
-                setModalOpen(true);
+            onchain
+              .reportImage({
+                creatorNickname: reqData.nickname,
+                imageTitle: reqData.title,
+                randomPhrase,
               })
-              .catch(err => {
-                console.log('report fail');
+              .then(data => {
+                setModalOpen(true);
               });
           }}
         >

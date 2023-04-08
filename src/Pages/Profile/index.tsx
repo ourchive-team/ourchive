@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 
-import { upload } from '@testing-library/user-event/dist/upload';
 import profileIcon from '../../images/profile-icon.png';
 import navIcon from '../../icons/prev.svg';
 import { baseColor } from '../../styles';
@@ -13,8 +12,9 @@ import { baseColor } from '../../styles';
 import RenderImageList, { TokenItem } from '../../Components/RenderImageList';
 import BottomNavigator from '../../Components/BottomNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
-import { addressState, nicknameState, publicKeyState } from '../../states/loginState';
-import { getPurchasedImageList, getUploadedImageList, getUserNickname, TokenPurchaseItem } from '../../func';
+import { addressState, nicknameState } from '../../states/loginState';
+import { onchain } from '../../func';
+import { TokenPurchaseItem } from '../../func/type';
 
 const YellowCardBox = styled.div`
   display: flex;
@@ -52,11 +52,11 @@ const Profile = () => {
   const [purchaseList, setPurchaseList] = useState<TokenPurchaseItem[]>([]);
 
   useEffect(() => {
-    getUploadedImageList(addressString).then(data => {
+    onchain.getUploadedImageList(addressString).then(data => {
       setUploadList(data);
     });
 
-    getPurchasedImageList(addressString).then(data => {
+    onchain.getPurchasedImageList(addressString).then(data => {
       setPurchaseList(data);
     });
   }, [nickname]);
@@ -76,7 +76,7 @@ const Profile = () => {
       <div style={{ padding: '16px' }}>
         <img alt="profile-icon" src={profileIcon} style={{ width: '120px', height: '120px', borderRadius: '50%' }} />
       </div>
-      <span style={{ fontSize: '24px', fontWeight: 700 }}>{nickname as unknown as string}</span>
+      <span style={{ fontSize: '24px', fontWeight: 700 }}>{(nickname as unknown) as string}</span>
       <span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>
         BA in fashion & graphic design tattoo, reiki&thetahealing master✨
       </span>

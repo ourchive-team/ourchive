@@ -10,7 +10,7 @@ import aptosLogo from '../../../icons/aptos.svg';
 import { baseColor, PaddingBox, StyledSpan } from '../../../styles';
 import YellowBottomNavigator from '../../../Components/YellowBottomNavigator';
 import TopNavigator from '../../../Components/TopNavigator';
-import { getUploadedImageList } from '../../../func';
+import { onchain } from '../../../func';
 import { addressState, nicknameState, publicKeyState } from '../../../states/loginState';
 
 interface ItemList {
@@ -27,7 +27,7 @@ const UploadList = () => {
   const [uploadList, setUploadList] = useState<TokenItem[]>([]);
 
   useEffect(() => {
-    getUploadedImageList(addressString).then(data => {
+    onchain.getUploadedImageList(addressString).then(data => {
       setUploadList(data);
     });
   }, []);
@@ -52,7 +52,13 @@ const UploadList = () => {
                 height: 'fit-content',
               }}
             >
-              <RenderImageList itemList={[el]} routeUrl="/Images" skeletonWidth={100} skeletonHeight={100} hideDetails />
+              <RenderImageList
+                itemList={[el]}
+                routeUrl="/Images"
+                skeletonWidth={100}
+                skeletonHeight={100}
+                hideDetails
+              />
               <div
                 style={{
                   display: 'flex',
