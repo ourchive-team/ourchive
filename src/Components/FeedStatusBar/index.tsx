@@ -9,19 +9,19 @@ const FeedStatusBar = () => {
   return (
     <FeedStatusBarContainer>
       <IconBox>
-        <StyledImg src={heartIcon} alt="home" style={{ width: '18px' }} />
-        <span style={{ fontSize: 14, fontWeight: 700 }}>123</span>
-        <span style={{ fontSize: 10, opacity: 0.3 }}>Favorites</span>
+        <StyledImg src={heartIcon} alt="home" />
+        <NumberSpan>123</NumberSpan>
+        <LabelSpan>Favorites</LabelSpan>
       </IconBox>
       <IconBox>
-        <StyledImg src={ownerIcon} alt="upload" style={{ width: '18px' }} />
-        <span style={{ fontSize: 14, fontWeight: 700 }}>55</span>
-        <span style={{ fontSize: 10, opacity: 0.3 }}>Owners</span>
+        <StyledImg src={ownerIcon} alt="upload" />
+        <NumberSpan>55</NumberSpan>
+        <LabelSpan>Owners</LabelSpan>
       </IconBox>
       <IconBox>
-        <StyledImg src={visitorIcon} alt="profile" style={{ height: '18px' }} />
-        <span style={{ fontSize: 14, fontWeight: 700 }}>1512</span>
-        <span style={{ fontSize: 10, opacity: 0.3 }}>Visitors</span>
+        <StyledImg src={visitorIcon} alt="profile" />
+        <NumberSpan>1512</NumberSpan>
+        <LabelSpan>Visitors</LabelSpan>
       </IconBox>
     </FeedStatusBarContainer>
   );
@@ -50,6 +50,19 @@ const IconBox = styled.div`
 const StyledImg = styled.img`
   margin-bottom: 4px;
   aspect-ratio: 1/1;
+  height: 18px;
 `;
+
+const NumberSpan = styled.span`
+  font-size: 14px;
+  font-weight: 700;
+`;
+
+const LabelSpan = styled.span`
+  font-size: 10px;
+  opacity: 0.3;
+`;
+
+const;
 
 export default FeedStatusBar;
