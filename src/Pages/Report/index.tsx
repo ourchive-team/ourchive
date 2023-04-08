@@ -2,10 +2,14 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
+import { getImageInfo, reportImage } from '../../func';
 import { onchain } from '../../func';
+
 import TopNavigator from '../../Components/TopNavigator';
 import YellowBottomNavigator from '../../Components/YellowBottomNavigator';
 import Modal from '../../Components/Modal';
+import { sendEmail } from './func';
+import { sendEmailByEmailJS } from './sendEmailByEmailJS';
 
 const Report = () => {
   const pathItems = window.location.pathname.split('/');
@@ -18,6 +22,7 @@ const Report = () => {
 
   const anchor = useRef<any>();
   const nav = useNavigate();
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
       <a
@@ -103,6 +108,7 @@ const Report = () => {
           onClick={() => {
             const randomPhrase = (Math.random() + 1).toString(36).substring(8);
             setReqData({ ...reqData, phrase: randomPhrase });
+
             onchain
               .reportImage({
                 creatorNickname: reqData.nickname,
