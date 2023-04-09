@@ -2,27 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import homeIconActive from '../../../icons/home-active.png';
+import homeIcon from '../../../icons/home.svg';
+import homeIconActive from '../../../icons/homeActive.svg';
 import uploadIcon from '../../../icons/upload.svg';
-import profileIcon from '../../../icons/profile.png';
-import profileIconActive from '../../../icons/profile-active.png';
+import profileIcon from '../../../icons/profile.svg';
+import profileIconActive from '../../../icons/profileActive.svg';
 
 import { baseColor } from '../../../styles';
 
-const BottomNavigator = () => {
+const BottomNavigator = ({ selectedMenu }: { selectedMenu: string }) => {
   return (
     <BottomNavContainer>
-      <NavBox to="/main" style={{ color: baseColor.yellow }}>
-        <StyledImage src={homeIconActive} alt="home" style={{ width: '20px' }} />
-        <span style={{ fontSize: 10 }}>Home</span>
+      <NavBox to="/main">
+        <StyledImage src={selectedMenu === 'home' ? homeIconActive : homeIcon} alt="home" />
+        <StyledSpan>Home</StyledSpan>
       </NavBox>
       <NavBox to="/upload-image">
-        <StyledImage src={uploadIcon} alt="upload" style={{ width: '28px' }} />
-        <span style={{ fontSize: 10 }}>Upload</span>
+        <StyledImage src={uploadIcon} alt="upload" />
+        <StyledSpan>Upload</StyledSpan>
       </NavBox>
       <NavBox to="/profile">
-        <StyledImage src={profileIcon} alt="profile" style={{ height: '20px' }} />
-        <span style={{ fontSize: 10 }}>Profile</span>
+        <StyledImage src={selectedMenu === 'profile' ? profileIconActive : profileIcon} alt="profile" />
+        <StyledSpan>Profile</StyledSpan>
       </NavBox>
     </BottomNavContainer>
   );
@@ -34,9 +35,8 @@ const BottomNavContainer = styled.div`
   height: 60px;
   margin-top: auto;
   position: sticky;
-  background-color: black;
+  background-color: ${baseColor.beige};
   justify-content: space-around;
-  border-top: 1px solid #1f1f1f;
   align-items: center;
   z-index: 9;
   padding-top: 8px;
@@ -51,8 +51,14 @@ const NavBox = styled(Link)`
 `;
 
 const StyledImage = styled.img`
+  width: 20px;
   margin-bottom: 4px;
   aspect-ratio: 1/1;
+`;
+
+const StyledSpan = styled.span`
+  font-size: 10px;
+  color: black;
 `;
 
 export default BottomNavigator;

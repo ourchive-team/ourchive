@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
 import ImageSkeletonRenderer, { TokenItem } from '../../../Components/ImageComponents/ImageSkeletonRenderer';
 
-import aptosLogo from '../../../icons/aptos.svg';
 import { baseColor, PaddingBox, StyledSpan } from '../../../styles';
-import YellowBottomNavigator from '../../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
 import { onchain } from '../../../func';
 import { addressState, nicknameState, publicKeyState } from '../../../states/loginState';
@@ -87,18 +85,13 @@ const UploadList = () => {
                     My profit
                   </span>
                   <span style={{ fontWeight: 700, color: baseColor.yellow }}>{1234}</span>
-                  <img
-                    src={aptosLogo}
-                    alt="apt_logo"
-                    style={{ borderRadius: '50%', marginLeft: '4px', width: '16px', height: '16px' }}
-                  />
                 </div>
               </div>
             </div>
           );
         })}
       </PaddingBox>
-      <YellowBottomNavigator
+      <BottomContainer
         style={{
           box: { position: 'fixed', left: 0, bottom: 0, backgroundColor: 'black', zIndex: 2, paddingTop: '0px' },
           bar: { backgroundColor: 'white' },

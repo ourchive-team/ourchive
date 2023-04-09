@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { onchain } from '../../func';
 import TopNavigator from '../../Components/NavigatorComponents/TopNavigator';
-import YellowBottomNavigator from '../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
 import Modal from '../../Components/Modal';
 import { ProveStatus } from '../ProfilePage/ProveList';
 import ImageSkeletonRenderer from '../../Components/ImageComponents/ImageSkeletonRenderer';
@@ -127,7 +127,7 @@ const ProveOwnershipOfImagePage = () => {
           onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
         />
       </PaddingBox>
-      <YellowBottomNavigator>
+      <BottomContainer>
         <LargeButton
           disabled={!reqData.nickname || !reqData.phrase || !reqData.title}
           onClick={() => {
@@ -146,7 +146,7 @@ const ProveOwnershipOfImagePage = () => {
         >
           Prove Ownership of Image
         </LargeButton>
-      </YellowBottomNavigator>
+      </BottomContainer>
     </div>
   );
 };

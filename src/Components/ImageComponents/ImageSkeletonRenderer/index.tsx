@@ -106,7 +106,7 @@ const ImageSkeletonRenderer = ({
                   >
                     <span style={{ fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>{el.name}</span>
                     <span style={{ fontSize: '12px', color: baseColor.yellow, marginBottom: '8px' }}>
-                      {`${el.price} APT ~`}
+                      {`${el.price} ETH ~`}
                     </span>
                     <div style={{ display: 'flex', width: '100%' }}>
                       <img

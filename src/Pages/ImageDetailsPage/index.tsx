@@ -38,7 +38,7 @@ import FeedStatusBar from '../../Components/FeedStatusBar';
 import Resolution from '../../Components/Resolution';
 import ImageSkeletonRenderer, { TokenItem } from '../../Components/ImageComponents/ImageSkeletonRenderer';
 import TopNavigator from '../../Components/NavigatorComponents/TopNavigator';
-import YellowBottomNavigator from '../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
 import { onchain } from '../../func';
 import { ImageInfo } from '../../func/type';
 import CreatorInfo from '../../Components/CreatorInfo';
@@ -239,7 +239,7 @@ const ImageDetailsPage = () => {
       </div>
       {/*/!* nav = /reportNFT -> /reportNFT:id *!/*/}
       {/* nav = /buyNFT -> /buyNFT:id */}
-      <YellowBottomNavigator>
+      <BottomContainer>
         <div style={{ display: 'flex', width: '100%', height: '100%' }}>
           <LargeButton
             onClick={() => nav('report')}
@@ -255,7 +255,7 @@ const ImageDetailsPage = () => {
           </LargeButton>
           <LargeButton onClick={() => nav('purchase')}>Buy this Image</LargeButton>
         </div>
-      </YellowBottomNavigator>
+      </BottomContainer>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { onchain } from '../../func';
 
 import TopNavigator from '../../Components/NavigatorComponents/TopNavigator';
-import YellowBottomNavigator from '../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
 import Modal from '../../Components/Modal';
 
 const ReportPage = () => {
@@ -24,7 +24,7 @@ const ReportPage = () => {
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
       <a
         ref={anchor}
-        href={`mailto:${reqData.email} ?subject= Prove Request for Stock Image &body= A request for proof of the Image you used has been received. Please visit OURCHIEVE and proceed with the proof of ownership. Please be advised that if you can’t prove ownership, there may be legal action against your contents.\n\n localhost:3000/profile/provement-list/0x31c3999bbc7d571b53a757c433ccbe7fcb626fe85af068bdf51155422b154646/AptosMan/finger?phrase=${reqData.phrase}
+        href={`mailto:${reqData.email} ?subject= Prove Request for Stock Image &body= A request for proof of the Image you used has been received. Please visit OURSTOCK and proceed with the proof of ownership. Please be advised that if you can’t prove ownership, there may be legal action against your contents.\n\n localhost:3000/profile/provement-list/0x31c3999bbc7d571b53a757c433ccbe7fcb626fe85af068bdf51155422b154646/AptosMan/finger?phrase=${reqData.phrase}
         `}
         style={{
           width: '100%',
@@ -99,7 +99,7 @@ const ReportPage = () => {
           onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
         />
       </PaddingBox>
-      <YellowBottomNavigator>
+      <BottomContainer>
         <LargeButton
           disabled={!reqData.nickname || !reqData.email || !reqData.title}
           onClick={() => {
@@ -119,7 +119,7 @@ const ReportPage = () => {
         >
           Request for Proof
         </LargeButton>
-      </YellowBottomNavigator>
+      </BottomContainer>
     </div>
   );
 };

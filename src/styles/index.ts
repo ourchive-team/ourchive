@@ -7,6 +7,7 @@ export const baseColor = {
   blue: '#BEE6EE',
   orange: '#F55B1D',
   pink: '#FEB2CE',
+  beige: '#E7CFB6',
 };
 
 export const PaddingBox = styled.div`
@@ -32,7 +33,7 @@ export const LargeButton = styled.button`
   /* Black */
   background: black;
   border: none;
-  border-radius: 4px;
+  border-radius: 36px;
 
   :disabled {
     background-color: #8e8e8e;
@@ -54,15 +55,15 @@ export const ImageContainer = styled.div`
 export const StyledInput = styled.input`
   background-color: transparent;
   color: gray;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 16px;
   border-radius: 12px;
   min-height: 48px;
   font-size: 14px;
-  color: white;
+  color: black;
 
   ::placeholder {
-    color: #4e4e4b;
+    color: rgba(0, 0, 0, 0.2);
   }
 `;
 

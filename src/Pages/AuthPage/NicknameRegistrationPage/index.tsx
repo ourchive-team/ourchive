@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 import { LargeButton, StyledInput } from '../../../styles';
-import YellowBottomNavigator from '../../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
 import { addressState, loginState } from '../../../states/loginState';
 import { onchain } from '../../../func';
 
@@ -32,13 +32,13 @@ const NicknameRegistrationPage = () => {
             }
           }}
         />
-        <span style={{ fontSize: '11px', paddingTop: '16px', color: 'rgba(255,255,255,0.5)' }}>
+        <span style={{ fontSize: '11px', paddingTop: '16px', color: 'rgba(0,0,0,0.5)' }}>
           {isAvailable
-            ? '* NicknameRegistrationPage is available'
+            ? '* This nickname is available'
             : '* Username must contain between 4~64 characters (letters or numbers), but cannot contain spaces or diacritics. Symbols are not allowed.'}
         </span>
       </div>
-      <YellowBottomNavigator>
+      <BottomContainer>
         <LargeButton
           disabled={!isAvailable}
           style={{ backgroundColor: isAvailable ? 'black' : '#8E8E8E' }}
@@ -48,9 +48,9 @@ const NicknameRegistrationPage = () => {
             nav('/main');
           }}
         >
-          Go to Ourchive
+          Go to Ourstock
         </LargeButton>
-      </YellowBottomNavigator>
+      </BottomContainer>
     </div>
   );
 };

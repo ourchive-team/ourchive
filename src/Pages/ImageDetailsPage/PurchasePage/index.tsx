@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
 import Resolution, { IResolutionList } from '../../../Components/Resolution';
-import YellowBottomNavigator from '../../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
 import { onchain } from '../../../func';
 
 const PurchasePage = () => {
@@ -72,7 +72,7 @@ const PurchasePage = () => {
           <span style={{ fontSize: '16px', padding: '16px' }}>day</span>
         </div>
       </PaddingBox>
-      <YellowBottomNavigator>
+      <BottomContainer>
         <>
           <span style={{ color: 'black', fontSize: '16px', marginBottom: '8px' }}>Total Price</span>
           <div
@@ -88,10 +88,10 @@ const PurchasePage = () => {
               {requestReady ? `${selectedSize.value * periodNumber}` : 0}
               &nbsp;
             </span>
-            <span>APT</span>
+            <span>ETH</span>
             {requestReady && (
               <StyledSpan style={{ fontSize: '13px', height: 'fit-content', marginTop: 'auto', marginLeft: '4px' }}>
-                {`(${selectedSize.value}APT x ${periodNumber} days)`}
+                {`(${selectedSize.value}ETH x ${periodNumber} days)`}
               </StyledSpan>
             )}
           </div>
@@ -111,7 +111,7 @@ const PurchasePage = () => {
             Buy this Image
           </LargeButton>
         </>
-      </YellowBottomNavigator>
+      </BottomContainer>
     </div>
   );
 };

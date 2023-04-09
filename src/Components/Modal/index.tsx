@@ -61,7 +61,7 @@ const ModalBody = styled.div`
   border-radius: 16px;
   padding: 16px;
   margin: 24px;
-  background-color: black;
+  background-color: white;
   position: fixed;
   z-index: 2;
 `;

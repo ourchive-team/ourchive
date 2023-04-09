@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { baseColor } from '../../../styles';
-
-interface IYellowBottomNavigator {
+interface IBottomContainer {
   children?: JSX.Element;
   style?: {
     box?: any;
@@ -12,16 +10,16 @@ interface IYellowBottomNavigator {
   fixed?: boolean;
 }
 
-const YellowBottomNavigator = ({ children, style, fixed }: IYellowBottomNavigator) => {
+const BottomContainer = ({ children, style, fixed }: IBottomContainer) => {
   return (
-    <YellowBottomNavContainer style={style?.box}>
+    <BottomNavContainer style={style?.box}>
       {children}
-      <YellowBottomNavBar style={style?.bar} />
-    </YellowBottomNavContainer>
+      <BottomNavBar />
+    </BottomNavContainer>
   );
 };
 
-const YellowBottomNavContainer = styled.div`
+const BottomNavContainer = styled.div`
   display: flex;
   margin-top: auto;
   position: sticky;
@@ -31,15 +29,15 @@ const YellowBottomNavContainer = styled.div`
   bottom: 0;
   z-index: 9;
   flex-direction: column;
-  background-color: ${baseColor.yellow};
 `;
 
-const YellowBottomNavBar = styled.div`
+const BottomNavBar = styled.div`
   width: 134px;
   height: 5px;
   margin: 21px auto 8px;
   background-color: black;
   border-radius: 100px;
+  bottom: 0;
 `;
 
-export default YellowBottomNavigator;
+export default BottomContainer;

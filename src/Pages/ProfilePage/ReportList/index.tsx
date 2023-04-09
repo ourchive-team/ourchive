@@ -5,7 +5,7 @@ import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
 import ImageSkeletonRenderer from '../../../Components/ImageComponents/ImageSkeletonRenderer';
 import CreatorInfo from '../../../Components/CreatorInfo';
 import profileIcon from '../../../images/profile-icon.png';
-import YellowBottomNavigator from '../../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
 import { onchain } from '../../../func';
 import { dateToString } from '../../../func/util';
 import { IProveItem } from '../../../func/type';
@@ -147,9 +147,9 @@ const ReportList = () => {
           );
         })}
       </PaddingBox>
-      <YellowBottomNavigator>
+      <BottomContainer>
         <LargeButton>Report Image</LargeButton>
-      </YellowBottomNavigator>
+      </BottomContainer>
     </div>
   );
 };

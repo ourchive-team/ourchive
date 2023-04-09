@@ -48,7 +48,7 @@ const Resolution = ({ list, selectedSize, selector }: IResolution) => {
               </span>
               <span>{el.format}</span>
             </DetailBox>
-            <DetailBox style={border}>{`${el.value} APT`}</DetailBox>
+            <DetailBox style={border}>{`${el.value} ETH`}</DetailBox>
           </Button>
         );
       })}

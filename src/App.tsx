@@ -1,10 +1,8 @@
 import './App.css';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React from 'react';
 
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { Types, AptosClient } from 'aptos';
-import { LoginPage } from './Pages/AuthPage/LoginPage';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 import MainPage from './Pages/MainPage';
@@ -20,6 +18,7 @@ import NicknameRegistrationPage from './Pages/AuthPage/NicknameRegistrationPage'
 import ProveList from './Pages/ProfilePage/ProveList';
 import ProveOwnershipOfImagePage from './Pages/ProveOwnershipOfImagePage';
 import LoginWrapper from './Components/LoginWrapper';
+import { LoginPage } from './Pages/AuthPage/LoginPage';
 
 const App = () => {
   // ngrok test error
@@ -27,7 +26,6 @@ const App = () => {
   //   if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
   // }, []);
 
-  // console.log(address, account?.sequence_number);
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <LoginWrapper>

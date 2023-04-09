@@ -29,12 +29,12 @@ const SelectCategoryBar = ({ data }: ISelectCategoryBarData) => {
     <div style={{ display: 'flex', width: '100%', height: '52px', overflowX: 'scroll', padding: '10px 20px' }}>
       {data.map((el, i) => {
         const isSelected = selected === i;
-        const selectedOrRandomColor = isSelected ? 'white' : randomColorCode[i];
+        const selectedOrRandomColor = isSelected ? 'black' : randomColorCode[i];
         return (
           <CategoryBtn
             style={{
               fontWeight: isSelected ? 700 : 400,
-              color: isSelected ? 'black' : 'rgba(0,0,0,0.5)',
+              color: isSelected ? 'white' : 'rgba(0,0,0,0.5)',
               backgroundColor: selectedOrRandomColor,
             }}
             onClick={() => setSelected(i)}
