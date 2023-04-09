@@ -63,6 +63,4 @@ const LabelSpan = styled.span`
   opacity: 0.3;
 `;
 
-const;
-
 export default FeedStatusBar;
