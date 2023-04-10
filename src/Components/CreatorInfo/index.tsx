@@ -26,7 +26,7 @@ const CreatorInfo = ({ profileImg, creator, style }: ICreatedInfo) => {
 };
 
 const Creator = styled.span<ICreator>`
-  color: ${props => (props.color ? props.color : baseColor.yellow)};
+  color: ${props => (props.color ? props.color : '#D57368')};
 `;
 
 export default CreatorInfo;

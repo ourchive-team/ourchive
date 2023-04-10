@@ -9,17 +9,17 @@ const FeedStatusBar = () => {
   return (
     <FeedStatusBarContainer>
       <IconBox>
-        <StyledImg src={heartIcon} alt="home" />
+        <StyledImg src={heartIcon} alt="home" style={{ filter: 'brightness(0) contrast(100%)' }} />
         <NumberSpan>123</NumberSpan>
         <LabelSpan>Favorites</LabelSpan>
       </IconBox>
       <IconBox>
-        <StyledImg src={ownerIcon} alt="upload" />
+        <StyledImg src={ownerIcon} alt="upload" style={{ filter: 'brightness(0) contrast(100%)' }} />
         <NumberSpan>55</NumberSpan>
         <LabelSpan>Owners</LabelSpan>
       </IconBox>
       <IconBox>
-        <StyledImg src={visitorIcon} alt="profile" />
+        <StyledImg src={visitorIcon} alt="profile" style={{ filter: 'brightness(0) contrast(100%)' }} />
         <NumberSpan>1512</NumberSpan>
         <LabelSpan>Visitors</LabelSpan>
       </IconBox>
@@ -35,7 +35,7 @@ const FeedStatusBarContainer = styled.div`
   padding: 10px;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(44, 44, 44, 0.2);
   border-radius: 8px;
 `;
 
@@ -44,7 +44,7 @@ const IconBox = styled.div`
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: white;
+  color: black;
 `;
 
 const StyledImg = styled.img`

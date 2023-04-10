@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../styles';
+import { baseColor, LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
 import Resolution, { IResolutionList } from '../../../Components/Resolution';
 import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
@@ -7,9 +7,12 @@ import { onchain } from '../../../func';
 
 const PurchasePage = () => {
   const pathItems = window.location.pathname.split('/');
-  const creatorAddress = pathItems[2].replace(/%20/g, ' ');
-  const nickname = pathItems[3].replace(/%20/g, ' ');
-  const imageTitle = pathItems[4].replace(/%20/g, ' ');
+  const creatorAddress = 'asd';
+  // pathItems[2].replace(/%20/g, ' ');
+  const nickname = 'asd';
+  // pathItems[3].replace(/%20/g, ' ');
+  const imageTitle = 'asd';
+  // pathItems[4].replace(/%20/g, ' ');
 
   const resolutionList = [
     {
@@ -72,7 +75,7 @@ const PurchasePage = () => {
           <span style={{ fontSize: '16px', padding: '16px' }}>day</span>
         </div>
       </PaddingBox>
-      <BottomContainer>
+      <BottomContainer style={{ backgroundColor: baseColor.beige }}>
         <>
           <span style={{ color: 'black', fontSize: '16px', marginBottom: '8px' }}>Total Price</span>
           <div
@@ -82,6 +85,7 @@ const PurchasePage = () => {
               fontSize: '20px',
               fontWeight: 700,
               marginBottom: '16px',
+              alignItems: 'center',
             }}
           >
             <span>
@@ -90,7 +94,7 @@ const PurchasePage = () => {
             </span>
             <span>ETH</span>
             {requestReady && (
-              <StyledSpan style={{ fontSize: '13px', height: 'fit-content', marginTop: 'auto', marginLeft: '4px' }}>
+              <StyledSpan style={{ fontSize: '13px', height: 'fit-content', marginLeft: '4px' }}>
                 {`(${selectedSize.value}ETH x ${periodNumber} days)`}
               </StyledSpan>
             )}

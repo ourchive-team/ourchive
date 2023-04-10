@@ -3,16 +3,13 @@ import styled from 'styled-components';
 
 interface IBottomContainer {
   children?: JSX.Element;
-  style?: {
-    box?: any;
-    bar?: any;
-  };
+  style?: any;
   fixed?: boolean;
 }
 
 const BottomContainer = ({ children, style, fixed }: IBottomContainer) => {
   return (
-    <BottomNavContainer style={style?.box}>
+    <BottomNavContainer style={style}>
       {children}
       <BottomNavBar />
     </BottomNavContainer>

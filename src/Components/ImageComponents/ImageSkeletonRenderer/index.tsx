@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Link, { useNavigate } from 'react-router-dom';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import heartIcon from '../../../icons/heart.svg';
 import { baseColor } from '../../../styles';
 import profileIcon from '../../../images/profile-icon.png';
 import RenderSkeleton from '../RenderSkeleton';
+import ImageContainer from '../ImageContainer';
 
 export interface TokenItem {
   creator: string;
@@ -48,47 +48,13 @@ const ImageSkeletonRenderer = ({
             const navUrl = routeUrlWithoutId ? routeUrl : `${routeUrl}/${el.creator}/${el.creatorNickname}/${el.name}`;
             return (
               <ItemCardDescriptionContainer onClick={() => nav(navUrl)} style={{ ...style?.wrapper }}>
-                {/*<img src="/public/images/image13.png" alt="test-img" />*/}
-
                 {routeUrl ? (
-                  <div
-                    style={{
-                      display: 'flex',
-                      width: '100%',
-                      height: '100%',
-                      minWidth: '136px',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      position: 'relative',
-                    }}
-                  >
-                    {favorite && (
-                      <div
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          position: 'absolute',
-                          // backgroundColor: 'rgba(0,0,0,0.1)',
-                        }}
-                      >
-                        <img
-                          alt="favorite"
-                          src={heartIcon}
-                          style={{
-                            position: 'absolute',
-                            right: 0,
-                            marginTop: '10px',
-                            marginRight: '10px',
-                          }}
-                        />
-                      </div>
-                    )}
-                    <img
-                      src={el.uri}
-                      alt={el.name}
-                      style={{ width: skeletonWidth || 'fit-content', maxWidth: '136px' }}
-                    />
-                  </div>
+                  <ImageContainer
+                    uri={el.uri}
+                    alt={el.name}
+                    favorite={favorite}
+                    style={{ width: skeletonWidth || 'fit-content', maxWidth: '136px' }}
+                  />
                 ) : (
                   <SkeletonTheme baseColor="#1F1F29" highlightColor="#3F3E3F" borderRadius="8px">
                     <Skeleton width={skeletonWidth || 136} height={skeletonHeight || 143} />

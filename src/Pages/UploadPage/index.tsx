@@ -77,7 +77,7 @@ const UploadPage = () => {
               display: 'flex',
               width: '100%',
               height: '100%',
-              padding: '8px 24px',
+              padding: '8px 48px',
               alignItems: 'center',
               flexDirection: 'column',
             }}
@@ -115,7 +115,12 @@ const UploadPage = () => {
           <img
             alt="add-img"
             src={imageFile?.thumbnail || plusIcon}
-            style={{ width: imageFile ? '100%' : '20px', height: imageFile ? '100%' : '20px', borderRadius: '8px' }}
+            style={{
+              width: imageFile ? '100%' : '20px',
+              height: imageFile ? '100%' : '20px',
+              borderRadius: '8px',
+              filter: imageFile?.thumbnail ? 'initial' : 'brightness(0) contrast(100%)',
+            }}
           />
         </StyledBox>
       </PaddingBox>
@@ -166,7 +171,7 @@ const UploadPage = () => {
         </PaddingBox>
       </div>
 
-      <BottomContainer>
+      <BottomContainer style={{ backgroundColor: baseColor.beige }}>
         <LargeButton
           disabled={!enabled}
           type="submit"
@@ -202,7 +207,7 @@ const StyledBox = styled.button`
   align-items: center;
   background-color: transparent;
 
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   padding: 1px;
 `;

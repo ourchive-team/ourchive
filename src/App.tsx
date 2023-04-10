@@ -30,7 +30,7 @@ const App = () => {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <LoginWrapper>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<UploadPage />} />
           <Route path="/nickname" element={<NicknameRegistrationPage />} />
           <Route path="/main" element={<MainPage />} />
           <Route path="/images/:creator/:nickname/:title" element={<ImageDetailsPage />} />

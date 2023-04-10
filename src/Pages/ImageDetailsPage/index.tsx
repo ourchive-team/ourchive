@@ -33,7 +33,7 @@ import o5 from '../../images/o5.jpg';
 
 import flagIcon from '../../icons/flag.svg';
 import profileIcon from '../../images/profile-icon.png';
-import { ImageContainer, LargeButton, PaddingBox } from '../../styles';
+import { baseColor, ImageContainer, LargeButton, PaddingBox } from '../../styles';
 import FeedStatusBar from '../../Components/FeedStatusBar';
 import Resolution from '../../Components/Resolution';
 import ImageSkeletonRenderer, { TokenItem } from '../../Components/ImageComponents/ImageSkeletonRenderer';
@@ -183,10 +183,7 @@ const ImageDetailsPage = () => {
         overflowX: 'hidden',
       }}
     >
-      <TopNavigator>
-        <span>Purchase</span>
-      </TopNavigator>
-      <PaddingBox>
+      <PaddingBox style={{ paddingTop: '48px' }}>
         <ImageContainer style={{ minHeight: '300px', height: '300px' }}>
           <img style={{ width: 'fit-content', maxWidth: '100%' }} src={imageInfo?.imgUrl} alt={imageInfo?.title} />
         </ImageContainer>
@@ -216,7 +213,7 @@ const ImageDetailsPage = () => {
             skeletonCount={6}
             skeletonWidth={140}
             skeletonHeight={140}
-            style={{ wrapper: { padding: '6px' } }}
+            style={{ wrapper: { padding: '16px' } }}
             hideDetails
           />
         </div>
@@ -232,14 +229,14 @@ const ImageDetailsPage = () => {
             skeletonCount={6}
             skeletonWidth={140}
             skeletonHeight={140}
-            style={{ wrapper: { padding: '6px' } }}
+            style={{ wrapper: { padding: '16px' } }}
             hideDetails
           />
         </div>
       </div>
       {/*/!* nav = /reportNFT -> /reportNFT:id *!/*/}
       {/* nav = /buyNFT -> /buyNFT:id */}
-      <BottomContainer>
+      <BottomContainer style={{ backgroundColor: baseColor.beige }}>
         <div style={{ display: 'flex', width: '100%', height: '100%' }}>
           <LargeButton
             onClick={() => nav('report')}
@@ -248,7 +245,8 @@ const ImageDetailsPage = () => {
               background: 'white',
               border: '1px solid black',
               color: 'black',
-              marginRight: '4px',
+              marginRight: '8px',
+              borderRadius: '8px',
             }}
           >
             <img src={flagIcon} alt="report" style={{ width: '15px' }} />
