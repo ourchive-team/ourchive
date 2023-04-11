@@ -4,6 +4,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import 'react-loading-skeleton/dist/skeleton.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import MainPage from './Pages/MainPage';
 import ImageDetailsPage from './Pages/ImageDetailsPage';
@@ -30,7 +31,7 @@ const App = () => {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <LoginWrapper>
         <Routes>
-          <Route path="/" element={<UploadPage />} />
+          <Route path="/" element={<ReportList />} />
           <Route path="/nickname" element={<NicknameRegistrationPage />} />
           <Route path="/main" element={<MainPage />} />
           <Route path="/images/:creator/:nickname/:title" element={<ImageDetailsPage />} />

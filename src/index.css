@@ -57,4 +57,13 @@ code {
     monospace;
 }
 
-@래ㅜㅅ-ㄹㅁㅊㄷ
+.modal-dialog{
+  width: 100%;
+  justify-content: center;
+}
+
+.modal-content{
+  padding: 8px 0px !important;
+  margin: 16px !important;
+  border-radius: 16px !important;
+}

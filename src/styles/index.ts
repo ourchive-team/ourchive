@@ -2,11 +2,12 @@ import styled from 'styled-components';
 
 export const baseColor = {
   purple: '#DAC6FB',
-  green: '#029C54',
+  green: '#5E8D41',
   yellow: '#FBFE67',
+  darkYellow: '#CC8E26',
   blue: '#BEE6EE',
   orange: '#F55B1D',
-  pink: '#FEB2CE',
+  pink: '#D57368',
   beige: '#E7CFB6',
 };
 
@@ -21,6 +22,8 @@ export const LargeButton = styled.button`
   height: 48px;
   font-size: 16px;
 
+  font-weight: 700;
+
   min-height: 48px;
 
   display: flex;
@@ -29,6 +32,8 @@ export const LargeButton = styled.button`
 
   color: white;
   cursor: pointer;
+
+  white-space: nowrap;
 
   /* Black */
   background: black;

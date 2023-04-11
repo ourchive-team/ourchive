@@ -136,7 +136,7 @@ const ProfilePage = () => {
           style={{ width: '20px', transform: 'rotate(180deg)', cursor: 'pointer' }}
         />
       </div>
-      <BottomContainer style={{ box: { backgroundColor: baseColor.beige, paddingTop: 0 } }}>
+      <BottomContainer style={{ backgroundColor: baseColor.beige, paddingTop: 0 }}>
         <BottomNavigator selectedMenu="profile" />
       </BottomContainer>
     </div>
@@ -148,7 +148,7 @@ const CardBox = styled.div`
   width: 100%;
   align-items: center;
   flex-direction: column;
-  border: 1px solid #7e8034;
+  border: 1px solid #0a1930;
   background-color: transparent;
   padding: 16px;
   border-radius: 8px;
