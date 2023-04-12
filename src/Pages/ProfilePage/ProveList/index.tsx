@@ -12,6 +12,7 @@ import { onchain } from '../../../func';
 import { dateToString } from '../../../func/util';
 import { IProveItem } from '../../../func/type';
 import { nicknameState } from '../../../states/loginState';
+import CenteredModal from '../../../Components/CenteredModal';
 
 interface IProveStatus {
   proveStatus: 0 | 1 | 2 | 3;
@@ -31,50 +32,36 @@ const EnumProveColor = {
   3: baseColor.orange,
 };
 
-export const ProveStatus = ({ proveStatus }: IProveStatus) => {
-  const color = EnumProveColor[proveStatus];
-  const status = EnumProveStatus[proveStatus];
-  return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '4px 12px',
-        border: `1px solid ${color}`,
-        width: 'fit-content',
-        borderRadius: 48,
-      }}
-    >
-      <div
-        style={{
-          width: '6px',
-          height: '6px',
-          backgroundColor: color,
-          borderRadius: '50%',
-          marginRight: '4px',
-        }}
-      />
-      <span style={{ color, fontSize: '11px' }}>{status}</span>
-    </div>
-  );
-};
-
 const ReportList = () => {
   const [proveList, setProveList] = useState<IProveItem[]>([]);
   const [nickname] = useRecoilState(nicknameState);
+  const [Modal, setModal] = useState(true);
+  const [completeModal, setCompleteModal] = useState(false);
 
-  useEffect(() => {
-    onchain.getProveList(nickname).then(data => {
-      setProveList(data);
-    });
-  }, []);
-
-  console.log(proveList);
+  // useEffect(() => {
+  //   onchain.getProveList(nickname).then(data => {
+  //     setProveList(data);
+  //   });
+  // }, []);
 
   const nav = useNavigate();
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
+      <CenteredModal
+        title="Submitting phrase completed"
+        show={completeModal}
+        onHide={() => setCompleteModal(false)}
+        body={
+          <p style={{ textAlign: 'center', fontWeight: 400, fontSize: '12px' }}>
+            Your proof went perfectly.
+            <br /> There will be no legal issues and the person who reported <br />
+            it will know that you have proved it. Thank you for your proof process.
+          </p>
+        }
+        footer={<LargeButton onClick={() => setCompleteModal(false)}>Go to prove List</LargeButton>}
+      />
+
       <TopNavigator>
         <span style={{ fontSize: '18px' }}>Prove list</span>
       </TopNavigator>
@@ -159,6 +146,34 @@ const ReportList = () => {
       <BottomContainer
         style={{ box: { backgroundColor: 'transparent', paddingTop: 0 }, bar: { backgroundColor: 'white' } }}
       />
+    </div>
+  );
+};
+
+export const ProveStatus = ({ proveStatus }: IProveStatus) => {
+  const color = EnumProveColor[proveStatus];
+  const status = EnumProveStatus[proveStatus];
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        padding: '4px 12px',
+        border: `1px solid ${color}`,
+        width: 'fit-content',
+        borderRadius: 48,
+      }}
+    >
+      <div
+        style={{
+          width: '6px',
+          height: '6px',
+          backgroundColor: color,
+          borderRadius: '50%',
+          marginRight: '4px',
+        }}
+      />
+      <span style={{ color, fontSize: '11px' }}>{status}</span>
     </div>
   );
 };

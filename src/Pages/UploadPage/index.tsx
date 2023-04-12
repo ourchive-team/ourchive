@@ -10,8 +10,8 @@ import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { onchain } from '../../func';
 import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
 import TopNavigator from '../../Components/NavigatorComponents/TopNavigator';
-import Modal from '../../Components/Modal';
 import { nicknameState } from '../../states/loginState';
+import CenteredModal from '../../Components/CenteredModal';
 
 interface IRenderTextArea {
   title: string;
@@ -70,32 +70,22 @@ const UploadPage = () => {
   const enabled = inputValues.title && inputValues.desc && Number(inputValues.price) > 0;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
-      {modalOpen && (
-        <Modal close={() => setModalOpen(!modalOpen)}>
-          <div
-            style={{
-              display: 'flex',
-              width: '100%',
-              height: '100%',
-              padding: '8px 48px',
-              alignItems: 'center',
-              flexDirection: 'column',
+      <CenteredModal
+        show={modalOpen}
+        onHide={() => setModalOpen(!modalOpen)}
+        title="Image Uploaded"
+        body={<span style={{ fontSize: '12px', marginBottom: '20px' }}>Your image successfully uploaded.</span>}
+        footer={
+          <LargeButton
+            onClick={() => {
+              nav('/profile/upload-list');
             }}
+            style={{ fontSize: '14px', fontWeight: 700 }}
           >
-            <span style={{ fontSize: '20px', fontWeight: 700, marginBottom: '20px' }}>Image Uploaded</span>
-            <span style={{ fontSize: '12px', marginBottom: '20px' }}>Your image successfully uploaded.</span>
-
-            <LargeButton
-              onClick={() => {
-                nav('/profile/upload-list');
-              }}
-              style={{ fontSize: '14px', fontWeight: 700 }}
-            >
-              Go to Upload List
-            </LargeButton>
-          </div>
-        </Modal>
-      )}
+            Go to Upload List
+          </LargeButton>
+        }
+      />
 
       <TopNavigator>
         <span style={{ fontSize: '18px' }}>Upload Image</span>

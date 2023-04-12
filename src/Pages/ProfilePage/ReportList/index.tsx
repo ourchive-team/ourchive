@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { baseColor, LargeButton, PaddingBox, StyledSpan } from '../../../styles';
+import { baseColor, LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
 import ImageSkeletonRenderer from '../../../Components/ImageComponents/ImageSkeletonRenderer';
 import CreatorInfo from '../../../Components/CreatorInfo';
-import MyVerticallyCenteredModal from '../../../Components/BTModal';
+import CenteredModal from '../../../Components/CenteredModal';
 
 import profileIcon from '../../../images/profile-icon.png';
 import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
@@ -35,7 +35,19 @@ const ReportList = () => {
   const [reportList, setUploadList] = useState<IProveItem[]>([
     { creator: 'a', title: 'a', proved: 0, requestedDate: null, provedDate: null, keyPhrase: 'a', uri: 'a' },
   ]);
+  const initReportData = {
+    nickname: '',
+    title: '',
+    email: '',
+    phrase: '',
+  };
+
   const [nickname] = useRecoilState(nicknameState);
+  const [modal, setModal] = useState(false);
+  const [completeModal, setCompleteModal] = useState(false);
+  const [reportData, setReportData] = useState<{ nickname: string; title: string; email: string; phrase?: string }>(
+    initReportData,
+  );
 
   useEffect(() => {
     // onchain.getReportList(nickname).then(data => {
@@ -45,18 +57,92 @@ const ReportList = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
-      <MyVerticallyCenteredModal
-        show={true}
-        onHide={() => console.log('f')}
-        title="Submitting phrase completed"
+      <CenteredModal
+        show={modal}
+        onHide={() => setModal(false)}
         body={
-          <p style={{ textAlign: 'center', fontWeight: 400, fontSize: '12px' }}>
-            Your proof went perfectly.
-            <br /> There will be no legal issues and the person who reported <br />
-            it will know that you have proved it. Thank you for your proof process.
-          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
+            <PaddingBox>
+              <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Creator Nickname</span>
+              <StyledInput
+                name="nickname"
+                value={reportData.nickname}
+                placeholder="Put Creator Nickname"
+                onChange={e => setReportData({ ...reportData, [e.target?.name]: e.target.value })}
+              />
+            </PaddingBox>
+            <PaddingBox>
+              <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Image Title</span>
+              <StyledInput
+                name="title"
+                value={reportData.title}
+                placeholder="Put Image Title"
+                onChange={e => setReportData({ ...reportData, [e.target?.name]: e.target.value })}
+              />
+            </PaddingBox>
+            <PaddingBox>
+              <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Email to Request</span>
+              <StyledInput
+                name="email"
+                placeholder="Put Email Address"
+                value={reportData.email}
+                onChange={e => setReportData({ ...reportData, [e.target?.name]: e.target.value })}
+              />
+            </PaddingBox>
+          </div>
         }
-        footer={<LargeButton onClick={() => console.log('f')}>Go to prove List</LargeButton>}
+        footer={
+          <LargeButton
+            style={{ margin: '0px 16px 16px' }}
+            disabled={!reportData.nickname || !reportData.email || !reportData.title}
+            onClick={() => {
+              const randomPhrase = (Math.random() + 1).toString(36).substring(8);
+
+              onchain
+                .reportImage({
+                  creatorNickname: reportData.nickname,
+                  imageTitle: reportData.title,
+                  randomPhrase,
+                })
+                .then(data => {
+                  setModal(false);
+                  setReportData({ ...reportData, phrase: randomPhrase });
+                  setCompleteModal(true);
+                });
+            }}
+          >
+            Request for Proof
+          </LargeButton>
+        }
+      />
+
+      <CenteredModal
+        show={completeModal}
+        onHide={() => setCompleteModal(false)}
+        title="Request Completed"
+        body={
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '8px' }}>
+            <span>Your request has been sent to</span>
+            <span style={{ fontSize: '14px', fontWeight: 700, color: baseColor.green, marginBottom: '16px' }}>
+              {`"${reportData.email}"`}
+            </span>
+            <span>The autogenerated phrase is</span>
+            <span style={{ fontSize: '14px', fontWeight: 700, color: baseColor.green, marginBottom: '16px' }}>
+              {`"${reportData.phrase}"`}
+            </span>
+          </div>
+        }
+        footer={
+          <LargeButton
+            style={{ width: '200px', backgroundColor: 'black', color: 'white' }}
+            onClick={() => {
+              setCompleteModal(false);
+              setReportData(initReportData);
+            }}
+          >
+            Go to Report List
+          </LargeButton>
+        }
       />
 
       <TopNavigator>
@@ -132,16 +218,22 @@ const ReportList = () => {
                   <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>{el.keyPhrase}</StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <LargeButton style={{ width: '114px', minHeight: '30px', height: '30px' }}>Prove</LargeButton>
+                  <LargeButton
+                    onClick={() => {
+                      setReportData({ nickname: el.creator, title: el.title, email: 'email' });
+                      setModal(true);
+                    }}
+                    style={{ width: '114px', minHeight: '30px', height: '30px' }}
+                  >
+                    Prove
+                  </LargeButton>
                 </div>
               </div>
             </div>
           );
         })}
       </PaddingBox>
-      <BottomContainer style={{ backgroundColor: baseColor.beige }}>
-        <LargeButton>Report Image</LargeButton>
-      </BottomContainer>
+      <BottomContainer style={{ backgroundColor: baseColor.beige }} />
     </div>
   );
 };

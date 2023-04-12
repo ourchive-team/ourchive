@@ -68,7 +68,7 @@ export const StyledInput = styled.input`
   color: black;
 
   ::placeholder {
-    color: rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.8);
   }
 `;
 

@@ -8,10 +8,10 @@ import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { onchain } from '../../func';
 import TopNavigator from '../../Components/NavigatorComponents/TopNavigator';
 import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
-import Modal from '../../Components/Modal';
 import { ProveStatus } from '../ProfilePage/ProveList';
 import ImageSkeletonRenderer from '../../Components/ImageComponents/ImageSkeletonRenderer';
 import { nicknameState } from '../../states/loginState';
+import CenteredModal from '../../Components/CenteredModal';
 
 const ProveOwnershipOfImagePage = () => {
   const location = useLocation();
@@ -23,6 +23,7 @@ const ProveOwnershipOfImagePage = () => {
     title: location.pathname.split('/')[5].replace(/%20/g, ' '),
     phrase: queryData?.phrase || '',
   });
+
   const [modalOpen, setModalOpen] = useState(false);
   const [nickname] = useRecoilState(nicknameState);
   const [uri, setUri] = useState('');
@@ -38,11 +39,13 @@ const ProveOwnershipOfImagePage = () => {
       .then(data => setUri(data));
   }, [reqData]);
 
-  const nav = useNavigate();
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
-      {modalOpen && (
-        <Modal close={() => setModalOpen(!modalOpen)}>
+      <CenteredModal
+        show={modalOpen}
+        onHide={() => setModalOpen(false)}
+        title="Image Uploaded"
+        body={
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '8px' }}>
             <span style={{ textAlign: 'center', fontSize: '20px', fontWeight: 700 }}>Submitting phrase completed</span>
             <span style={{ textAlign: 'center', padding: '20px 0px' }}>
@@ -51,17 +54,18 @@ const ProveOwnershipOfImagePage = () => {
               There will be no legal issues and the person who reported it will know that you have proved it. Thank you
               for your proof process.
             </span>
-            <PaddingBox style={{ width: '100%', padding: '0px 16px' }}>
-              <LargeButton
-                style={{ backgroundColor: baseColor.yellow, color: 'black', fontWeight: 700 }}
-                onClick={() => nav(-1)}
-              >
-                Go to Prove List
-              </LargeButton>
-            </PaddingBox>
           </div>
-        </Modal>
-      )}
+        }
+        footer={
+          <LargeButton
+            style={{ backgroundColor: baseColor.yellow, color: 'black', fontWeight: 700 }}
+            onClick={() => setModalOpen(false)}
+          >
+            Go to Prove List
+          </LargeButton>
+        }
+      />
+
       <TopNavigator>
         <span>Prove Ownership of Image</span>
       </TopNavigator>
