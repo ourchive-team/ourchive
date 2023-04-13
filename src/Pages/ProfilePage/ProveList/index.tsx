@@ -26,16 +26,18 @@ const EnumProveStatus = {
 };
 
 const EnumProveColor = {
-  0: baseColor.yellow,
+  0: baseColor.lightOrange,
   1: baseColor.green,
   2: baseColor.orange,
-  3: baseColor.orange,
+  3: baseColor.pink,
 };
 
 const ReportList = () => {
-  const [proveList, setProveList] = useState<IProveItem[]>([]);
+  const [proveList, setProveList] = useState<IProveItem[]>([
+    { creator: 'a', title: 'a', proved: 0, requestedDate: null, provedDate: null, keyPhrase: 'a', uri: 'a' },
+  ]);
   const [nickname] = useRecoilState(nicknameState);
-  const [Modal, setModal] = useState(true);
+  const [modal, setModal] = useState(true);
   const [completeModal, setCompleteModal] = useState(false);
 
   // useEffect(() => {
@@ -78,7 +80,7 @@ const ReportList = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 padding: '16px',
-                border: '1px solid white',
+                border: '1px solid black',
                 borderRadius: '16px',
                 marginBottom: '16px',
               }}
@@ -114,7 +116,7 @@ const ReportList = () => {
                       creator={el.creator}
                       style={{
                         img: { width: '16px', height: '16px', marginRight: '4px' },
-                        text: { fontSize: '10px', fontWeight: 700, marginBottom: '0px', color: 'white' },
+                        text: { fontSize: '10px', fontWeight: 700, marginBottom: '0px', color: 'black' },
                       }}
                     />
                   </div>
@@ -123,29 +125,38 @@ const ReportList = () => {
               <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.3)', marginBottom: '12px' }} />
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 'auto', rowGap: '12px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>
-                    Requested Date
-                  </StyledSpan>
+                  <StyledSpan style={{ color: 'rgba(0,0,0,0.6)', whiteSpace: 'nowrap' }}>Requested Date</StyledSpan>
                   <StyledSpan style={{ whiteSpace: 'nowrap' }}>{dateToString(el.requestedDate)}</StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Proved Date</StyledSpan>
+                  <StyledSpan style={{ color: 'rgba(0,0,0,0.6)', whiteSpace: 'nowrap' }}>Proved Date</StyledSpan>
                   <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>
                     {dateToString(el.provedDate)}
                   </StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <StyledSpan style={{ color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>Key Phrase</StyledSpan>
+                  <StyledSpan style={{ color: 'rgba(0,0,0,0.6)', whiteSpace: 'nowrap' }}>Key Phrase</StyledSpan>
                   <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>{el.keyPhrase}</StyledSpan>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {el.proved === 0 && (
+                    <LargeButton
+                      onClick={() => {
+                        // setReportData({ nickname: el.creator, title: el.title, email: 'email' });
+                        // setModal(true);
+                      }}
+                      style={{ width: '114px', minHeight: '30px', height: '30px' }}
+                    >
+                      Prove
+                    </LargeButton>
+                  )}
                 </div>
               </div>
             </div>
           );
         })}
       </PaddingBox>
-      <BottomContainer
-        style={{ box: { backgroundColor: 'transparent', paddingTop: 0 }, bar: { backgroundColor: 'white' } }}
-      />
+      <BottomContainer style={{ backgroundColor: baseColor.beige }} />
     </div>
   );
 };

@@ -6,6 +6,7 @@ export const baseColor = {
   yellow: '#FBFE67',
   darkYellow: '#CC8E26',
   blue: '#BEE6EE',
+  lightOrange: '#CC8E26',
   orange: '#F55B1D',
   pink: '#D57368',
   beige: '#E7CFB6',

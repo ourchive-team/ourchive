@@ -225,7 +225,7 @@ const ReportList = () => {
                     }}
                     style={{ width: '114px', minHeight: '30px', height: '30px' }}
                   >
-                    Prove
+                    Report
                   </LargeButton>
                 </div>
               </div>
