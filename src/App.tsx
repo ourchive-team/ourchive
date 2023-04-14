@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -21,17 +21,18 @@ import { LoginPage } from './Pages/AuthPage/LoginPage';
 
 const App = () => {
   // ngrok test error
-  // useEffect(() => {
-  //   if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
-  // }, []);
+  useEffect(() => {
+    if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
+  }, []);
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <LoginWrapper>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/nickname" element={<NicknameRegistrationPage />} />
           <Route path="/main" element={<MainPage />} />
+          <Route path="/upload" element={<UploadPage />} />
           <Route path="/images/:creator/:nickname/:title" element={<ImageDetailsPage />} />
           <Route path="/images/:creator/:nickname/:title/purchase" element={<PurchasePage />} />
           <Route path="/profile" element={<ProfilePage />} />
@@ -39,7 +40,6 @@ const App = () => {
           <Route path="/profile/download-list" element={<DownloadList />} />
           <Route path="/profile/report-list" element={<ReportListPage />} />
           <Route path="/profile/prove-list" element={<ProveListPage />} />
-          <Route path="/upload-image" element={<UploadPage />} />
         </Routes>
       </LoginWrapper>
     </BrowserRouter>

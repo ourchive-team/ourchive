@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
-import { baseColor, LargeButton } from '../../../styles';
+import { LargeButton } from '../../../styles';
 import { addressState, publicKeyState, nicknameState } from '../../../states/loginState';
 
 import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
+import { onchain } from '../../../func';
 
 export const LoginPage = () => {
   const nav = useNavigate();
@@ -37,13 +38,12 @@ export const LoginPage = () => {
         <LargeButton
           style={{ fontSize: '16px' }}
           onClick={async () => {
-            // await onchain.walletConnect(setAddress, setPublicKey);
-            // if (await onchain.checkUserExists(setNickname)) {
-            // SET isLogin to true
-            nav('/main');
-            // } else {
-            //   nav('/nickname');
-            // }
+            await onchain.walletConnect(setAddress, setPublicKey);
+            if (await onchain.checkUserExists(setNickname)) {
+              nav('/main');
+            } else {
+              nav('/nickname');
+            }
           }}
         >
           Connect Wallet

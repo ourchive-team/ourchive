@@ -43,9 +43,7 @@ const MainPage = () => {
         favorite
         style={{ wrapper: { width: '100%' } }}
       />
-      <BottomContainer
-        style={{ box: { backgroundColor: baseColor.beige, paddingTop: 0 }, bar: { backgroundColor: baseColor.beige } }}
-      >
+      <BottomContainer style={{ backgroundColor: baseColor.beige }}>
         <BottomNavigator selectedMenu="home" />
       </BottomContainer>
     </MainWrapper>

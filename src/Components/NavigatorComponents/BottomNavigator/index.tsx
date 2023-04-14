@@ -17,7 +17,7 @@ const BottomNavigator = ({ selectedMenu }: { selectedMenu: string }) => {
         <StyledImage src={selectedMenu === 'home' ? homeIconActive : homeIcon} alt="home" />
         <StyledSpan>Home</StyledSpan>
       </NavBox>
-      <NavBox to="/upload-image">
+      <NavBox to="/upload">
         <StyledImage src={uploadIcon} alt="upload" />
         <StyledSpan>Upload</StyledSpan>
       </NavBox>

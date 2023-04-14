@@ -8,7 +8,6 @@ import { TokenItem } from '../../../Components/ImageComponents/ImageSkeletonRend
 import { baseColor, PaddingBox, StyledSpan } from '../../../styles';
 import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
-import { onchain } from '../../../func';
 import { addressState } from '../../../states/loginState';
 import ImageContainer from '../../../Components/ImageComponents/ImageContainer';
 

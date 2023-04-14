@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { baseColor, LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
 import Resolution, { IResolutionList } from '../../../Components/Resolution';
@@ -7,12 +7,9 @@ import { onchain } from '../../../func';
 
 const PurchasePage = () => {
   const pathItems = window.location.pathname.split('/');
-  const creatorAddress = 'asd';
-  // pathItems[2].replace(/%20/g, ' ');
-  const nickname = 'asd';
-  // pathItems[3].replace(/%20/g, ' ');
-  const imageTitle = 'asd';
-  // pathItems[4].replace(/%20/g, ' ');
+  const creatorAddress = pathItems[2].replace(/%20/g, ' ');
+  const nickname = pathItems[3].replace(/%20/g, ' ');
+  const imageTitle = pathItems[4].replace(/%20/g, ' ');
 
   const resolutionList = [
     {

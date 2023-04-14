@@ -61,33 +61,12 @@ const ImageSkeletonRenderer = ({
                   </SkeletonTheme>
                 )}
                 {!hideDetails && typeof el === 'object' && (
-                  <div
-                    style={{
-                      display: 'flex',
-                      width: '100%',
-                      marginTop: 'auto',
-                      paddingTop: '10px',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <span style={{ fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>{el.name}</span>
-                    <span style={{ fontSize: '12px', color: baseColor.yellow, marginBottom: '8px' }}>
-                      {`${el.price} ETH ~`}
-                    </span>
-                    <div style={{ display: 'flex', width: '100%' }}>
-                      <img
-                        srcSet={profileIcon}
-                        alt="profile icon"
-                        style={{ width: '16px', height: '16px', marginRight: '4px' }}
-                      />
-                      <span>{`Creator ${el.creatorNickname}`}</span>
-                    </div>
-                  </div>
+                  <ItemDetails name={el.name} price={el.price} creatorNickname={el.creatorNickname} />
                 )}
               </ItemCardDescriptionContainer>
             );
           })
-        : skeletonCountMap.map(el => {
+        : skeletonCountMap.map(() => {
             return (
               <ItemCardDescriptionContainer>
                 <RenderSkeleton skeletonWidth={skeletonWidth || 134} skeletonHeight={skeletonHeight || 143} />
@@ -95,6 +74,27 @@ const ImageSkeletonRenderer = ({
             );
           })}
     </>
+  );
+};
+
+const ItemDetails = ({ name, price, creatorNickname }: { creatorNickname: string; name: string; price: number }) => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        width: '100%',
+        marginTop: 'auto',
+        paddingTop: '10px',
+        flexDirection: 'column',
+      }}
+    >
+      <span style={{ fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>{name}</span>
+      <span style={{ fontSize: '12px', color: baseColor.yellow, marginBottom: '8px' }}>{`${price} ETH ~`}</span>
+      <div style={{ display: 'flex', width: '100%' }}>
+        <img srcSet={profileIcon} alt="profile icon" style={{ width: '16px', height: '16px', marginRight: '4px' }} />
+        <span>{`Creator ${creatorNickname}`}</span>
+      </div>
+    </div>
   );
 };
 
