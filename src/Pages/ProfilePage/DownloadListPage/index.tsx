@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
 
 import ImageSkeletonRenderer from '../../../Components/ImageComponents/ImageSkeletonRenderer';
 import { onchain } from '../../../func';
 import { downloadFromIPFS } from '../../../func/ipfs';
 import { TokenPurchaseItem } from '../../../func/type';
-import { addressState } from '../../../states/loginState';
 import { baseColor, StyledSpan } from '../../../styles';
 import CreatorInfo from '../../../Components/CreatorInfo';
 import profileIcon from '../../../images/profile-icon.png';
@@ -15,7 +13,7 @@ interface IExpireStatus {
   expireDate: number;
 }
 
-const PurchaseList = () => {
+const DownloadList = () => {
   const [purchaseList, setPurchaseList] = useState<TokenPurchaseItem[]>([
     {
       expireDate: 0,
@@ -29,12 +27,12 @@ const PurchaseList = () => {
       },
     },
   ]);
-  const [address] = useRecoilState(addressState);
-  useEffect(() => {
-    // onchain.getPurchasedImageList(address).then(data => {
-    //   setPurchaseList(data);
-    // });
-  }, []);
+  // const [address] = useRecoilState(addressState);
+  // useEffect(() => {
+  // onchain.getPurchasedImageList(address).then(data => {
+  //   setPurchaseList(data);
+  // });
+  // }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -177,4 +175,4 @@ const ReDownloadOrExpiredButton = ({ expireDate, creator, creatorNickname, image
   );
 };
 
-export default PurchaseList;
+export default DownloadList;

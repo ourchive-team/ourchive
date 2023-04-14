@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { TokenTypes } from 'aptos';
 import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';

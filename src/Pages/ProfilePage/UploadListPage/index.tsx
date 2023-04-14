@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
-import ImageSkeletonRenderer, { TokenItem } from '../../../Components/ImageComponents/ImageSkeletonRenderer';
+import { TokenItem } from '../../../Components/ImageComponents/ImageSkeletonRenderer';
 
 import { baseColor, PaddingBox, StyledSpan } from '../../../styles';
 import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
 import { onchain } from '../../../func';
-import { addressState, nicknameState, publicKeyState } from '../../../states/loginState';
+import { addressState } from '../../../states/loginState';
 import ImageContainer from '../../../Components/ImageComponents/ImageContainer';
 
 interface ItemList {
@@ -19,7 +19,7 @@ interface ItemList {
   profit: string;
 }
 
-const UploadList = () => {
+const UploadListPage = () => {
   const [address] = useRecoilState(addressState);
   const addressString = address;
 
@@ -115,4 +115,4 @@ const UploadList = () => {
   );
 };
 
-export default UploadList;
+export default UploadListPage;

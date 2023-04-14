@@ -6,11 +6,11 @@ import Link, { useNavigate } from 'react-router-dom';
 
 import plusIcon from '../../icons/plus.svg';
 
+import { nicknameState } from '../../states/loginState';
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { onchain } from '../../func';
 import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
 import TopNavigator from '../../Components/NavigatorComponents/TopNavigator';
-import { nicknameState } from '../../states/loginState';
 import CenteredModal from '../../Components/CenteredModal';
 
 interface IRenderTextArea {

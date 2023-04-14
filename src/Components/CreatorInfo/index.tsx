@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { baseColor } from '../../styles';
 
 interface ICreator {
   readonly color?: string;

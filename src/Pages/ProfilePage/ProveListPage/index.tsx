@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+
 import { useRecoilState } from 'recoil';
 import { baseColor, LargeButton, PaddingBox, StyledInput, StyledSpan } from '../../../styles';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
 import ImageSkeletonRenderer from '../../../Components/ImageComponents/ImageSkeletonRenderer';
 import CreatorInfo from '../../../Components/CreatorInfo';
-import CenteredModal from '../../../Components/CenteredModal';
-
 import profileIcon from '../../../images/profile-icon.png';
 import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
-import { onchain } from '../../../func';
+import CenteredModal from '../../../Components/CenteredModal';
 import { dateToString } from '../../../func/util';
-import { IProveItem } from '../../../func/type';
+import { IProveImage, IProveItem } from '../../../func/type';
 import { nicknameState } from '../../../states/loginState';
+import { onchain } from '../../../func';
 
 interface IProveStatus {
   proveStatus: 0 | 1 | 2 | 3;
@@ -25,35 +25,44 @@ const EnumProveStatus = {
 };
 
 const EnumProveColor = {
-  0: baseColor.darkYellow,
+  0: baseColor.lightOrange,
   1: baseColor.green,
-  2: baseColor.pink,
+  2: baseColor.orange,
   3: baseColor.pink,
 };
 
-const ReportList = () => {
-  const [reportList, setUploadList] = useState<IProveItem[]>([
-    { creator: 'a', title: 'a', proved: 0, requestedDate: null, provedDate: null, keyPhrase: 'a', uri: 'a' },
-  ]);
-  const initReportData = {
-    nickname: '',
-    title: '',
-    email: '',
+const ProveListPage = () => {
+  const initReqData: IProveImage = {
+    userNickname: '',
+    creatorNickname: '',
+    imageTitle: '',
     phrase: '',
   };
 
+  const dummy: IProveItem[] = [
+    {
+      proved: 0,
+      title: 'set',
+      creator: 'wer',
+      requestedDate: null, //Timestamp?
+      provedDate: null, //Timestamp?
+      keyPhrase: 'wef w',
+      uri: 'fwef',
+    },
+  ];
+
+  const [proveList, setProveList] = useState<IProveItem[]>(dummy);
+
   const [nickname] = useRecoilState(nicknameState);
+  const [reqData, setReqData] = useState<IProveImage>(initReqData);
   const [modal, setModal] = useState(false);
   const [completeModal, setCompleteModal] = useState(false);
-  const [reportData, setReportData] = useState<{ nickname: string; title: string; email: string; phrase?: string }>(
-    initReportData,
-  );
 
-  useEffect(() => {
-    // onchain.getReportList(nickname).then(data => {
-    //   setUploadList(data);
-    // });
-  }, []);
+  // useEffect(() => {
+  //   onchain.getProveList(nickname).then(data => {
+  //     setProveList(data);
+  //   });
+  // }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
@@ -63,30 +72,65 @@ const ReportList = () => {
         body={
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
             <PaddingBox>
+              <div
+                style={{
+                  display: 'flex',
+                  borderRadius: '16px',
+                  flexDirection: 'column',
+                  width: '100%',
+                  height: 'fit-content',
+                  border: '1px solid rgba(0,0,0,0.5)',
+                  alignItems: 'center',
+                }}
+              >
+                <div style={{ marginTop: 16 }}>
+                  <ProveStatus proveStatus={0} />
+                </div>
+                <ImageSkeletonRenderer
+                  itemList={[
+                    {
+                      creator: reqData.creatorNickname,
+                      creatorNickname: reqData.userNickname,
+                      collection: 'asdf',
+                      name: reqData.imageTitle,
+                      uri: 'fewaf',
+                      price: 0,
+                    },
+                  ]}
+                  routeUrl="/Images"
+                  style={{ wrapper: { padding: '12px 30px 30px' } }}
+                  skeletonWidth={130}
+                  skeletonHeight={130}
+                  hideDetails
+                />
+                {/*<img src="" style={{ width: '130px', height: '130px' }} />*/}
+              </div>
+            </PaddingBox>
+            <PaddingBox>
               <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Creator Nickname</span>
               <StyledInput
-                name="nickname"
-                value={reportData.nickname}
+                name="creatorNickname"
+                value={reqData.creatorNickname}
                 placeholder="Put Creator Nickname"
-                onChange={e => setReportData({ ...reportData, [e.target?.name]: e.target.value })}
+                onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
               />
             </PaddingBox>
             <PaddingBox>
               <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Image Title</span>
               <StyledInput
-                name="title"
-                value={reportData.title}
+                name="imageTitle"
+                value={reqData.imageTitle}
                 placeholder="Put Image Title"
-                onChange={e => setReportData({ ...reportData, [e.target?.name]: e.target.value })}
+                onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
               />
             </PaddingBox>
             <PaddingBox>
               <span style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }}>Email to Request</span>
               <StyledInput
-                name="email"
-                placeholder="Put Email Address"
-                value={reportData.email}
-                onChange={e => setReportData({ ...reportData, [e.target?.name]: e.target.value })}
+                name="phrase"
+                placeholder="Put Phrase"
+                value={reqData.phrase}
+                onChange={e => setReqData({ ...reqData, [e.target?.name]: e.target.value })}
               />
             </PaddingBox>
           </div>
@@ -94,69 +138,56 @@ const ReportList = () => {
         footer={
           <LargeButton
             style={{ margin: '0px 16px 16px' }}
-            disabled={!reportData.nickname || !reportData.email || !reportData.title}
+            disabled={!reqData.creatorNickname || !reqData.phrase || !reqData.imageTitle}
             onClick={() => {
-              const randomPhrase = (Math.random() + 1).toString(36).substring(8);
-
               onchain
-                .reportImage({
-                  creatorNickname: reportData.nickname,
-                  imageTitle: reportData.title,
-                  randomPhrase,
+                .proveImage({
+                  userNickname: nickname,
+                  creatorNickname: reqData.userNickname,
+                  imageTitle: reqData.imageTitle,
+                  phrase: reqData.phrase,
                 })
                 .then(data => {
                   setModal(false);
-                  setReportData({ ...reportData, phrase: randomPhrase });
+                  setReqData(initReqData);
                   setCompleteModal(true);
                 });
             }}
           >
-            Request for Proof
+            Prove Ownership of Image
           </LargeButton>
         }
       />
 
       <CenteredModal
+        title="Submitting phrase completed"
         show={completeModal}
         onHide={() => setCompleteModal(false)}
-        title="Request Completed"
         body={
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '8px' }}>
-            <span>Your request has been sent to</span>
-            <span style={{ fontSize: '14px', fontWeight: 700, color: baseColor.green, marginBottom: '16px' }}>
-              {`"${reportData.email}"`}
-            </span>
-            <span>The autogenerated phrase is</span>
-            <span style={{ fontSize: '14px', fontWeight: 700, color: baseColor.green, marginBottom: '16px' }}>
-              {`"${reportData.phrase}"`}
-            </span>
-          </div>
+          <p style={{ textAlign: 'center', fontWeight: 400, fontSize: '12px' }}>
+            Your proof went perfectly.
+            <br /> There will be no legal issues and the person who reported <br />
+            it will know that you have proved it. Thank you for your proof process.
+          </p>
         }
-        footer={
-          <LargeButton
-            style={{ width: '200px', backgroundColor: 'black', color: 'white' }}
-            onClick={() => {
-              setCompleteModal(false);
-              setReportData(initReportData);
-            }}
-          >
-            Go to Report List
-          </LargeButton>
-        }
+        footer={<LargeButton onClick={() => setCompleteModal(false)}>Go to prove List</LargeButton>}
       />
 
       <TopNavigator>
-        <span style={{ fontSize: '18px' }}>Report list</span>
+        <span style={{ fontSize: '18px' }}>Prove list</span>
       </TopNavigator>
 
       <PaddingBox>
-        {reportList.map(el => {
+        {proveList.map(el => {
           const highlightsColor = EnumProveColor[el.proved];
           return (
             <div
+              // click to prove page
+              // onClick={() => {
+              //   nav(`${el.creator}/${el.title}?phrase=${el.keyPhrase}`);
+              // }}
               style={{
                 display: 'flex',
-                minWidth: 'fit-content',
                 flexDirection: 'column',
                 padding: '16px',
                 border: '1px solid black',
@@ -166,16 +197,16 @@ const ReportList = () => {
             >
               <ProveStatus proveStatus={el.proved} />
               <div style={{ display: 'flex', marginTop: '-4px' }}>
-                <ImageSkeletonRenderer
-                  itemList={[
-                    { creator: el.creator, creatorNickname: '', collection: '', name: el.title, uri: el.uri, price: 0 },
-                  ]}
-                  routeUrl="/Images"
-                  style={{ wrapper: { paddingLeft: '0px' } }}
-                  skeletonWidth={60}
-                  skeletonHeight={60}
-                  hideDetails
-                />
+                <div>
+                  <ImageSkeletonRenderer
+                    itemList={[]}
+                    routeUrl="/Images"
+                    style={{ wrapper: { paddingLeft: '0px' } }}
+                    skeletonWidth={60}
+                    skeletonHeight={60}
+                    hideDetails
+                  />
+                </div>
 
                 <div style={{ display: 'flex', width: '100%', flexDirection: 'column', padding: '18px 18px 18px 0px' }}>
                   <StyledSpan
@@ -192,7 +223,7 @@ const ReportList = () => {
                   <div style={{ marginTop: 'auto' }}>
                     <CreatorInfo
                       profileImg={profileIcon}
-                      creator={nickname}
+                      creator={el.creator}
                       style={{
                         img: { width: '16px', height: '16px', marginRight: '4px' },
                         text: { fontSize: '10px', fontWeight: 700, marginBottom: '0px', color: 'black' },
@@ -201,7 +232,7 @@ const ReportList = () => {
                   </div>
                 </div>
               </div>
-              <div style={{ height: '1px', backgroundColor: 'rgba(0,0,0,0.3)', marginBottom: '12px' }} />
+              <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.3)', marginBottom: '12px' }} />
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 'auto', rowGap: '12px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <StyledSpan style={{ color: 'rgba(0,0,0,0.6)', whiteSpace: 'nowrap' }}>Requested Date</StyledSpan>
@@ -218,15 +249,26 @@ const ReportList = () => {
                   <StyledSpan style={{ color: highlightsColor, whiteSpace: 'nowrap' }}>{el.keyPhrase}</StyledSpan>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <LargeButton
-                    onClick={() => {
-                      setReportData({ nickname: el.creator, title: el.title, email: 'email' });
-                      setModal(true);
-                    }}
-                    style={{ width: '114px', minHeight: '30px', height: '30px' }}
-                  >
-                    Report
-                  </LargeButton>
+                  {el.proved === 0 && (
+                    <LargeButton
+                      onClick={() => {
+                        const itemData = {
+                          userNickname: nickname,
+                          creatorNickname: el.creator,
+                          imageTitle: el.title,
+                          phrase: el.keyPhrase,
+                        };
+
+                        // onchain.proveImage({ ...itemData }).then(data => {
+                        setReqData({ ...itemData });
+                        setModal(true);
+                        // });
+                      }}
+                      style={{ width: '114px', minHeight: '30px', height: '30px' }}
+                    >
+                      Prove
+                    </LargeButton>
+                  )}
                 </div>
               </div>
             </div>
@@ -237,7 +279,8 @@ const ReportList = () => {
     </div>
   );
 };
-const ProveStatus = ({ proveStatus }: IProveStatus) => {
+
+export const ProveStatus = ({ proveStatus }: IProveStatus) => {
   const color = EnumProveColor[proveStatus];
   const status = EnumProveStatus[proveStatus];
   return (
@@ -265,4 +308,4 @@ const ProveStatus = ({ proveStatus }: IProveStatus) => {
   );
 };
 
-export default ReportList;
+export default ProveListPage;

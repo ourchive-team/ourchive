@@ -10,16 +10,13 @@ import MainPage from './Pages/MainPage';
 import ImageDetailsPage from './Pages/ImageDetailsPage';
 import UploadPage from './Pages/UploadPage';
 import ProfilePage from './Pages/ProfilePage';
-import UploadList from './Pages/ProfilePage/UploadList';
-import PurchaseList from './Pages/ProfilePage/DownloadList';
+import UploadListPage from './Pages/ProfilePage/UploadListPage';
+import DownloadList from './Pages/ProfilePage/DownloadListPage';
 import PurchasePage from './Pages/ImageDetailsPage/PurchasePage';
-import ReportPage from './Pages/ReportPage';
-import ReportList from './Pages/ProfilePage/ReportList';
+import ReportListPage from './Pages/ProfilePage/ReportListPage';
 import NicknameRegistrationPage from './Pages/AuthPage/NicknameRegistrationPage';
-import ProveList from './Pages/ProfilePage/ProveList';
-import ProveOwnershipOfImagePage from './Pages/ProveOwnershipOfImagePage';
+import ProveListPage from './Pages/ProfilePage/ProveListPage';
 import LoginWrapper from './Components/LoginWrapper';
-import { LoginPage } from './Pages/AuthPage/LoginPage';
 
 const App = () => {
   // ngrok test error
@@ -31,18 +28,16 @@ const App = () => {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <LoginWrapper>
         <Routes>
-          <Route path="/" element={<ProveList />} />
+          <Route path="/" element={<ProveListPage />} />
           <Route path="/nickname" element={<NicknameRegistrationPage />} />
           <Route path="/main" element={<MainPage />} />
           <Route path="/images/:creator/:nickname/:title" element={<ImageDetailsPage />} />
-          <Route path="/images/:creator/:nickname/:title/report" element={<ReportPage />} />
           <Route path="/images/:creator/:nickname/:title/purchase" element={<PurchasePage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/profile/upload-list" element={<UploadList />} />
-          <Route path="/profile/download-list" element={<PurchaseList />} />
-          <Route path="/profile/report-list" element={<ReportList />} />
-          <Route path="/profile/provement-list" element={<ProveList />} />
-          <Route path="/profile/provement-list/:creator/:nickname/:title" element={<ProveOwnershipOfImagePage />} />
+          <Route path="/profile/upload-list" element={<UploadListPage />} />
+          <Route path="/profile/download-list" element={<DownloadList />} />
+          <Route path="/profile/report-list" element={<ReportListPage />} />
+          <Route path="/profile/provement-list" element={<ProveListPage />} />
           <Route path="/upload-image" element={<UploadPage />} />
         </Routes>
       </LoginWrapper>
