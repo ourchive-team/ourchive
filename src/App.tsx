@@ -17,6 +17,7 @@ import ReportListPage from './Pages/ProfilePage/ReportListPage';
 import NicknameRegistrationPage from './Pages/AuthPage/NicknameRegistrationPage';
 import ProveListPage from './Pages/ProfilePage/ProveListPage';
 import LoginWrapper from './Components/LoginWrapper';
+import { LoginPage } from './Pages/AuthPage/LoginPage';
 
 const App = () => {
   // ngrok test error
@@ -28,7 +29,7 @@ const App = () => {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <LoginWrapper>
         <Routes>
-          <Route path="/" element={<ProveListPage />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/nickname" element={<NicknameRegistrationPage />} />
           <Route path="/main" element={<MainPage />} />
           <Route path="/images/:creator/:nickname/:title" element={<ImageDetailsPage />} />
@@ -37,7 +38,7 @@ const App = () => {
           <Route path="/profile/upload-list" element={<UploadListPage />} />
           <Route path="/profile/download-list" element={<DownloadList />} />
           <Route path="/profile/report-list" element={<ReportListPage />} />
-          <Route path="/profile/provement-list" element={<ProveListPage />} />
+          <Route path="/profile/prove-list" element={<ProveListPage />} />
           <Route path="/upload-image" element={<UploadPage />} />
         </Routes>
       </LoginWrapper>

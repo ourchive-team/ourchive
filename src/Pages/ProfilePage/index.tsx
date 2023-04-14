@@ -119,7 +119,7 @@ const ProfilePage = () => {
       </div>
 
       <div
-        onClick={() => nav('provement-list')}
+        onClick={() => nav('prove-list')}
         style={{
           display: 'flex',
           padding: '12px 16px',
@@ -128,10 +128,10 @@ const ProfilePage = () => {
           marginBottom: '28px',
         }}
       >
-        <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Provement List</span>
+        <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Prove List</span>
         <img
           src={navIcon}
-          alt="go to provement-list"
+          alt="go to prove-list"
           style={{ width: '20px', transform: 'rotate(180deg)', cursor: 'pointer' }}
         />
       </div>
