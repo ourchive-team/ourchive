@@ -21,15 +21,15 @@ import { LoginPage } from './Pages/AuthPage/LoginPage';
 
 const App = () => {
   // ngrok test error
-  useEffect(() => {
-    if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
-  }, []);
+  // useEffect(() => {
+  //   if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
+  // }, []);
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <LoginWrapper>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/nickname" element={<NicknameRegistrationPage />} />
           <Route path="/main" element={<MainPage />} />
           <Route path="/upload" element={<UploadPage />} />
