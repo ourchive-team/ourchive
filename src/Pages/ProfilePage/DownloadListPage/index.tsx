@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { addressState } from '../../../states/loginState';
 
 import ImageSkeletonRenderer from '../../../Components/ImageComponents/ImageSkeletonRenderer';
 import { onchain } from '../../../func';
@@ -27,12 +29,12 @@ const DownloadList = () => {
       },
     },
   ]);
-  // const [address] = useRecoilState(addressState);
-  // useEffect(() => {
-  // onchain.getPurchasedImageList(address).then(data => {
-  //   setPurchaseList(data);
-  // });
-  // }, []);
+  const [address] = useRecoilState(addressState);
+  useEffect(() => {
+    onchain.getPurchasedImageList(address).then(data => {
+      setPurchaseList(data);
+    });
+  }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
