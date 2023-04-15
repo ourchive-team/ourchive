@@ -17,12 +17,6 @@ window.addEventListener('load', () => {
 
 declare global {
   interface Window {
-    aptos: any;
-  }
-}
-
-declare global {
-  interface Window {
-    ethereum: any
+    ethereum: any;
   }
 }
