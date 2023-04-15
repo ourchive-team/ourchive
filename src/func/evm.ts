@@ -116,7 +116,6 @@ export class EvmOnChainImpl implements OnChainCommunicator {
 
             const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
 
-            console.log(creatorAddress, imageTitle);
             const { name, description, uri, price, creator, expiry } = await MarketplaceContract.get_image_by_creator_and_name(creatorAddress, imageTitle);
             imageInfo = <ImageInfo>{
                 title: name,
@@ -234,10 +233,10 @@ export class EvmOnChainImpl implements OnChainCommunicator {
             const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
 
             console.log("buyImage: ", nft.creator, nft.imageTitle);
-            const { id } = await MarketplaceContract.get_image_by_creator_and_name(nft.creator, nft.imageTitle);
+            const { id, price } = await MarketplaceContract.get_image_by_creator_and_name(nft.creator, nft.imageTitle);
             console.log("buyImage: ", id);
 
-            await MarketplaceContract.purchase_image(id);
+            await MarketplaceContract.purchase_image(id, { value: price });
         } catch (err) {
             console.log(err);
             throw (err);

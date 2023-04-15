@@ -7,9 +7,10 @@ import { onchain } from '../../../func';
 
 const PurchasePage = () => {
   const pathItems = window.location.pathname.split('/');
-  const creatorAddress = pathItems[2].replace(/%20/g, ' ');
-  const nickname = pathItems[3].replace(/%20/g, ' ');
-  const imageTitle = pathItems[4].replace(/%20/g, ' ');
+  const creatorAddress = pathItems[3].replace(/%20/g, ' ');
+  const nickname = pathItems[4].replace(/%20/g, ' ');
+  const imageTitle = pathItems[5].replace(/%20/g, ' ');
+  console.log({ creatorAddress, nickname, imageTitle });
 
   const resolutionList = [
     {
