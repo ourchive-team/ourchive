@@ -42,8 +42,9 @@ const UploadPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const nav = useNavigate();
   const [nickname, setUserNickname] = useRecoilState(nicknameState);
-  if ((nickname as unknown as string) === '') {
-    const { address } = window.aptos.account();
+  if (((nickname as unknown) as string) === '') {
+    // evm assumption here
+    const { address } = window.ethereum.account();
     setUserNickname(address);
   }
 
@@ -176,7 +177,7 @@ const UploadPage = () => {
               price: parseInt(inputValues.price, 10),
               // eslint-disable-next-line
               img: imageFile?.file!,
-              nickname: nickname as unknown as string,
+              nickname: (nickname as unknown) as string,
             });
           }}
         >
