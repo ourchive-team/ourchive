@@ -92,15 +92,17 @@ export interface OnChainCommunicator {
   checkUserExists(setNickname: SetterOrUpdater<string>): Promise<boolean>;
   submitUserNickname(userAddress: string, userNickname: string): Promise<void>;
   getUserNickname(userAddress: string): Promise<string>;
+
   getImageInfo(creatorAddress: string, creatorNickname: string, imageTitle: string): Promise<ImageInfo>;
   tokendataIdToUri(tokenDataId: { creator: string; collection: string; name: string }): Promise<string>;
   getAllImageInfoList(): Promise<TokenItem[]>;
   getUploadedImageList(address: string): Promise<TokenItem[]>;
   getPurchasedImageList(address: string): Promise<TokenPurchaseItem[]>;
-  getReportList(nickname: string): Promise<IProveItem[]>;
-  getProveList(nickname: string): Promise<IProveItem[]>;
   uploadImage(nft: IUploadImage): Promise<void>;
   buyImage(nft: IBuyImage): Promise<void>;
+
+  getReportList(nickname: string): Promise<IProveItem[]>;
+  getProveList(nickname: string): Promise<IProveItem[]>;
   proveImage(proof: IProveImage): Promise<void>;
   reportImage(report: IReportImage): Promise<void>;
 }
