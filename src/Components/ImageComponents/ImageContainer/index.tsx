@@ -43,6 +43,8 @@ export default ImageContainer;
 export const ImageContainerBox = styled.div`
   display: flex;
   width: fit-content;
+  padding: 4px;
+  border-radius: 16px;
   height: 100%;
   min-width: 136px;
   justify-content: center;
