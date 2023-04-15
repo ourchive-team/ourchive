@@ -13,6 +13,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'prefer-spread': 'off',
+    'react/jsx-first-prop-new': 'off',
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     'import/no-absolute-path': 'off',
     'max-len': 'off',

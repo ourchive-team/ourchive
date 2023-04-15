@@ -27,8 +27,12 @@ export const LoginPage = () => {
           marginBottom: 'auto',
         }}
       >
-        <span style={{ fontFamily: 'Cormorant SC', letterSpacing: '0.5em', fontSize: '58px' }}>OUR</span>
-        <span style={{ fontFamily: 'Cormorant SC', letterSpacing: '0.5em', fontSize: '58px' }}>STOCK</span>
+        <span style={{ fontFamily: 'Cormorant SC', letterSpacing: '0.5em', marginRight: '-0.5em', fontSize: '58px' }}>
+          OUR
+        </span>
+        <span style={{ fontFamily: 'Cormorant SC', letterSpacing: '0.5em', marginRight: '-0.5em', fontSize: '58px' }}>
+          STOCK
+        </span>
 
         <span style={{ fontSize: '15px', marginTop: '24px', fontWeight: 400, letterSpacing: '0.1em' }}>
           Web3 Stock Image Market

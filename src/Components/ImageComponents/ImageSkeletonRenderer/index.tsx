@@ -89,7 +89,7 @@ const ItemDetails = ({ name, price, creatorNickname }: { creatorNickname: string
       }}
     >
       <span style={{ fontSize: '13px', fontWeight: 700, marginBottom: '8px' }}>{name}</span>
-      <span style={{ fontSize: '12px', color: baseColor.yellow, marginBottom: '8px' }}>{`${price} ETH ~`}</span>
+      <span style={{ fontSize: '12px', color: baseColor.pink, marginBottom: '8px' }}>{`${price} ETH ~`}</span>
       <div style={{ display: 'flex', width: '100%' }}>
         <img srcSet={profileIcon} alt="profile icon" style={{ width: '16px', height: '16px', marginRight: '4px' }} />
         <span>{`Creator ${creatorNickname}`}</span>
