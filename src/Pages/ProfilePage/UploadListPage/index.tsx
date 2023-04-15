@@ -8,7 +8,7 @@ import { TokenItem } from '../../../Components/ImageComponents/ImageSkeletonRend
 import { baseColor, PaddingBox, StyledSpan } from '../../../styles';
 import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
-import { addressState } from '../../../states/loginState';
+import { addressState, uploadedImageList } from '../../../states/loginState';
 import ImageContainer from '../../../Components/ImageComponents/ImageContainer';
 import { onchain } from '../../../func';
 
@@ -20,14 +20,14 @@ interface ItemList {
 }
 
 const UploadListPage = () => {
-  const [address] = useRecoilState(addressState);
-  const addressString = address;
+  const [address, setAddress] = useRecoilState(addressState);
+  const [uploadedImage, setUploadedImage] = useRecoilState(uploadedImageList);
 
-  const [uploadList, setUploadList] = useState<TokenItem[]>([]);
+  const addressString = address;
 
   useEffect(() => {
     onchain.getUploadedImageList(addressString).then(data => {
-      setUploadList(data);
+      setUploadedImage(data);
     });
   }, []);
 
@@ -39,7 +39,7 @@ const UploadListPage = () => {
         <span>Upload List</span>
       </TopNavigator>
       <PaddingBox>
-        {uploadList.map(el => {
+        {uploadedImage.map(el => {
           return (
             <div
               onClick={() => nav(`/images/${el.creator}/${el.creatorNickname}/${el.name}`)}

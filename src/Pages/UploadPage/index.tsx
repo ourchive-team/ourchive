@@ -1,12 +1,12 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Link, { useNavigate } from 'react-router-dom';
 
 import plusIcon from '../../icons/plus.svg';
 
-import { nicknameState } from '../../states/loginState';
+import { addressState, nicknameState, uploadedImageList } from '../../states/loginState';
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { onchain } from '../../func';
 import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
@@ -42,7 +42,7 @@ const UploadPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const nav = useNavigate();
   const [nickname, setUserNickname] = useRecoilState(nicknameState);
-  if (((nickname as unknown) as string) === '') {
+  if ((nickname as unknown as string) === '') {
     // evm assumption here
     const { address } = window.ethereum.account();
     setUserNickname(address);
@@ -168,17 +168,28 @@ const UploadPage = () => {
           type="submit"
           style={{ backgroundColor: enabled ? 'black' : '#8E8E8E', textTransform: 'capitalize', marginTop: 'auto' }}
           onClick={async () => {
-            setModalOpen(true);
             console.log('uploading broom! broom!');
             //and upload image to server
-            await onchain.uploadImage({
-              title: inputValues.title,
-              description: inputValues.desc,
-              price: parseInt(inputValues.price, 10),
-              // eslint-disable-next-line
-              img: imageFile?.file!,
-              nickname: (nickname as unknown) as string,
-            });
+            await onchain
+              .uploadImage({
+                title: inputValues.title,
+                description: inputValues.desc,
+                price: parseInt(inputValues.price, 10),
+                // eslint-disable-next-line
+                img: imageFile?.file!,
+                nickname: nickname as unknown as string,
+              })
+              .then(() => {
+                console.log('asd');
+                const [address, setAddress] = useRecoilState(addressState);
+                const [uploadedImage, setUploadedImage] = useRecoilState(uploadedImageList);
+
+                const addressString = address;
+                onchain.getUploadedImageList(addressString).then(data => {
+                  setUploadedImage(data);
+                  setModalOpen(true);
+                });
+              });
           }}
         >
           Upload Image

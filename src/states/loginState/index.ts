@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { LoginStateEnum } from '../recoilKeys';
+import { TokenItem } from '../../Components/ImageComponents/ImageSkeletonRenderer';
 
 type TLoginState = {
   isLogin: boolean;
@@ -40,4 +41,11 @@ type TAddressState = string;
 export const addressState = atom<TAddressState>({
   key: LoginStateEnum.ADDRESS,
   default: '',
+});
+
+type TUploadedImageList = TokenItem[];
+
+export const uploadedImageList = atom<TUploadedImageList>({
+  key: LoginStateEnum.UploadedImageList,
+  default: [],
 });
