@@ -10,6 +10,7 @@ import BottomContainer from '../../../Components/NavigatorComponents/BottomConta
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
 import { addressState } from '../../../states/loginState';
 import ImageContainer from '../../../Components/ImageComponents/ImageContainer';
+import { onchain } from '../../../func';
 
 interface ItemList {
   id: string;
@@ -22,29 +23,12 @@ const UploadListPage = () => {
   const [address] = useRecoilState(addressState);
   const addressString = address;
 
-  const [uploadList, setUploadList] = useState<TokenItem[]>([
-    {
-      creator: '0x00000000',
-      creatorNickname: 'test',
-      name: 'test',
-      collection: 'test',
-      price: 0,
-      uri: 'test',
-    },
-    {
-      creator: '0x00000000',
-      creatorNickname: 'test',
-      name: 'test',
-      collection: 'test',
-      price: 0,
-      uri: 'test',
-    },
-  ]);
+  const [uploadList, setUploadList] = useState<TokenItem[]>([]);
 
   useEffect(() => {
-    // onchain.getUploadedImageList(addressString).then(data => {
-    //   setUploadList(data);
-    // });
+    onchain.getUploadedImageList(addressString).then(data => {
+      setUploadList(data);
+    });
   }, []);
 
   const nav = useNavigate();
