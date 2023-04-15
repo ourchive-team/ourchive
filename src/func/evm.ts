@@ -31,9 +31,9 @@ export class EvmOnChainImpl implements OnChainCommunicator {
         // this.ownerProverAddress = "0x3E286397e21198970b51D901A2e8F5EC91739DAB";
 
         // mumbai
-        this.userManagerAddress = "0x05861C139a278AB10a86ce4bF0fB74610311B5A2";
-        this.marketplaceAddress = "0xC692A8d37Fe05C2aC88c719F4498A11bA2e6f19C";
-        this.ownerProverAddress = "0x23eBB81143B36417a0292089D68090cd4523f294";
+        this.userManagerAddress = "0xD0F59a3187074B67a93836F1B9D0921b5093F151";
+        this.marketplaceAddress = "0x5739fEfebA02B531D612F29d92C7218C70032002";
+        this.ownerProverAddress = "0xa5B195CAB5050Cb8516C093C2ff775CF6a7578a8";
     }
 
     public async walletConnect(
