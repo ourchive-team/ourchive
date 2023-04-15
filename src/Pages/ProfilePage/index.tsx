@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { TokenTypes } from 'aptos';
 import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
@@ -11,36 +10,10 @@ import { baseColor } from '../../styles';
 
 import ImageSkeletonRenderer, { TokenItem } from '../../Components/ImageComponents/ImageSkeletonRenderer';
 import BottomNavigator from '../../Components/NavigatorComponents/BottomNavigator';
-import YellowBottomNavigator from '../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
 import { addressState, nicknameState } from '../../states/loginState';
 import { onchain } from '../../func';
 import { TokenPurchaseItem } from '../../func/type';
-
-const YellowCardBox = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  color: #fbfe67;
-  flex-direction: column;
-  border: 1px solid #7e8034;
-  background-color: transparent;
-  padding: 16px;
-  border-radius: 8px;
-  margin-right: 16px;
-
-  :nth-last-child(1) {
-    margin-right: 0px;
-  }
-
-  span:nth-child(1) {
-    font-weight: 900;
-    font-size: 15px;
-  }
-  span:nth-child(2) {
-    font-weight: 400;
-    font-size: 12px;
-  }
-`;
 
 const ProfilePage = () => {
   const [nickname, setNickname] = useRecoilState(nicknameState);
@@ -80,21 +53,21 @@ const ProfilePage = () => {
       <span style={{ fontSize: '14px', padding: '8px', textAlign: 'center' }}>
         BA in fashion & graphic design tattoo, reiki&thetahealing master✨
       </span>
-      <span style={{ color: baseColor.purple }}>{renderAddressString}</span>
+      <span style={{ color: baseColor.green }}>{renderAddressString}</span>
 
       <div style={{ display: 'flex', width: '100%', padding: '16px', marginBottom: '28px' }}>
-        <YellowCardBox>
+        <CardBox>
           <span>326</span>
           <span>Upload</span>
-        </YellowCardBox>
-        <YellowCardBox>
+        </CardBox>
+        <CardBox>
           <span>34</span>
           <span>Buy</span>
-        </YellowCardBox>
-        <YellowCardBox>
+        </CardBox>
+        <CardBox>
           <span>$4269.1</span>
           <span>Profit</span>
-        </YellowCardBox>
+        </CardBox>
       </div>
 
       <span style={{ fontSize: '16px', fontWeight: 700, paddingLeft: '16px', marginRight: 'auto' }}>Upload List</span>
@@ -146,7 +119,7 @@ const ProfilePage = () => {
       </div>
 
       <div
-        onClick={() => nav('provement-list')}
+        onClick={() => nav('prove-list')}
         style={{
           display: 'flex',
           padding: '12px 16px',
@@ -155,20 +128,43 @@ const ProfilePage = () => {
           marginBottom: '28px',
         }}
       >
-        <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Provement List</span>
+        <span style={{ fontSize: '16px', fontWeight: 700, marginRight: 'auto' }}>Prove List</span>
         <img
           src={navIcon}
-          alt="go to provement-list"
+          alt="go to prove-list"
           style={{ width: '20px', transform: 'rotate(180deg)', cursor: 'pointer' }}
         />
       </div>
-      <YellowBottomNavigator
-        style={{ box: { backgroundColor: 'black', paddingTop: 0 }, bar: { backgroundColor: 'white' } }}
-      >
-        <BottomNavigator />
-      </YellowBottomNavigator>
+      <BottomContainer style={{ backgroundColor: baseColor.beige, paddingTop: 0 }}>
+        <BottomNavigator selectedMenu="profile" />
+      </BottomContainer>
     </div>
   );
 };
+
+const CardBox = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid #0a1930;
+  background-color: transparent;
+  padding: 16px;
+  border-radius: 8px;
+  margin-right: 16px;
+
+  :nth-last-child(1) {
+    margin-right: 0px;
+  }
+
+  span:nth-child(1) {
+    font-weight: 900;
+    font-size: 15px;
+  }
+  span:nth-child(2) {
+    font-weight: 400;
+    font-size: 12px;
+  }
+`;
 
 export default ProfilePage;

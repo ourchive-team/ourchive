@@ -6,12 +6,12 @@ import Link, { useNavigate } from 'react-router-dom';
 
 import plusIcon from '../../icons/plus.svg';
 
+import { nicknameState } from '../../states/loginState';
 import { baseColor, LargeButton, PaddingBox, StyledInput } from '../../styles';
 import { onchain } from '../../func';
-import YellowBottomNavigator from '../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
 import TopNavigator from '../../Components/NavigatorComponents/TopNavigator';
-import Modal from '../../Components/Modal';
-import { nicknameState } from '../../states/loginState';
+import CenteredModal from '../../Components/CenteredModal';
 
 interface IRenderTextArea {
   title: string;
@@ -70,32 +70,22 @@ const UploadPage = () => {
   const enabled = inputValues.title && inputValues.desc && Number(inputValues.price) > 0;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
-      {modalOpen && (
-        <Modal close={() => setModalOpen(!modalOpen)}>
-          <div
-            style={{
-              display: 'flex',
-              width: '100%',
-              height: '100%',
-              padding: '8px 24px',
-              alignItems: 'center',
-              flexDirection: 'column',
+      <CenteredModal
+        show={modalOpen}
+        onHide={() => setModalOpen(!modalOpen)}
+        title="Image Uploaded"
+        body={<span style={{ fontSize: '12px', marginBottom: '20px' }}>Your image successfully uploaded.</span>}
+        footer={
+          <LargeButton
+            onClick={() => {
+              nav('/profile/upload-list');
             }}
+            style={{ fontSize: '14px', fontWeight: 700 }}
           >
-            <span style={{ fontSize: '20px', fontWeight: 700, marginBottom: '20px' }}>Image Uploaded</span>
-            <span style={{ fontSize: '12px', marginBottom: '20px' }}>Your image successfully uploaded.</span>
-
-            <LargeButton
-              onClick={() => {
-                nav('/profile/upload-list');
-              }}
-              style={{ fontSize: '14px', fontWeight: 700, backgroundColor: baseColor.yellow, color: 'black' }}
-            >
-              Go to Upload List
-            </LargeButton>
-          </div>
-        </Modal>
-      )}
+            Go to Upload List
+          </LargeButton>
+        }
+      />
 
       <TopNavigator>
         <span style={{ fontSize: '18px' }}>Upload Image</span>
@@ -115,7 +105,12 @@ const UploadPage = () => {
           <img
             alt="add-img"
             src={imageFile?.thumbnail || plusIcon}
-            style={{ width: imageFile ? '100%' : '20px', height: imageFile ? '100%' : '20px', borderRadius: '8px' }}
+            style={{
+              width: imageFile ? '100%' : '20px',
+              height: imageFile ? '100%' : '20px',
+              borderRadius: '8px',
+              filter: imageFile?.thumbnail ? 'initial' : 'brightness(0) contrast(100%)',
+            }}
           />
         </StyledBox>
       </PaddingBox>
@@ -155,7 +150,7 @@ const UploadPage = () => {
                 }}
                 style={{ width: '100%' }}
               />
-              <span style={{ marginLeft: '16px', fontSize: '16px' }}>APT</span>
+              <span style={{ marginLeft: '16px', fontSize: '16px' }}>ETH</span>
             </div>
             <span style={{ fontSize: '11px', marginTop: '8px', color: '#676767' }}>
               · If you upload a picture, it willl be automatically registered as a large size file, medium and small
@@ -166,7 +161,7 @@ const UploadPage = () => {
         </PaddingBox>
       </div>
 
-      <YellowBottomNavigator>
+      <BottomContainer style={{ backgroundColor: baseColor.beige }}>
         <LargeButton
           disabled={!enabled}
           type="submit"
@@ -187,7 +182,7 @@ const UploadPage = () => {
         >
           Upload Image
         </LargeButton>
-      </YellowBottomNavigator>
+      </BottomContainer>
     </div>
   );
 };
@@ -202,20 +197,19 @@ const StyledBox = styled.button`
   align-items: center;
   background-color: transparent;
 
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   padding: 1px;
 `;
 
 const TextArea = styled.textarea`
   background-color: transparent;
-  color: gray;
-  border-color: rgba(255, 255, 255, 0.5);
+  color: black;
+  border-color: #2c2c2c80;
   padding: 16px;
   border-radius: 8px;
   min-height: 48px;
   font-size: 14px;
-  color: white;
 
   ::placeholder {
     color: #4e4e4b;

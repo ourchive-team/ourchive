@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
-import ImageSkeletonRenderer, { TokenItem } from '../../../Components/ImageComponents/ImageSkeletonRenderer';
+import { TokenItem } from '../../../Components/ImageComponents/ImageSkeletonRenderer';
 
-import aptosLogo from '../../../icons/aptos.svg';
 import { baseColor, PaddingBox, StyledSpan } from '../../../styles';
-import YellowBottomNavigator from '../../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../../Components/NavigatorComponents/BottomContainer';
 import TopNavigator from '../../../Components/NavigatorComponents/TopNavigator';
-import { onchain } from '../../../func';
-import { addressState, nicknameState, publicKeyState } from '../../../states/loginState';
+import { addressState } from '../../../states/loginState';
+import ImageContainer from '../../../Components/ImageComponents/ImageContainer';
 
 interface ItemList {
   id: string;
@@ -20,16 +18,33 @@ interface ItemList {
   profit: string;
 }
 
-const UploadList = () => {
+const UploadListPage = () => {
   const [address] = useRecoilState(addressState);
   const addressString = address;
 
-  const [uploadList, setUploadList] = useState<TokenItem[]>([]);
+  const [uploadList, setUploadList] = useState<TokenItem[]>([
+    {
+      creator: '0x00000000',
+      creatorNickname: 'test',
+      name: 'test',
+      collection: 'test',
+      price: 0,
+      uri: 'test',
+    },
+    {
+      creator: '0x00000000',
+      creatorNickname: 'test',
+      name: 'test',
+      collection: 'test',
+      price: 0,
+      uri: 'test',
+    },
+  ]);
 
   useEffect(() => {
-    onchain.getUploadedImageList(addressString).then(data => {
-      setUploadList(data);
-    });
+    // onchain.getUploadedImageList(addressString).then(data => {
+    //   setUploadList(data);
+    // });
   }, []);
 
   const nav = useNavigate();
@@ -47,18 +62,12 @@ const UploadList = () => {
               style={{
                 display: 'flex',
                 marginBottom: '20px',
-                border: '1px solid white',
+                border: '1px solid black',
                 borderRadius: '16px',
                 height: 'fit-content',
               }}
             >
-              <ImageSkeletonRenderer
-                itemList={[el]}
-                routeUrl="/Images"
-                skeletonWidth={100}
-                skeletonHeight={100}
-                hideDetails
-              />
+              <ImageContainer uri={el.uri} alt={el.name} style={{ width: 'fit-content', maxWidth: '136px' }} />
               <div
                 style={{
                   display: 'flex',
@@ -76,36 +85,33 @@ const UploadList = () => {
                     fontSize: '12px',
                     width: '100%',
                     margin: '8px 0px',
-                    color: 'rgba(255,255,255,0.6)',
+                    color: 'rgba(0,0,0,0.6)',
                   }}
                 >
                   description todo
                 </StyledSpan>
 
                 <div style={{ display: 'flex', alignItems: 'center', marginTop: 'auto' }}>
-                  <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginRight: '8px' }}>
-                    My profit
-                  </span>
-                  <span style={{ fontWeight: 700, color: baseColor.yellow }}>{1234}</span>
-                  <img
-                    src={aptosLogo}
-                    alt="apt_logo"
-                    style={{ borderRadius: '50%', marginLeft: '4px', width: '16px', height: '16px' }}
-                  />
+                  <span style={{ fontSize: '10px', color: 'rgba(0,0,0,0.4)', marginRight: '8px' }}>My profit</span>
+                  <span style={{ fontWeight: 700, color: '#D57368' }}>1234</span>
                 </div>
               </div>
             </div>
           );
         })}
       </PaddingBox>
-      <YellowBottomNavigator
+      <BottomContainer
         style={{
-          box: { position: 'fixed', left: 0, bottom: 0, backgroundColor: 'black', zIndex: 2, paddingTop: '0px' },
-          bar: { backgroundColor: 'white' },
+          position: 'fixed',
+          left: 0,
+          bottom: 0,
+          backgroundColor: baseColor.beige,
+          zIndex: 2,
+          paddingTop: '0px',
         }}
       />
     </div>
   );
 };
 
-export default UploadList;
+export default UploadListPage;

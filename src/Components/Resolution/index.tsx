@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { baseColor } from '../../styles';
 
@@ -19,8 +19,9 @@ const Resolution = ({ list, selectedSize, selector }: IResolution) => {
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', padding: '16px 0px' }}>
       {list.map(el => {
-        const border = {
-          border: selectedSize === el.size ? `1px solid ${baseColor.yellow}` : '1px solid rgba(255, 255, 255, 0.2)',
+        const style = {
+          border: selectedSize === el.size ? `1px solid ${baseColor.green}` : '1px solid rgba(44, 44, 44, 0.2)',
+          color: selectedSize === el.size ? baseColor.green : 'black',
         };
         return (
           <Button
@@ -32,12 +33,12 @@ const Resolution = ({ list, selectedSize, selector }: IResolution) => {
               cursor: 'pointer',
               overflowX: 'auto',
               padding: '12px 16px',
-              color: selectedSize === el.size ? baseColor.yellow : 'white',
+              color: selectedSize === el.size ? baseColor.green : 'white',
             }}
           >
-            <DetailBox style={border}>{el.size}</DetailBox>
+            <DetailBox style={{ fontWeight: 700, ...style }}>{el.size}</DetailBox>
 
-            <DetailBox style={{ ...border, display: 'flex' }}>
+            <DetailBox style={{ ...style, display: 'flex' }}>
               <span>
                 {`${el.resolution} px ·`}
                 &nbsp;
@@ -48,7 +49,7 @@ const Resolution = ({ list, selectedSize, selector }: IResolution) => {
               </span>
               <span>{el.format}</span>
             </DetailBox>
-            <DetailBox style={border}>{`${el.value} APT`}</DetailBox>
+            <DetailBox style={style}>{`${el.value} ETH`}</DetailBox>
           </Button>
         );
       })}
@@ -68,7 +69,7 @@ const DetailBox = styled.div`
   border-radius: 4px;
   font-size: 12px;
   padding: 4px 8px;
-  color: inherit;
+  color: black;
 `;
 
 export default Resolution;

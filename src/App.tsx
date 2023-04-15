@@ -1,50 +1,45 @@
 import './App.css';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { Types, AptosClient } from 'aptos';
-import { LoginPage } from './Pages/AuthPage/LoginPage';
 import 'react-loading-skeleton/dist/skeleton.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import MainPage from './Pages/MainPage';
 import ImageDetailsPage from './Pages/ImageDetailsPage';
 import UploadPage from './Pages/UploadPage';
 import ProfilePage from './Pages/ProfilePage';
-import UploadList from './Pages/ProfilePage/UploadList';
-import PurchaseList from './Pages/ProfilePage/DownloadList';
+import UploadListPage from './Pages/ProfilePage/UploadListPage';
+import DownloadList from './Pages/ProfilePage/DownloadListPage';
 import PurchasePage from './Pages/ImageDetailsPage/PurchasePage';
-import ReportPage from './Pages/ReportPage';
-import ReportList from './Pages/ProfilePage/ReportList';
+import ReportListPage from './Pages/ProfilePage/ReportListPage';
 import NicknameRegistrationPage from './Pages/AuthPage/NicknameRegistrationPage';
-import ProveList from './Pages/ProfilePage/ProveList';
-import ProveOwnershipOfImagePage from './Pages/ProveOwnershipOfImagePage';
+import ProveListPage from './Pages/ProfilePage/ProveListPage';
 import LoginWrapper from './Components/LoginWrapper';
+import { LoginPage } from './Pages/AuthPage/LoginPage';
 
 const App = () => {
   // ngrok test error
-  // useEffect(() => {
-  //   if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
-  // }, []);
+  useEffect(() => {
+    if (window.location.href !== 'http://localhost:3000/') window.location.href = 'http://localhost:3000/';
+  }, []);
 
-  // console.log(address, account?.sequence_number);
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <LoginWrapper>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/nickname" element={<NicknameRegistrationPage />} />
           <Route path="/main" element={<MainPage />} />
+          <Route path="/upload" element={<UploadPage />} />
           <Route path="/images/:creator/:nickname/:title" element={<ImageDetailsPage />} />
-          <Route path="/images/:creator/:nickname/:title/report" element={<ReportPage />} />
           <Route path="/images/:creator/:nickname/:title/purchase" element={<PurchasePage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/profile/upload-list" element={<UploadList />} />
-          <Route path="/profile/download-list" element={<PurchaseList />} />
-          <Route path="/profile/report-list" element={<ReportList />} />
-          <Route path="/profile/provement-list" element={<ProveList />} />
-          <Route path="/profile/provement-list/:creator/:nickname/:title" element={<ProveOwnershipOfImagePage />} />
-          <Route path="/upload-image" element={<UploadPage />} />
+          <Route path="/profile/upload-list" element={<UploadListPage />} />
+          <Route path="/profile/download-list" element={<DownloadList />} />
+          <Route path="/profile/report-list" element={<ReportListPage />} />
+          <Route path="/profile/prove-list" element={<ProveListPage />} />
         </Routes>
       </LoginWrapper>
     </BrowserRouter>

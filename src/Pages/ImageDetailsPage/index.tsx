@@ -4,44 +4,34 @@ import { useNavigate } from 'react-router-dom';
 // @ts-ignore
 import s1 from '../../images/s1.jpg';
 // @ts-ignore
-
 import s2 from '../../images/s2.jpg';
 // @ts-ignore
-
 import s3 from '../../images/s3.jpg';
 // @ts-ignore
-
 import s4 from '../../images/s4.jpg';
 // @ts-ignore
-
 import s5 from '../../images/s5.jpg';
 // @ts-ignore
-
 import o1 from '../../images/o1.jpg';
 // @ts-ignore
-
 import o2 from '../../images/o2.jpg';
 // @ts-ignore
-
 import o3 from '../../images/o3.jpg';
 // @ts-ignore
-
 import o4 from '../../images/o4.jpg';
 // @ts-ignore
-
 import o5 from '../../images/o5.jpg';
 
 import flagIcon from '../../icons/flag.svg';
 import profileIcon from '../../images/profile-icon.png';
-import { ImageContainer, LargeButton, PaddingBox } from '../../styles';
 import FeedStatusBar from '../../Components/FeedStatusBar';
 import Resolution from '../../Components/Resolution';
 import ImageSkeletonRenderer, { TokenItem } from '../../Components/ImageComponents/ImageSkeletonRenderer';
-import TopNavigator from '../../Components/NavigatorComponents/TopNavigator';
-import YellowBottomNavigator from '../../Components/NavigatorComponents/YellowBottomNavigator';
+import BottomContainer from '../../Components/NavigatorComponents/BottomContainer';
+import CreatorInfo from '../../Components/CreatorInfo';
 import { onchain } from '../../func';
 import { ImageInfo } from '../../func/type';
-import CreatorInfo from '../../Components/CreatorInfo';
+import { baseColor, ImageContainer, LargeButton, PaddingBox } from '../../styles';
 
 const ImageDetailsPage = () => {
   const nav = useNavigate();
@@ -183,10 +173,7 @@ const ImageDetailsPage = () => {
         overflowX: 'hidden',
       }}
     >
-      <TopNavigator>
-        <span>Purchase</span>
-      </TopNavigator>
-      <PaddingBox>
+      <PaddingBox style={{ paddingTop: '48px' }}>
         <ImageContainer style={{ minHeight: '300px', height: '300px' }}>
           <img style={{ width: 'fit-content', maxWidth: '100%' }} src={imageInfo?.imgUrl} alt={imageInfo?.title} />
         </ImageContainer>
@@ -216,7 +203,7 @@ const ImageDetailsPage = () => {
             skeletonCount={6}
             skeletonWidth={140}
             skeletonHeight={140}
-            style={{ wrapper: { padding: '6px' } }}
+            style={{ wrapper: { padding: '16px' } }}
             hideDetails
           />
         </div>
@@ -232,14 +219,14 @@ const ImageDetailsPage = () => {
             skeletonCount={6}
             skeletonWidth={140}
             skeletonHeight={140}
-            style={{ wrapper: { padding: '6px' } }}
+            style={{ wrapper: { padding: '16px' } }}
             hideDetails
           />
         </div>
       </div>
       {/*/!* nav = /reportNFT -> /reportNFT:id *!/*/}
       {/* nav = /buyNFT -> /buyNFT:id */}
-      <YellowBottomNavigator>
+      <BottomContainer style={{ backgroundColor: baseColor.beige }}>
         <div style={{ display: 'flex', width: '100%', height: '100%' }}>
           <LargeButton
             onClick={() => nav('report')}
@@ -248,14 +235,15 @@ const ImageDetailsPage = () => {
               background: 'white',
               border: '1px solid black',
               color: 'black',
-              marginRight: '4px',
+              marginRight: '8px',
+              borderRadius: '8px',
             }}
           >
             <img src={flagIcon} alt="report" style={{ width: '15px' }} />
           </LargeButton>
           <LargeButton onClick={() => nav('purchase')}>Buy this Image</LargeButton>
         </div>
-      </YellowBottomNavigator>
+      </BottomContainer>
     </div>
   );
 };

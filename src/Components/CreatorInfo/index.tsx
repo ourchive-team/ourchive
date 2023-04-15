@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { baseColor } from '../../styles';
 
 interface ICreator {
   readonly color?: string;
@@ -26,7 +25,7 @@ const CreatorInfo = ({ profileImg, creator, style }: ICreatedInfo) => {
 };
 
 const Creator = styled.span<ICreator>`
-  color: ${props => (props.color ? props.color : baseColor.yellow)};
+  color: ${props => (props.color ? props.color : '#D57368')};
 `;
 
 export default CreatorInfo;

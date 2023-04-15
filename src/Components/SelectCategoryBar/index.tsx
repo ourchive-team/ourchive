@@ -1,40 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { baseColor } from '../../styles';
 
 interface ISelectCategoryBarData {
   data: string[];
 }
 
+const colorCode = ['#E7CFB6', '#A7CCC5', '#E6B86B', '#D57368'];
+
 const SelectCategoryBar = ({ data }: ISelectCategoryBarData) => {
-  const colorCode = Object.values(baseColor);
-  const random = Math.floor(Math.random() * colorCode.length - 1);
-
   const [selected, setSelected] = useState(0);
-  const [randomColorCode, setRandomColorCode] = useState(colorCode);
-
-  useEffect(() => {
-    let colorCount = 0;
-    const randomCode = colorCode.map((el, i) => {
-      const isOver = random + i > colorCode.length - 1;
-      if (colorCount > colorCode.length - 1) colorCount = 0;
-      if (isOver) colorCount += 1;
-      return colorCode[random + i > colorCode.length - 1 ? colorCount : random + i];
-    });
-
-    setRandomColorCode(randomCode);
-  }, []);
 
   return (
     <div style={{ display: 'flex', width: '100%', height: '52px', overflowX: 'scroll', padding: '10px 20px' }}>
       {data.map((el, i) => {
         const isSelected = selected === i;
-        const selectedOrRandomColor = isSelected ? 'white' : randomColorCode[i];
+        const selectedOrRandomColor = isSelected ? 'black' : colorCode[i];
         return (
           <CategoryBtn
             style={{
               fontWeight: isSelected ? 700 : 400,
-              color: isSelected ? 'black' : 'rgba(0,0,0,0.5)',
+              color: isSelected ? 'white' : 'rgba(255,255,255,0.8)',
               backgroundColor: selectedOrRandomColor,
             }}
             onClick={() => setSelected(i)}
@@ -56,8 +41,6 @@ const CategoryBtn = styled.button`
 
   width: fit-content;
   height: 32px;
-
-  /* Gray 300 */
 
   background: #f2f2f2;
   border-color: transparent;
