@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { Signer, ethers } from 'ethers';
 import { SetterOrUpdater } from 'recoil';
 import { TPublicKeyState, nicknameState } from '../states/loginState';
 import { uploadToIPFS } from './ipfs';
@@ -14,15 +14,25 @@ import {
     IProofResponse,
     OnChainCommunicator,
 } from './type';
-import { UserManagerABI, MarketplaceABI } from './evmABI';
+import { UserManagerABI, MarketplaceABI, OwnerProverABI } from './evmABI';
 import { TokenItem } from '../Components/ImageComponents/ImageSkeletonRenderer';
 
 export class EvmOnChainImpl implements OnChainCommunicator {
+    private signer: Signer;
+
+    private provider;
+
     private userManagerAddress: string;
+
+    private userManagerContract: ethers.Contract;
 
     private marketplaceAddress: string;
 
+    private marketplaceContract: ethers.Contract;
+
     private ownerProverAddress: string;
+
+    private ownerProverContract: ethers.Contract;
 
     constructor() {
         // goerli
@@ -34,6 +44,13 @@ export class EvmOnChainImpl implements OnChainCommunicator {
         this.userManagerAddress = "0xD0F59a3187074B67a93836F1B9D0921b5093F151";
         this.marketplaceAddress = "0x5739fEfebA02B531D612F29d92C7218C70032002";
         this.ownerProverAddress = "0xa5B195CAB5050Cb8516C093C2ff775CF6a7578a8";
+
+        this.provider = new ethers.providers.Web3Provider(window.ethereum);
+        this.signer = this.provider.getSigner();
+
+        this.userManagerContract = new ethers.Contract(this.userManagerAddress, UserManagerABI, this.signer);
+        this.marketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, this.signer);
+        this.ownerProverContract = new ethers.Contract(this.ownerProverAddress, OwnerProverABI, this.signer);
     }
 
     public async walletConnect(
@@ -62,13 +79,16 @@ export class EvmOnChainImpl implements OnChainCommunicator {
     public async checkUserExists(setNickname: SetterOrUpdater<string>): Promise<boolean> {
         try {
             console.log("checkUserExists");
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const UserManagerContract = new ethers.Contract(this.userManagerAddress, UserManagerABI, signer);
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
+            // const UserManagerContract = new ethers.Contract(this.userManagerAddress, UserManagerABI, signer);
 
             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
 
-            const nickname = await UserManagerContract.getUserNickname(accounts[0]);
+            const nickname = await this.userManagerContract.getUserNickname(accounts[0]);
+            console.log(accounts[0]);
+            console.log(accounts[0]);
+            console.log(accounts[0]);
             setNickname(nickname);
             console.log("nickname", nickname);
         } catch (err) {
@@ -80,13 +100,11 @@ export class EvmOnChainImpl implements OnChainCommunicator {
 
     public async submitUserNickname(userAddress: string, userNickname: string): Promise<void> {
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const UserManagerContract = new ethers.Contract(this.userManagerAddress, UserManagerABI, signer);
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
+            // const UserManagerContract = new ethers.Contract(this.userManagerAddress, UserManagerABI, signer);
 
-            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-
-            await UserManagerContract.setUserNickname(accounts[0], userNickname);
+            await this.userManagerContract.setUserNickname(userAddress, userNickname);
         } catch (err) {
             console.log(this.submitUserNickname.name, err);
         }
@@ -95,11 +113,11 @@ export class EvmOnChainImpl implements OnChainCommunicator {
     public async getUserNickname(userAddress: string): Promise<string> {
         let nickname;
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const UserManagerContract = new ethers.Contract(this.userManagerAddress, UserManagerABI, signer);
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
+            // const UserManagerContract = new ethers.Contract(this.userManagerAddress, UserManagerABI, signer);
 
-            nickname = await UserManagerContract.getUserNickname(userAddress);
+            nickname = await this.userManagerContract.getUserNickname(userAddress);
         } catch (err) {
             console.log(this.getUserNickname.name, err);
             throw (err);
@@ -111,12 +129,13 @@ export class EvmOnChainImpl implements OnChainCommunicator {
     public async getImageInfo(creatorAddress: string, creatorNickname: string, imageTitle: string): Promise<ImageInfo> {
         let imageInfo = <ImageInfo>{};
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
 
-            const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
+            // const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
 
-            const { name, description, uri, price, creator, expiry } = await MarketplaceContract.get_image_by_creator_and_name(creatorAddress, imageTitle);
+            console.log(creatorAddress, imageTitle);
+            const { name, description, uri, price, creator, expiry } = await this.marketplaceContract.get_image_by_creator_and_name(creatorAddress, imageTitle);
             imageInfo = <ImageInfo>{
                 title: name,
                 price,
@@ -141,16 +160,16 @@ export class EvmOnChainImpl implements OnChainCommunicator {
     public async getAllImageInfoList(): Promise<TokenItem[]> {
         const tokens: TokenItem[] = [];
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
 
-            const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
+            // const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
 
-            const count = await MarketplaceContract.latest_id();
+            const count = await this.marketplaceContract.latest_id();
 
             for (let i = 0; i < count; i += 1) {
                 // eslint-disable-next-line no-await-in-loop
-                const { id, name, description, uri, price, creator, expiry } = await MarketplaceContract.stock_images(i);
+                const { id, name, description, uri, price, creator, expiry } = await this.marketplaceContract.stock_images(i);
                 // eslint-disable-next-line no-await-in-loop
                 const creatorNickname = await this.getUserNickname(creator);
                 const image = { creator, creatorNickname, collection: `${creatorNickname}'s collection`, name, uri, price };
@@ -167,12 +186,12 @@ export class EvmOnChainImpl implements OnChainCommunicator {
     public async getUploadedImageList(address: string): Promise<TokenItem[]> {
         const tokens: TokenItem[] = [];
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
 
-            const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
+            // const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
 
-            const images = await MarketplaceContract.get_uploaded_images(address);
+            const images = await this.marketplaceContract.get_uploaded_images(address);
             console.log(images);
             for (let i = 0; i < images.length; i += 1) {
                 const image = images[i];
@@ -189,12 +208,12 @@ export class EvmOnChainImpl implements OnChainCommunicator {
     public async getPurchasedImageList(address: string): Promise<TokenPurchaseItem[]> {
         const tokens: TokenPurchaseItem[] = [];
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
 
-            const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
+            // const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
 
-            const images = await MarketplaceContract.get_purchased_images(address);
+            const images = await this.marketplaceContract.get_purchased_images(address);
             console.log(images);
             for (let i = 0; i < images.length; i += 1) {
                 const image = images[i];
@@ -212,13 +231,13 @@ export class EvmOnChainImpl implements OnChainCommunicator {
     public async uploadImage(nft: IUploadImage): Promise<void> {
         const imageUri = await uploadToIPFS(nft.img);
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
 
-            const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
+            // const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
 
             // uint256 price, string calldata name, string calldata description, string calldata uri, uint256 expiry
-            await MarketplaceContract.upload_image(nft.price, nft.title, nft.description, imageUri, 0);
+            await this.marketplaceContract.upload_image(nft.price, nft.title, nft.description, imageUri, 0);
         } catch (err) {
             console.log(err);
             throw (err);
@@ -227,16 +246,16 @@ export class EvmOnChainImpl implements OnChainCommunicator {
 
     public async buyImage(nft: IBuyImage): Promise<void> {
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
 
-            const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
+            // const MarketplaceContract = new ethers.Contract(this.marketplaceAddress, MarketplaceABI, signer);
 
             console.log("buyImage: ", nft.creator, nft.imageTitle);
-            const { id, price } = await MarketplaceContract.get_image_by_creator_and_name(nft.creator, nft.imageTitle);
+            const { id } = await this.marketplaceContract.get_image_by_creator_and_name(nft.creator, nft.imageTitle);
             console.log("buyImage: ", id);
 
-            await MarketplaceContract.purchase_image(id, { value: price });
+            await this.marketplaceContract.purchase_image(id);
         } catch (err) {
             console.log(err);
             throw (err);
@@ -246,20 +265,52 @@ export class EvmOnChainImpl implements OnChainCommunicator {
     // owner prover
 
     public async proveImage(proof: IProveImage): Promise<void> {
-        // TODO
+        try {
+            // const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // const signer = provider.getSigner();
+
+            // const OwnerProverContract = new ethers.Contract(this.ownerProverAddress, OwnerProverABI);
+            console.log("prove image ownership: ", proof.imageTitle);
+            this.ownerProverContract.prove_ownership(proof.userNickname, proof.creatorNickname, proof.imageTitle, proof.phrase);
+        } catch (err) {
+            console.log(err);
+            throw (err);
+        }
     }
 
     public async reportImage(report: IReportImage): Promise<void> {
-        // TODO
+        try {
+            console.log("reporting image: ", report.imageTitle);
+            this.ownerProverContract.submit_report(report.creatorNickname, report.imageTitle, report.randomPhrase);
+        } catch (err) {
+            console.log(err);
+            throw (err);
+        }
     }
 
     public async getReportList(nickname: string): Promise<IProveItem[]> {
-        // TODO
+        try {
+            console.log("get report list: ", nickname);
+            const { result } = this.ownerProverContract.get_report_list(nickname);
+            console.log(result);
+        } catch (err) {
+            console.log(err);
+            throw (err);
+        }
+
         return [];
     }
 
     public async getProveList(nickname: string): Promise<IProveItem[]> {
-        // TODO
+        try {
+            console.log("get prove list: ", nickname);
+            const { result } = this.ownerProverContract.get_proof_list(nickname);
+            console.log(result);
+        } catch (err) {
+            console.log(err);
+            throw (err);
+        }
+
         return [];
     }
 }

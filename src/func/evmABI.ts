@@ -686,3 +686,173 @@ export const MarketplaceABI = [
     "type": "function"
   }
 ];
+
+export const OwnerProverABI = [
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "marketplaceAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "IncorrectImageTitle",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "IncorrectPhrase",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "UserNotImageOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "getMarketplaceAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_userNickname",
+        "type": "string"
+      }
+    ],
+    "name": "getProofList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "imageId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "phrase",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct ProofElement[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_creatorNickname",
+        "type": "string"
+      }
+    ],
+    "name": "getReportList",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "imageId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "proved",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "phrase",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct ReportElement[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "userNickname",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "creatorNickname",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "imageTitle",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "phrase",
+        "type": "string"
+      }
+    ],
+    "name": "proveOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "creatorNickname",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "imageTitle",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "phrase",
+        "type": "string"
+      }
+    ],
+    "name": "submitReport",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];
